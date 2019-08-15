@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule .* - [S=4]
+RewriteRule ^([^/]+)/([^/]+)$ index.php?halaman=$1&form=$2 [L]
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)$ index.php?halaman=$1&form=$2&id=$3 [L]
+RewriteRule ^([^/]+)/([^/]+)/$ index.php?halaman=$1&form=$2 [L]
+RewriteRule ^([^/]+)/([^/]+)/([^/]+)/$ index.php?halaman=$1&form=$2&id=$3 [L]
+RewriteRule ^([a-zA-Z0-9]+)$ index.php?halaman=$1
+RewriteRule ^([a-zA-Z0-9]+)/$ index.php?halaman=$1
