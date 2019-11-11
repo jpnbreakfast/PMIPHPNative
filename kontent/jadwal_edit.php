@@ -1,19 +1,20 @@
 <?php
 if(isset($_GET['id'])){
-	$query = dapatkandatapilihan($_GET['halaman'],'id_jadwal',$_GET['id']);
+	
+	$query = dapatkandatapilihan(htmlspecialchars($_GET['halaman'], ENT_QUOTES, 'UTF-8'),'id_jadwal',htmlspecialchars($_GET['id'], ENT_QUOTES, 'UTF-8'));
 	if(mysqli_num_rows($query) != 0){
 		$r = mysqli_fetch_array($query);
-		$id_jadwal			= $r['id_jadwal'];
-		$instasi			= $r['instasi_jadwal'];
-		$target				= $r['target_jumlah_jadwal'];
-		$tanggal_jadwal 	= $r['tanggal_jadwal'];
-		$jam_jadwal 		= $r['jam_jadwal'];
-		$hari_jadwal 		= $r['hari_jadwal'];
-		$alamat_jadwal		= $r['alamat_jadwal'];
-		$kecamatan_jadwal	= $r['kecamatan_jadwal'];
-		$lat_peta_jadwal	= $r['lat_jadwal'];
-		$lng_peta_jadwal 	= $r['lng_jadwal'];
-		$link_peta_jadwal 	= $r['link_jadwal'];
+		$id_jadwal			= htmlspecialchars($r['id_jadwal'], ENT_QUOTES, 'UTF-8');
+		$instasi			= htmlspecialchars($r['instasi_jadwal'], ENT_QUOTES, 'UTF-8');
+		$target				= htmlspecialchars($r['target_jumlah_jadwal'], ENT_QUOTES, 'UTF-8');
+		$tanggal_jadwal 	= htmlspecialchars($r['tanggal_jadwal'], ENT_QUOTES, 'UTF-8');
+		$jam_jadwal 		= htmlspecialchars($r['jam_jadwal'], ENT_QUOTES, 'UTF-8');
+		$hari_jadwal 		= htmlspecialchars($r['hari_jadwal'], ENT_QUOTES, 'UTF-8');
+		$alamat_jadwal		= htmlspecialchars($r['alamat_jadwal'], ENT_QUOTES, 'UTF-8');
+		$kecamatan_jadwal	= htmlspecialchars($r['kecamatan_jadwal'], ENT_QUOTES, 'UTF-8');
+		$lat_peta_jadwal	= htmlspecialchars($r['lat_jadwal'], ENT_QUOTES, 'UTF-8');
+		$lng_peta_jadwal 	= htmlspecialchars($r['lng_jadwal'], ENT_QUOTES, 'UTF-8');
+		$link_peta_jadwal 	= htmlspecialchars($r['link_jadwal'], ENT_QUOTES, 'UTF-8');
 		$opsihari  			= array('Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu');
 		$opsikecamatan 		= array('Denpasar Timur' ,'Denpasar Selatan', 'Denpasar Barat', 'Denpasar Utara');
 	}else{
@@ -28,40 +29,28 @@ if(isset($_GET['id'])){
 		$lat_peta_jadwal	= '';
 		$lng_peta_jadwal 	= '';
 		$link_peta_jadwal 	= '';
-		echo'
+		echo"
 		<script>
 			$(document).ready(function () {
-				$("#infoSalah").html("Data Yang Dipilih Salah!");
-				$("#modalInfo").modal();
-				$("#buttonKembali").show();
-				$("#buttonOK").hide();
+				Swal.fire({
+					title: 'Kesalahan!',
+					text: 'Data Yang Dipilih Salah!',
+					type: 'warning',
+					showCancelButton: false,
+					showConfirmButton: true,
+				}).then((result) => {
+					if (result.value) {
+						window.location='".base_url()."/admin/jadwal/';
+					} 
+				  })
 			});
-		</script>';
+		</script>";
 	}
 }
 ?>
 <script>
 	sembunyiform();
 </script>
-<div class="modal fade" id="modalInfo">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Informasi</h4>
-      </div>
-      <div class="modal-body">
-        <p id="infoSalah"></p>
-      </div>
-      <div id="buttonOK" class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">OK</button>
-      </div>
-	  <div id="buttonKembali" class="modal-footer">
-        <a href="/PMIAdminPHP/admin/jadwal/"><button type="button" class="btn btn-default pull-left"><i class="fa fa-angle-left"></i>  Kembali</button></a>
-      </div>
-    </div>
-  </div>
-</div>
 <div class="modal fade" id="mapModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -90,10 +79,6 @@ Ubah
 </ol>
 </section>
 <section class="content">
-<div id="statusOK" class="callout callout-info">
-	<h4>Berhasil!</h4>
-	Tunggu Sebentar Akan Dikembalikan Ke Dashboard....
-</div>
 <div class="box">
 	<div class="box-header">
 	<h3 class="box-title">Ubah Jadwal</h3>
@@ -135,25 +120,10 @@ Ubah
 			<label for="hari_jadwal" class="control-label">Hari Jadwal</label>
 			<div>
 			  <select class="form-control" id="tanggal_jadwal" name="hari_jadwal" required>
+			  <option>Pilih Hari</option>
             	<?php
 				foreach($opsihari as $option){
     			    if($hari_jadwal == $option){
-							echo "<option selected='selected' value='$option'>$option</option>" ;
-						}else{
-							echo "<option value='$option'>$option</option>" ;
-						}
-					}
-				?>
-            </select>
-			</div>
-		  </div>
-		   <div class="form-group">
-			<label for="kecamatan_jadwal" class="control-label">Kecamatan</label>
-			<div>
-			  <select class="form-control" id="kecamatan_jadwal" name="kecamatan_jadwal" required>
-            	<?php
-				foreach($opsikecamatan as $option){
-    			    if($kecamatan_jadwal == $option){
 							echo "<option selected='selected' value='$option'>$option</option>" ;
 						}else{
 							echo "<option value='$option'>$option</option>" ;
@@ -172,20 +142,37 @@ Ubah
                </span>
 			</div>
 		  </div>
+		  <div class="form-group">
+			<label for="kecamatan_jadwal" class="control-label">Kecamatan</label>
+			<div>
+			  <select class="form-control" id="kecamatan_jadwal" name="kecamatan_jadwal" required>
+			  <option>Pilih Kecamatan</option>
+            	<?php
+				foreach($opsikecamatan as $option){
+    			    if($kecamatan_jadwal == $option){
+							echo "<option selected='selected' value='$option'>$option</option>" ;
+						}else{
+							echo "<option value='$option'>$option</option>" ;
+						}
+					}
+				?>
+            </select>
+			</div>
+		  </div>
 		   <div class="form-group">
-			<label for="lat_peta_jadwal" class="control-label">Lattidue Google Map</label>
+			<label for="lat_peta_jadwal" class="control-label">Lattidue Lokasi</label>
 			<div>
 			  <input type="text" class="form-control" value="<?php echo $lat_peta_jadwal; ?>" id="lat_peta_jadwal" maxlength="10" name="lat_peta_jadwal" onchange="cekKebenaran('ubah',10,'#lat_peta_jadwal','Pastikan Panjang Lattidue Google Map 10 Baris Angka.!')" required>
 			</div>
 		  </div>
 		   <div class="form-group">
-			<label for="lng_peta_jadwal" class="control-label">Longtidue Google Map</label>
+			<label for="lng_peta_jadwal" class="control-label">Longtidue Lokasi</label>
 			<div>
 			  <input type="text" class="form-control" value="<?php echo $lng_peta_jadwal; ?>" id="lng_peta_jadwal" maxlength="10" name="lng_peta_jadwal" onchange="cekKebenaran('ubah',10,'#lng_peta_jadwal','Pastikan Panjang Longtidue Google Map 10 Baris Angka.!')" required>
 			</div>
 		  </div>
 		   <div class="form-group">
-			<label for="link_peta_jadwal" class="control-label">Link Google Map</label>
+			<label for="link_peta_jadwal" class="control-label">Link Lokasi</label>
 			<div>
 			  <input type="text" class="form-control" value="<?php echo $link_peta_jadwal; ?>" id="link_peta_jadwal" name="link_peta_jadwal" onchange="cekKebenaran('ubah',1,'#link_peta_jadwal','Pastikan Anda Mengisi Link.!')" required>
 			</div>
@@ -203,26 +190,45 @@ Ubah
 
 <?php
 if (isset($_POST['submit'])){  
-	$e_id_jadwal		= $_POST['id_jadwal'];
-	$e_instasi			= $_POST['instasi'];
-	$e_target			= $_POST['target'];
-	$e_tanggal_jadwal 	= $_POST['tanggal_jadwal'];
-	$e_jam_jadwal  		= $_POST['jam_jadwal'];
-	$e_hari_jadwal  	= $_POST['hari_jadwal'];
-	$e_kecamatan	  	= $_POST['kecamatan_jadwal'];
-	$e_alamat_jadwal 	= $_POST['lokasi_jadwal'];
-	$e_lat_peta_jadwal 	= $_POST['lat_peta_jadwal'];
-	$e_lng_peta_jadwal 	= $_POST['lng_peta_jadwal'];
-	$e_link_peta_jadwal = $_POST['link_peta_jadwal'];
+	$e_id_jadwal		= htmlspecialchars($_POST['id_jadwal'], ENT_QUOTES, 'UTF-8');
+	$e_instasi			= htmlspecialchars($_POST['instasi'], ENT_QUOTES, 'UTF-8');
+	$e_target			= htmlspecialchars($_POST['target'], ENT_QUOTES, 'UTF-8');
+	$e_tanggal_jadwal 	= htmlspecialchars($_POST['tanggal_jadwal'], ENT_QUOTES, 'UTF-8');
+	$e_jam_jadwal  		= htmlspecialchars($_POST['jam_jadwal'], ENT_QUOTES, 'UTF-8');
+	$e_hari_jadwal  	= htmlspecialchars($_POST['hari_jadwal'], ENT_QUOTES, 'UTF-8');
+	$e_kecamatan	  	= htmlspecialchars($_POST['kecamatan_jadwal'], ENT_QUOTES, 'UTF-8');
+	$e_alamat_jadwal 	= htmlspecialchars($_POST['lokasi_jadwal'], ENT_QUOTES, 'UTF-8');
+	$e_lat_peta_jadwal 	= htmlspecialchars($_POST['lat_peta_jadwal'], ENT_QUOTES, 'UTF-8');
+	$e_lng_peta_jadwal 	= htmlspecialchars($_POST['lng_peta_jadwal'], ENT_QUOTES, 'UTF-8');
+	$e_link_peta_jadwal = htmlspecialchars($_POST['link_peta_jadwal'], ENT_QUOTES, 'UTF-8');
 	$q_edit	= 'UPDATE jadwal SET instasi_jadwal="'.$e_instasi.'", target_jumlah_jadwal="'.$e_target.'", tanggal_jadwal="'.$e_tanggal_jadwal.'", kecamatan_jadwal="'.$e_kecamatan.'", jam_jadwal="'.$e_jam_jadwal.'", hari_jadwal="'.$e_hari_jadwal.'", alamat_jadwal="'.$e_alamat_jadwal.'", lat_jadwal="'.$e_lat_peta_jadwal.'", lng_jadwal="'.$e_lng_peta_jadwal.'",link_jadwal="'.$e_link_peta_jadwal.'" WHERE id_jadwal="'.$e_id_jadwal.'"';
 	$p_edit	= mysqli_query(koneksi_global(),$q_edit) or die(mysqli_error());
 	if ($p_edit){
-		echo '<script>
+		echo "<script>
 				$(document).ready(function(){
-					$("#statusOK").show();
+					Swal.fire({
+						title: 'Sukses!',
+						text: 'Sukses Mengubah!,Harap Menungu Halaman Akan Di Refresh!',
+						type: 'success',
+						showCancelButton: false,
+						showConfirmButton: false,
+					})
 				});
-				setTimeout(function(){window.location="'.base_url().'/admin/jadwal/";}, 1000);
-			 </script>';
+				setTimeout(function(){window.location='".base_url()."/admin/jadwal/';}, 1000);
+			 </script>";
+	}else{
+		echo "
+		<script>
+		$(document).ready(function () {
+				Swal.fire({
+					title: 'Kesalahan!',
+					text: 'Kesalahan Dalam Mengubah!',
+					type: 'warning',
+					showCancelButton: false,
+					showConfirmButton: true,
+				})
+			});
+		</script>";
 	}
 }
 ?>

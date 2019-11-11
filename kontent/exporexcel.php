@@ -11,8 +11,8 @@ $judul = date("Ymd"). "-" .str_replace("_"," ",$_GET["x"]);
 header("Content-Type: application/vnd.ms-excel");
 header("Content-Disposition: attachment; filename=\"$judul.xls\"");
 $arraykolom = array();
-$sql=mysql_query("SHOW COLUMNS FROM ".$_GET["x"]);
-while ($arraykolom = mysql_fetch_assoc($sql)){
+$sql=mysqli_query($GLOBALS['conn'],"SHOW COLUMNS FROM ".$_GET["x"]);
+while ($arraykolom = mysqli_fetch_assoc($sql)){
   $kolom[] = $arraykolom['Field'];
   $penomoran = 0;
 }
@@ -30,8 +30,8 @@ foreach ($kolom as $f) {
 <?php
 }
 $query = dapatkandata($_GET["x"]);
-if(mysql_num_rows($query) != 0){
-	while($n = mysql_fetch_array($query)){
+if(mysqli_num_rows($query) != 0){
+	while($n = mysqli_fetch_array($query)){
 		  $penomoran++;
 		 
 ?>
@@ -51,6 +51,8 @@ if(mysql_num_rows($query) != 0){
 ?>
 </tr>
 </table>
+
+<b>Jumlah Data : <?php echo mysqli_num_rows($query);?></b>
 <?php
 }
 

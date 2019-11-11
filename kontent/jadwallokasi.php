@@ -49,7 +49,7 @@ Jadwal Dan Lokasi
 	</div>
 	</div>
 	<div class="box-body table-responsive">
-	  <table id="datatble" class="table table-bordered table-striped">
+	  <table id="datatble" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
 		<thead>
 		<tr>
 		  <th>No.</th>
@@ -65,7 +65,7 @@ Jadwal Dan Lokasi
 		  <th>Waktu</th>
 		  <th>Lokasi</th>
 		  <th>Link</th>
-		  <th>Opsi</th>
+		  <th data-priority="1">Opsi</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -74,20 +74,20 @@ Jadwal Dan Lokasi
 		$query = dapatkandata('jadwaldanlokasi');
 		if(mysqli_num_rows($query) != 0){
 		while($n = mysqli_fetch_array($query)){
-			$instasi_jadwal = $n['instasi_jadwal'];
-			$target_jumlah_jadwal = $n['target_jumlah_jadwal'];
-			$doketer_jadwallokasi = $n['doketer_jadwallokasi'];
-			$tensi_jadwallokasi = $n['tensi_jadwallokasi'];
-			$hb_jadwallokasi = $n['hb_jadwallokasi'];
-			$aftaper_jadwallokasi = $n['aftaper_jadwallokasi'];
-			$admin_jadwallokasi = $n['admin_jadwallokasi'];
-			$supir_jadwallokasi	 = $n['supir_jadwallokasi'];
-			$tanggal_jadwal = $n['tanggal_jadwal'];
-			$jam_jadwal = $n['jam_jadwal'];
-			$alamat_jadwal = $n['alamat_jadwal'];
-			$kecamatan_jadwal = $n['kecamatan_jadwal'];
-			$link_jadwal = $n['link_jadwal'];
-			$id_jadwallokasi = $n['id_jadwallokasi'];
+			$instasi_jadwal 		= htmlspecialchars($n['instasi_jadwal'], ENT_QUOTES, 'UTF-8');
+			$target_jumlah_jadwal 	= htmlspecialchars($n['target_jumlah_jadwal'], ENT_QUOTES, 'UTF-8');
+			$doketer_jadwallokasi 	= htmlspecialchars($n['doketer_jadwallokasi'], ENT_QUOTES, 'UTF-8');
+			$tensi_jadwallokasi 	= htmlspecialchars($n['tensi_jadwallokasi'], ENT_QUOTES, 'UTF-8');
+			$hb_jadwallokasi 		= htmlspecialchars($n['hb_jadwallokasi'], ENT_QUOTES, 'UTF-8');
+			$aftaper_jadwallokasi 	= htmlspecialchars($n['aftaper_jadwallokasi'], ENT_QUOTES, 'UTF-8');
+			$admin_jadwallokasi 	= htmlspecialchars($n['admin_jadwallokasi'], ENT_QUOTES, 'UTF-8');
+			$supir_jadwallokasi	 	= htmlspecialchars($n['supir_jadwallokasi'], ENT_QUOTES, 'UTF-8');
+			$tanggal_jadwal 		= htmlspecialchars($n['tanggal_jadwal'], ENT_QUOTES, 'UTF-8');
+			$jam_jadwal 			= htmlspecialchars($n['jam_jadwal'], ENT_QUOTES, 'UTF-8');
+			$alamat_jadwal 			= htmlspecialchars($n['alamat_jadwal'], ENT_QUOTES, 'UTF-8');
+			$kecamatan_jadwal 		= htmlspecialchars($n['kecamatan_jadwal'], ENT_QUOTES, 'UTF-8');
+			$link_jadwal 			= htmlspecialchars($n['link_jadwal'], ENT_QUOTES, 'UTF-8');
+			$id_jadwallokasi 		= htmlspecialchars($n['id_jadwallokasi'], ENT_QUOTES, 'UTF-8');
 			$penomoran++;
 			?>
 			<tr>

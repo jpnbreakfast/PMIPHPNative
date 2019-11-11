@@ -51,7 +51,7 @@ Pendonor
 	</div>
 	</div>
 	<div class="box-body table-responsive">
-	  <table id="datatble" class="table table-bordered table-striped">
+	  <table id="datatble" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
 		<thead>
 		<tr>
 		  <th>No.</th>
@@ -63,7 +63,7 @@ Pendonor
 		  <th>Pekerjaan</th>
 		  <th>Golongan Darah</th>
 		  <th>Nomor Telepon</th>
-		  <th>Opsi</th>
+		  <th data-priority="1">Opsi</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -71,16 +71,16 @@ Pendonor
 		$penomoran = 0;
 		$query = dapatkandata('pendonor');
 		if(mysqli_num_rows($query) != 0){
-		while($n = mysqli_fetch_array($query)){
-			$id_pendonor = $n['id_pendonor'];
-			$nama_lengkap_pendonor = $n['nama_lengkap_pendonor'];
-			$jenis_kelamin_pendonor = $n['jenis_kelamin_pendonor'];
-			$tanggal_lahir_pendonor = $n['tanggal_lahir_pendonor'];
-			$tempat_lahir_pendonor = $n['tempat_lahir_pendonor'];
-			$alamat_pendonor = $n['alamat_pendonor'];
-			$pekerjaan_pendonor = $n['pekerjaan_pendonor'];
-			$golongan_darah_pendonor = $n['golongan_darah_pendonor'];
-			$no_telp_pendonor = $n['no_telp_pendonor'];
+		while($r = mysqli_fetch_array($query)){
+			$id_pendonor 				= htmlspecialchars($r['id_pendonor'], ENT_QUOTES, 'UTF-8');
+			$nama_lengkap_pendonor 		= htmlspecialchars($r['nama_lengkap_pendonor'], ENT_QUOTES, 'UTF-8');
+			$jenis_kelamin_pendonor 	= htmlspecialchars($r['jenis_kelamin_pendonor'], ENT_QUOTES, 'UTF-8');
+			$tanggal_lahir_pendonor 	= htmlspecialchars($r['tanggal_lahir_pendonor'], ENT_QUOTES, 'UTF-8');
+			$tempat_lahir_pendonor 		= htmlspecialchars($r['tempat_lahir_pendonor'], ENT_QUOTES, 'UTF-8');
+			$alamat_pendonor 			= htmlspecialchars($r['alamat_pendonor'], ENT_QUOTES, 'UTF-8');
+			$pekerjaan_pendonor 		= htmlspecialchars($r['pekerjaan_pendonor'], ENT_QUOTES, 'UTF-8');
+			$golongan_darah_pendonor 	= htmlspecialchars($r['golongan_darah_pendonor'], ENT_QUOTES, 'UTF-8');
+			$no_telp_pendonor 			= htmlspecialchars($r['no_telp_pendonor'], ENT_QUOTES, 'UTF-8');
 			$penomoran++;
 			?>
 			<tr>

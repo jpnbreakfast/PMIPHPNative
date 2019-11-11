@@ -68,10 +68,6 @@ Tambah
 </ol>
 </section>
 <section class="content">
-<div id="statusOK" class="callout callout-info">
-	<h4>Berhasil!</h4>
-	Tunggu Sebentar Akan Dikembalikan Ke Dashboard....
-</div>
 <div class="box">
 	<div class="box-header">
 	<h3 class="box-title">Tambah Pendonor</h3>
@@ -155,24 +151,43 @@ Tambah
 
 <?php
 if (isset($_POST['submit'])){  
-	$t_id_pendonor				= $_POST['id_pendonor'];
-	$t_nama_lengkap_pendonor	= $_POST['nama_lengkap'];
-	$t_jenis_kelamin_pendonor  	= $_POST['jenis_kelamin'];
-	$t_tanggal_lahir_pendonor  	= $_POST['tanggal_lahir'];
-	$t_tempat_lahir_pendonor 	= $_POST['tempat_lahir'];
-	$t_alamat_pendonor 			= $_POST['alamat'];
-	$t_pekerjaan_pendonor 		= $_POST['pekerjaan'];
-	$t_golongan_darah_pendonor	= $_POST['golongan_darah'];
-	$t_no_telp_pendonor 		= $_POST['nomor_telepon'];
+	$t_id_pendonor				= htmlspecialchars($_POST['id_pendonor'], ENT_QUOTES, 'UTF-8');
+	$t_nama_lengkap_pendonor	= htmlspecialchars($_POST['nama_lengkap'], ENT_QUOTES, 'UTF-8');
+	$t_jenis_kelamin_pendonor  	= htmlspecialchars($_POST['jenis_kelamin'], ENT_QUOTES, 'UTF-8');
+	$t_tanggal_lahir_pendonor  	= htmlspecialchars($_POST['tanggal_lahir'], ENT_QUOTES, 'UTF-8');
+	$t_tempat_lahir_pendonor 	= htmlspecialchars($_POST['tempat_lahir'], ENT_QUOTES, 'UTF-8');
+	$t_alamat_pendonor 			= htmlspecialchars($_POST['alamat'], ENT_QUOTES, 'UTF-8');
+	$t_pekerjaan_pendonor 		= htmlspecialchars($_POST['pekerjaan'], ENT_QUOTES, 'UTF-8');
+	$t_golongan_darah_pendonor	= htmlspecialchars($_POST['golongan_darah'], ENT_QUOTES, 'UTF-8');
+	$t_no_telp_pendonor 		= htmlspecialchars($_POST['nomor_telepon'], ENT_QUOTES, 'UTF-8');
 	$q_tambah	= 'INSERT INTO pendonor VALUES("'.$t_id_pendonor.'","'.$t_nama_lengkap_pendonor.'","'.$t_jenis_kelamin_pendonor.'","'.$t_tanggal_lahir_pendonor.'","'.$t_tempat_lahir_pendonor.'","'.$t_alamat_pendonor.'","'.$t_pekerjaan_pendonor.'","'.$t_golongan_darah_pendonor.'","'.$t_no_telp_pendonor.'")';
 	$q_tambah	= mysqli_query(koneksi_global(),$q_tambah) or die(mysqli_error());
 	if ($q_tambah){
-		echo '<script>
-				$(document).ready(function(){
-					$("#statusOK").show();
-					});
-					setTimeout(function(){window.location="'.base_url().'admin/pendonor/";}, 1000);
-			 </script>';
-	}
+		echo "<script>
+		$(document).ready(function(){
+			Swal.fire({
+				title: 'Sukses!',
+				text: 'Sukses Menambah Data!,Harap Menungu Halaman Akan Di Refresh!',
+				type: 'success',
+				showCancelButton: false,
+				showConfirmButton: false,
+			})
+		});
+		setTimeout(function(){window.location='".base_url()."/admin/pendonor/';}, 1000);
+	 </script>";
+}else{
+echo "
+<script>
+$(document).ready(function () {
+		Swal.fire({
+			title: 'Kesalahan!',
+			text: 'Kesalahan Dalam Menambah Data!',
+			type: 'warning',
+			showCancelButton: false,
+			showConfirmButton: true,
+		})
+	});
+</script>";
+}
 }
 ?>

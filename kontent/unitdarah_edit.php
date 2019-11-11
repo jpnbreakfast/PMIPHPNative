@@ -3,23 +3,30 @@ if(isset($_GET['id'])){
 	$query = dapatkandatapilihan('unit_darah','nomor_kantong_darah',$_GET['id']);
 	if(mysqli_num_rows($query) != 0){
 		$r = mysqli_fetch_array($query);
-		$nomor_kantong_darah = $r['nomor_kantong_darah'];
-		$id_pendonor = $r['id_pendonor'];
-		$rhesus_darah = $r['rhesus_darah'];
+		$nomor_kantong_darah 	= htmlspecialchars($r['nomor_kantong_darah'], ENT_QUOTES, 'UTF-8');
+		$id_pendonor 			= htmlspecialchars($r['id_pendonor'], ENT_QUOTES, 'UTF-8');
+		$rhesus_darah 			= htmlspecialchars($r['rhesus_darah'], ENT_QUOTES, 'UTF-8');
 		$rhesusOptions  = array('+','-');
 	}else{
 		$nomor_kantong_darah = '';
 		$id_pendonor = '';
 		$rhesus_darah = '';
-		echo'
+		echo"
 		<script>
-			$(document).ready(function () {
-				$("#infoSalah").html("Data Yang Dipilih Salah!");
-				$("#modalInfo").modal();
-				$("#buttonKembali").show();
-				$("#buttonOK").hide();
-			});
-		</script>';
+		$(document).ready(function () {
+			Swal.fire({
+				title: 'Kesalahan!',
+				text: 'Data Yang Dipilih Salah!',
+				type: 'warning',
+				showCancelButton: false,
+				showConfirmButton: true,
+			}).then((result) => {
+				if (result.value) {
+					window.location='".base_url()."/admin/jadwal/';
+				} 
+			  })
+		});
+	</script>";
 	}
 }
 ?>
@@ -28,16 +35,18 @@ if(isset($_GET['id'])){
 	function cekKebenaran(halaman,batas,idelement,pesan){
     var value = $(idelement).val().length;
     if (value < batas){
-		$("#infoSalah").html(pesan);
-		$("#modalInfo").modal();
-		$("#buttonKembali").hide();
-    }else{
-		if(halaman=='ubah'){
-			$("#buttonKembali").show();
-		}else{
-			
-		}
-	}
+		Swal.fire({
+				title: 'Kesalahan!',
+				text: pesan,
+				type: 'warning',
+				showCancelButton: false,
+				showConfirmButton: true,
+			}).then((result) => {
+				if (result.value) {
+					window.location='".base_url()."/admin/jadwal/';
+				} 
+			  })
+    }
 }
 </script>
 <div class="modal fade" id="modalInfo">
@@ -68,10 +77,6 @@ Ubah
 </ol>
 </section>
 <section class="content">
-<div id="statusOK" class="callout callout-info">
-	<h4>Berhasil!</h4>
-	Tunggu Sebentar Akan Dikembalikan Ke Dashboard....
-</div>
 <div class="box">
 	<div class="box-header">
 	<h3 class="box-title">Ubah Unit Darah</h3>
@@ -96,8 +101,8 @@ Ubah
 					if ($n!=0)
 						{	
 							while ($r = mysqli_fetch_array($q)){
-							$pil_id_pendonor = $r['id_pendonor'];
-							$pil_nama_lengkap_pendonor = $r['nama_lengkap_pendonor'];
+							$pil_id_pendonor 			= htmlspecialchars($r['id_pendonor'], ENT_QUOTES, 'UTF-8');
+							$pil_nama_lengkap_pendonor 	= htmlspecialchars($r['nama_lengkap_pendonor'], ENT_QUOTES, 'UTF-8');
 							if($id_pendonor == $pil_id_pendonor){
 							echo '<option selected="selected"  value="'.$pil_id_pendonor.'">['.$pil_id_pendonor.']&nbsp;'.$pil_nama_lengkap_pendonor.'</option>';
 								}else{
@@ -113,6 +118,7 @@ Ubah
 			<label for="rhesus" class="control-label">Rhesus</label>
 			<div>
 			   <select class="form-control" id="rhesus" name="rhesus" required>
+			   <option>Pilih Rhesus Darah</option>
 					<?php
 					foreach($rhesusOptions as $option){
     			    if($rhesus_darah == $option){
@@ -138,9 +144,9 @@ Ubah
 
 <?php
 if (isset($_POST['submit'])){  
-	$t_nomor_kantong_darah		= $_POST['nomor_kantong_darah'];
-	$t_id_pendonor				= $_POST['id_pendonor'];
-	$t_rhesus					= $_POST['rhesus'];
+	$t_nomor_kantong_darah		= htmlspecialchars($_POST['nomor_kantong_darah'], ENT_QUOTES, 'UTF-8');
+	$t_id_pendonor				= htmlspecialchars($_POST['id_pendonor'], ENT_QUOTES, 'UTF-8');
+	$t_rhesus					= htmlspecialchars($_POST['rhesus'], ENT_QUOTES, 'UTF-8');
 
 	$query = dapatkandatapilihan('pendonor','id_pendonor',$t_id_pendonor);
 	if(mysqli_num_rows($query) != 0){
@@ -150,13 +156,32 @@ if (isset($_POST['submit'])){
 	$q_edit	= 'UPDATE unit_darah SET id_pendonor="'.$t_id_pendonor.'",rhesus_darah="'.$t_rhesus.'",golongan_darah="'.$t_golongandarah.'" WHERE nomor_kantong_darah="'.$t_nomor_kantong_darah.'"';
 	$q_edit	= mysqli_query(koneksi_global(),$q_edit) or die(mysql_error());
 	if ($q_edit){
-		echo '<script>
-				$(document).ready(function(){
-					$("#statusOK").show();
-					});
-					setTimeout(function(){window.location="'.base_url().'admin/unitdarah/";}, 1000);
-			 </script>';
-			}
+		echo "<script>
+		$(document).ready(function(){
+			Swal.fire({
+				title: 'Sukses!',
+				text: 'Sukses Mengubah Data!,Harap Menungu Halaman Akan Di Refresh!',
+				type: 'success',
+				showCancelButton: false,
+				showConfirmButton: false,
+			})
+		});
+		setTimeout(function(){window.location='".base_url()."/admin/unitdarah/';}, 1000);
+	 </script>";
+}else{
+echo "
+<script>
+$(document).ready(function () {
+		Swal.fire({
+			title: 'Kesalahan!',
+			text: 'Kesalahan Dalam Mengubah Data!',
+			type: 'warning',
+			showCancelButton: false,
+			showConfirmButton: true,
+		})
+	});
+</script>";
+}
 		}
 	}
 }

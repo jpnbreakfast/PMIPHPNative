@@ -85,7 +85,7 @@ Unit Darah
 	</div>
 	</div>
 	<div class="box-body table-responsive">
-	  <table id="datatble" class="table table-bordered table-striped">
+	  <table id="datatble" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
 		<thead>
 		<tr>
 		  <th>No.</th>
@@ -93,7 +93,7 @@ Unit Darah
 		  <th>ID Pendonor</th>
 		  <th>Rhesus</th>
 		  <th>Tipe Darah</th>
-		  <th>Opsi</th>
+		  <th data-priority="1">Opsi</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -101,11 +101,11 @@ Unit Darah
 		$penomoran = 0;
 		$query = dapatkandata('unit_darah');
 		if(mysqli_num_rows($query) != 0){
-		while($n = mysqli_fetch_array($query)){
-			$nomor_kantong_darah = $n['nomor_kantong_darah'];
-			$id_pendonor = $n['id_pendonor'];
-			$rhesus_darah = $n['rhesus_darah'];
-			$golongan_darah = $n['golongan_darah'];
+		while($r = mysqli_fetch_array($query)){
+			$nomor_kantong_darah 	= htmlspecialchars($r['nomor_kantong_darah'], ENT_QUOTES, 'UTF-8');
+			$id_pendonor 			= htmlspecialchars($r['id_pendonor'], ENT_QUOTES, 'UTF-8');
+			$rhesus_darah 			= htmlspecialchars($r['rhesus_darah'], ENT_QUOTES, 'UTF-8');
+			$golongan_darah = htmlspecialchars($r['golongan_darah'], ENT_QUOTES, 'UTF-8');
 			$penomoran++;
 			?>
 			<tr>

@@ -28,25 +28,6 @@ if (mysqli_num_rows($q_kode)!=0)
 <script>
 	sembunyiform();
 </script>
-<div class="modal fade" id="modalInfo">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Informasi</h4>
-      </div>
-      <div class="modal-body">
-        <p id="infoSalah"></p>
-      </div>
-      <div id="buttonOK" class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">OK</button>
-      </div>
-	  <div id="buttonKembali" class="modal-footer">
-        <a href="<?php echo base_url(); ?>admin/petugas/"><button type="button" class="btn btn-default pull-left"><i class="fa fa-angle-left"></i>  Kembali</button></a>
-      </div>
-    </div>
-  </div>
-</div>
 <section class="content-header">
 <h1>
 Tambah
@@ -59,18 +40,6 @@ Tambah
 </ol>
 </section>
 <section class="content">
-<div id="statusOK" class="callout callout-info">
-	<h4>Berhasil!</h4>
-	Tunggu Sebentar Akan Dikembalikan Ke Dashboard....
-</div>
-<div id="statusBAD" class="callout callout-warning">
-	<h4>Kesalahan!</h4>
-	Nama Petugas Yang Anda Masukan Mungkin Sudah Ada, Cek Kembali Atau Masukan Petugas Baru.!
-</div>
-<div id="statusBAD2" class="callout callout-warning">
-	<h4>Kesalahan!</h4>
-	Username Dan Password Tidak Boleh Kosong Saat Anda Memilih Posisi Administrator Web.!
-</div>
 <div class="box">
 	<div class="box-header">
 	<h3 class="box-title">Tambah Petugas</h3>
@@ -135,46 +104,85 @@ Tambah
 
 <?php
 if (isset($_POST['submit'])){  
-	$e_id_petugas				= $_POST['id_petugas'];
-	$e_posisi_petugas			= $_POST['posisi_petugas'];
-	$e_nama_petugas				= $_POST['nama_lengkap'];
-	$e_username_petugas  		= $_POST['username_petugas'];
-	$e_password_petugas  		= $_POST['password_petugas'];
+	$e_id_petugas				= htmlspecialchars($_POST['id_petugas'], ENT_QUOTES, 'UTF-8');
+	$e_posisi_petugas			= htmlspecialchars($_POST['posisi_petugas'], ENT_QUOTES, 'UTF-8');
+	$e_nama_petugas				= htmlspecialchars($_POST['nama_lengkap'], ENT_QUOTES, 'UTF-8');
+	$e_username_petugas  		= htmlspecialchars($_POST['username_petugas'], ENT_QUOTES, 'UTF-8');
+	$e_password_petugas  		= htmlspecialchars($_POST['password_petugas'], ENT_QUOTES, 'UTF-8');
 	$lokasi_file = $_FILES['foto_petugas']['tmp_name'];
 		if(!empty($lokasi_file)){
 			$e_foto = $e_id_petugas.'_'.$_FILES['foto_petugas']['name'];
 			$lokasi_tujuan = '../img/'.$e_foto.'';
 			move_uploaded_file($lokasi_file,$lokasi_tujuan);
 		}else{
-			$e_foto = '../img/default_profile.jpg';
+			$e_foto = 'default_profile.jpg';
 		}
 	
 	{
 if(cek_user('petugas',$e_nama_petugas)=='sama'){
-	echo '<script>
-				$(document).ready(function(){
-					$("#statusBAD").show();
-				});
-			 </script>';
-	}else{
+	echo "
+		<script>
+		$(document).ready(function () {
+				Swal.fire({
+					title: 'Kesalahan!',
+					text: 'Kesalahan Dalam Menambah Data!',
+					type: 'warning',
+					showCancelButton: false,
+					showConfirmButton: true,
+				})
+			});
+		</script>";
+
+	}elseif($e_posisi_petugas == "Administrator Web" && strlen($e_username_petugas) == 0 && strlen($e_password_petugas) == 0){
+		echo "
+				<script>
+				$(document).ready(function () {
+						Swal.fire({
+							title: 'Kesalahan!',
+							text: 'Username Dan Password Tidak Boleh Kosong Saat Anda Memilih Posisi Administrator Web.!',
+							type: 'warning',
+							showCancelButton: false,
+							showConfirmButton: true,
+						})
+					});
+				</script>";
+		
+		
+}else{
 	$q_edit	= 'INSERT INTO petugas VALUES("'.$e_id_petugas.'", "'.$e_username_petugas.'", "'.$e_nama_petugas.'", "'.$e_posisi_petugas.'", "'.$e_foto.'")';
 	$p_edit	= mysqli_query(koneksi_global(),$q_edit) or die(mysqli_error());
 	if ($p_edit){
-		if(strlen($e_username_petugas) == 0 && strlen($e_password_petugas) == 0){
-		
-		}else if($e_posisi_petugas == "Administrator Web"){
 			$nomorlogin = intval(dapatkantotal('login'))+1;
-			$q_edit_password 	= 'INSERT INTO login VALUES("'.$nomorlogin.'","'.$e_username_petugas.'","'.md5($e_password_petugas).'")';
+			$q_edit_password 	= 'INSERT INTO login VALUES("'.$nomorlogin.'","'.$e_username_petugas.'","'.password_hash($e_password_petugas, PASSWORD_DEFAULT).'")';
 			$p_edit_password	= mysqli_query(koneksi_global(),$q_edit_password) or die(mysqli_error());
-		}
-		echo '<script>
+		echo "<script>
 				$(document).ready(function(){
-					$("#statusOK").show();
+					Swal.fire({
+						title: 'Sukses!',
+						text: 'Sukses Menambah Data!,Harap Menungu Halaman Akan Di Refresh!',
+						type: 'success',
+						showCancelButton: false,
+						showConfirmButton: false,
+					})
 				});
-				setTimeout(function(){window.location="'.base_url().'admin/petugas/";}, 1000);
-			 </script>';
-			}
+				setTimeout(function(){window.location='".base_url()."/admin/petugas/';}, 1000);
+			</script>";
+			}else{
+				echo "
+				<script>
+				$(document).ready(function () {
+						Swal.fire({
+							title: 'Kesalahan!',
+							text: 'Kesalahan Dalam Menambah Data!',
+							type: 'warning',
+							showCancelButton: false,
+							showConfirmButton: true,
+						})
+					});
+				</script>";
+				}
 		}
+		
 
 }
 }

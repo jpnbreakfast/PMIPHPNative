@@ -116,7 +116,7 @@ Transaksi
 
 	  <div class="active tab-pane" id="semua">
 		<div class="box-body table-responsive">
-	<table id="datatble" class="table table-bordered table-striped">
+	<table id="datatble" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
 		<thead>
 		<tr>
 		  <th>No.</th>
@@ -128,7 +128,7 @@ Transaksi
 		  <th>ID Jadwal</th>
 		  <th>Tanggal</th>
 		  <th>Pengambilan</th>
-		  <th>Opsi</th>
+		  <th data-priority="1">Opsi</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -136,15 +136,15 @@ Transaksi
 		$penomoran = 0;
 		$query = dapatkandata('transaksi');
 		if(mysqli_num_rows($query) != 0){
-		while($n = mysqli_fetch_array($query)){
-			$id_transaksi = $n['id_transaksi'];
-			$id_pendonor = $n['id_pendonor'];
-			$nama_pendonor = $n['nama_pendonor'];
-			$nomor_kantong_darah = $n['nomor_kantong_darah'];
-			$golongan_darah = $n['golongan_darah'];
-			$id_jadwal = $n['id_jadwal'];
-			$tanggal = $n['tanggal'];
-			$pengambilan = $n['pengambilan'];
+		while($r = mysqli_fetch_array($query)){
+			$id_transaksi			= htmlspecialchars($r['id_transaksi'], ENT_QUOTES, 'UTF-8');
+			$id_pendonor			= htmlspecialchars($r['id_pendonor'], ENT_QUOTES, 'UTF-8');
+			$nama_pendonor			= htmlspecialchars($r['nama_pendonor'], ENT_QUOTES, 'UTF-8');
+			$nomor_kantong_darah 	= htmlspecialchars($r['nomor_kantong_darah'], ENT_QUOTES, 'UTF-8');
+			$golongan_darah 		= htmlspecialchars($r['golongan_darah'], ENT_QUOTES, 'UTF-8');
+			$id_jadwal 				= htmlspecialchars($r['id_jadwal'], ENT_QUOTES, 'UTF-8');
+			$tanggal				= htmlspecialchars($r['tanggal'], ENT_QUOTES, 'UTF-8');
+			$pengambilan			= htmlspecialchars($r['pengambilan'], ENT_QUOTES, 'UTF-8');
 			
 			$penomoran++;
 			?>

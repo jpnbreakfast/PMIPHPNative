@@ -1,11 +1,26 @@
-<?php include('fungsi.php'); ?>
-<?php include('head.php'); ?>
-<div class="banner">
-<h1 class="deskrippmi" style="width: 262px;">Stok Darah</h1>
-</div>
+<?php include('header.php'); ?>
+ <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1>Stok Darah</h1>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .page-header -->
 
-<div class="container table-stok">
-			<h1 class="judul">Informasi Unit Darah Kota Denpasar</h1>
+    <div class="contact-page-wrap" style="
+    padding-top: 50px;
+">
+        <div class="container">
+        <div class="row">
+                <div class="col-12">
+                    
+                </div><!-- .col -->
+            </div><!-- .row -->
+
+            <div class="row">
+                <div class="col-12">
 			<p class="des">Berikut adalah Tabel Unit Darah yang tersedia pada PMI Denpasar</p>
               <table class="table table-bordered table-striped table2">
                 <tr>
@@ -28,5 +43,9 @@
 				}
 				?>
               </table>
-		  </div>
-<?php include('footer.php'); ?>
+                </div><!-- .col -->
+                </div>
+           
+        </div><!-- .container -->
+    </div>
+<?php include('footer.html'); ?>

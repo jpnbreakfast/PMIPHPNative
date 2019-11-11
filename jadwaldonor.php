@@ -1,154 +1,123 @@
 <?php include('fungsi.php'); ?>
-<?php include('head.php'); ?>
-<div class="modal fade" id="modalInfo">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Kesalahan!</h4>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#000000">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>PMI Denpasar</title>
+
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="dist/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/app.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+    <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css">
+    <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css">
+    <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css">
+    <link rel="stylesheet" href="dist/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.css">
+    <link rel="stylesheet" href="dist/css/style.css">
+  </head>
+
+  <body>
+  <header class="site-header">
+        <div class="nav-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="site-branding d-flex align-items-center">
+							<a class="navbar-brand" href="#" style="display: flex;"><img src="img/logo.png" height="32px" width="32px" style="margin-right: 5px;"> PMI DENPASAR</a>
+                        </div><!-- .site-branding -->
+
+                        <nav class="site-navigation d-flex justify-content-end align-items-center">
+                            <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                <li><a href="<?php echo $url; ?>">Beranda</a></li>
+                                <li><a href="#">Tentang Kami</a></li>
+                                <li><a href="jadwaldonor">Jadwal Donor</a></li>
+                                <li><a href="stokdarah">Stok Darah</a></li>
+                                <li><a href="kontak">Kontak</a></li>
+                                <li class="tampilkanmenu" id="sidebar-toggle-btn"><a href="#">Tampilkan Lokasi</a></li>
+                            </ul>
+                        </nav><!-- .site-navigation -->
+
+                        <div class="hamburger-menu d-lg-none">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div><!-- .hamburger-menu -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .nav-bar -->
+    </header><!-- .site-header -->
+
+    <div id="container">
+      <div id="sidebar">
+        <div class="sidebar-wrapper">
+          <div class="panel panel-default" id="features">
+          <div class="panel-heading">
+              <h3 class="panel-title">Lokasi
+              <i class="fa fa-close fa-xs pull-right" style="color: #e81123;" id="sidebar-hide-btn"></i></h3>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="">
+                <div class="search-widget">
+                            <form class="flex flex-wrap align-items-center">
+                                <input type="search" class="search" placeholder="Cari...">
+                                <button type="button" class="flex justify-content-center align-items-center sort" data-sort="feature-name" id="sort-btn">GO</button>
+                            </form><!-- .flex -->
+                        </div>
+                </div>
+              </div>
+            </div>
+            <div class="sidebar-table">
+              <table class="table table-hover" id="feature-list">
+                <tbody class="list"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-        <p id="infoSalah"></p>
+      <div id="map"></div>
+    </div>
+    <div id="loading">
+      <div class="loading-indicator">
+        <div class="progress progress-striped active">
+          <div class="progress-bar progress-bar-info progress-bar-full"></div>
+        </div>
       </div>
-	  <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">OK</button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="banner">
-<h1 class="deskrippmi" style="width: 324px;">Jadwal Donor</h1>
-</div>
+	</div>
 
-<div class="container table-stok">
-<h1 class="judul">Informasi Jadwal Donor</h1>
-<p class="des">Berikut adalah Jadwal Pelaksanaan Donor</p>
-<script>
-function googlemaps(){
-	var marker;
-function initialize() {
-	var mapCanvas = document.getElementById('map-canvas');
-	var mapOptions = {
-mapTypeId: google.maps.MapTypeId.ROADMAP
-	}     
-	var map = new google.maps.Map(mapCanvas, mapOptions);
-	var infoWindow = new google.maps.InfoWindow;      
-	var bounds = new google.maps.LatLngBounds();
-
-
-	function bindInfoWindow(marker, map, infoWindow, html) {
-		google.maps.event.addListener(marker, 'click', function() {
-			infoWindow.setContent(html);
-			infoWindow.open(map, marker);
-		});
-	}
-
-	function addMarker(lat, lng, info) {
-		var pt = new google.maps.LatLng(lat, lng);
-		bounds.extend(pt);
-		var marker = new google.maps.Marker({
-map: map,
-position: pt
-		});       
-		map.fitBounds(bounds);
-		bindInfoWindow(marker, map, infoWindow, info);
-	}
-
-	<?php
-	if(isset($_POST['tempat'])){
-		$query = dapatkanlokasi($_POST['tempat']);
-	}else{
-		$query = dapatkandatadashboard('jadwaldanlokasi','id_jadwallokasi');	
-	}
-	while ($data = mysqli_fetch_array($query)) {
-		$lat = $data['lat_jadwal'];
-		$lon = $data['lng_jadwal'];
-		$nama = $data['instasi_jadwal'];
-		$alamat = $data['alamat_jadwal'];
-		$hari_jadwal = $data['hari_jadwal'];
-		$tanggal_jadwal = $data['tanggal_jadwal'];
-		$link_jadwal = $data['link_jadwal'];
-		
-		echo ("addMarker($lat, $lon, '<b>$nama</b><p>Alamat : $alamat<br/>Pelaksanaan : $hari_jadwal, ".date('j-F-Y',strtotime($tanggal_jadwal))."</p><a href=".$link_jadwal.">Lihat Di Google Maps</a>');\n");                        
-	}
-	?>
-}
-google.maps.event.addDomListener(window, 'load', initialize);
-}
-googlemaps();
-</script>
-<div id="map-canvas"></div>
-
-<div class="table-responsive">    
-<form action="jadwaldonor" id="formcari" method="POST">                 
-    <div class="form-group form-inline pull-right" style="width: 410px;">                            
-        <label for="exampleInputEmail1">Cari Lokasi :</label>
-		<div class="input-group">
-		<input type="text" style="width: 263px;" class="form-control" placeholder="Cari Lokasi..." id="tempat"  name="tempat">
-		<span class="input-group-btn">
-        <input class="btn btn-default" type="submit" value="Cari"/>
-      </span>
-    </div>
-    </div>
-<form>
-<div id="form-sebelum">
-<table class="table table-bordered table-striped">
-<tr>
-<th style="width: 10px">#</th>
-<th>Instasi</th>
-<th>Target</th>
-<th>Tanggal</th>
-<th>Waktu</th>
-<th>Alamat</th>
-<th>Link</th>
-</tr>
-<?php
-$penomoran = 0;
-if(isset($_POST['tempat'])){
-$query = dapatkanlokasi($_POST['tempat']);
-}else{
-$query = dapatkandatadashboard('jadwaldanlokasi','id_jadwallokasi');	
-}
-if(mysqli_num_rows($query) != 0){
-	while($n = mysqli_fetch_array($query,MYSQLI_ASSOC)){
-		$instasi_jadwal = $n['instasi_jadwal'];
-		$target_jumlah_jadwal = $n['target_jumlah_jadwal'];
-		$tanggal_jadwal = $n['tanggal_jadwal'];
-		$alamat_jadwal = $n['alamat_jadwal'];
-		$kecamatan_jadwal = $n['kecamatan_jadwal'];
-		$jam_jadwal = $n['jam_jadwal'];
-		$penomoran++;
-		?>
-		<tr>
-		<td><?php echo $penomoran.'.'?></td>
-		<td><?php echo $instasi_jadwal?></td>
-		<td><?php echo $target_jumlah_jadwal?></td>
-		<td><?php echo date('j-F-Y',strtotime($tanggal_jadwal))?></td>
-		<td><?php echo $jam_jadwal?></td>
-		<td><?php echo $alamat_jadwal.', '.$kecamatan_jadwal?></td>
-		<td><a  target="_blank" href="<?php echo $link_jadwal;?>"><button data-toggle="tooltip" title="<?php echo $link_jadwal;?>" type="button" class="btn btn-xs btn-info btn-flat"><i class="fa fa-eye"></i> Lihat</button></a></td>
-		</tr>
-		<?php
-	}
-}else{
-	echo'<tr>
-	<td colspan="12" align="center">Tidak Ada Jadwal</td>
-	</tr>';
-}
-?>
-</table>
-</div>
-
-</div>
-</div>
-<script type="text/javascript">
-$('#formcari').submit(function(){
-		var data = $("#tempat").val()
-		if(data.length == 0){
-			$("#infoSalah").html("Anda Belum Memasukan Lokasi!.");
-			$("#modalInfo").modal();
-			return false;
-		}
-})
-</script>
-<?php include('footer.php'); ?>
+    <div class="modal fade" id="featureModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title text-primary" id="feature-title"></h4>
+          </div>
+          <div class="modal-body" id="feature-info"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script src="dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/typeahead.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js"></script>
+    <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js"></script>
+    <script src="dist/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.js"></script>
+    <script src="dist/js/app.js"></script>
+    <script src="dist/js/custom.js"></script>
+  </body>
+</html>

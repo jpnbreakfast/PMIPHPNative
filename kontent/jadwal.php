@@ -51,7 +51,7 @@ Jadwal
 	</div>
 	</div>
 	<div class="box-body table-responsive">
-	  <table id="datatble" class="table table-bordered table-striped">
+	  <table id="datatble" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
 		<thead>
 		<tr>
 		  <th>No.</th>
@@ -63,7 +63,7 @@ Jadwal
 		  <th>Alamat</th>
 		  <th>Kecamatan</th>
 		  <th>Link Alamat</th>
-		  <th>Opsi</th>
+		  <th data-priority="1">Opsi</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -72,17 +72,17 @@ Jadwal
 		$query = dapatkandata('jadwal');
 		if(mysqli_num_rows($query) != 0){
 		while($n = mysqli_fetch_array($query)){
-			$id_jadwal = $n['id_jadwal'];
-			$instasi_jadwal = $n['instasi_jadwal'];
-			$target_jadwal = $n['target_jumlah_jadwal'];
-			$tanggal_jadwal = $n['tanggal_jadwal'];
-			$jam_jadwal = $n['jam_jadwal'];
-			$hari_jadwal = $n['hari_jadwal'];
-			$alamat_jadwal = $n['alamat_jadwal'];
-			$kecamatan_jadwal = $n['kecamatan_jadwal'];
-			$lat_jadwal = $n['lat_jadwal'];
-			$lng_jadwal = $n['lng_jadwal'];
-			$link_jadwal = $n['link_jadwal'];
+			$id_jadwal 			= htmlspecialchars($n['id_jadwal'], ENT_QUOTES, 'UTF-8');
+			$instasi_jadwal 	= htmlspecialchars($n['instasi_jadwal'], ENT_QUOTES, 'UTF-8');
+			$target_jadwal 		= htmlspecialchars($n['target_jumlah_jadwal'], ENT_QUOTES, 'UTF-8');
+			$tanggal_jadwal 	= htmlspecialchars($n['tanggal_jadwal'], ENT_QUOTES, 'UTF-8');
+			$jam_jadwal 		= htmlspecialchars($n['jam_jadwal'], ENT_QUOTES, 'UTF-8');
+			$hari_jadwal 		= htmlspecialchars($n['hari_jadwal'], ENT_QUOTES, 'UTF-8');
+			$alamat_jadwal 		= htmlspecialchars($n['alamat_jadwal'], ENT_QUOTES, 'UTF-8');
+			$kecamatan_jadwal 	= htmlspecialchars($n['kecamatan_jadwal'], ENT_QUOTES, 'UTF-8');
+			$lat_jadwal 		= htmlspecialchars($n['lat_jadwal'], ENT_QUOTES, 'UTF-8');
+			$lng_jadwal 		= htmlspecialchars($n['lng_jadwal'], ENT_QUOTES, 'UTF-8');
+			$link_jadwal 		= htmlspecialchars($n['link_jadwal'], ENT_QUOTES, 'UTF-8');
 			$penomoran++;
 			?>
 			<tr>

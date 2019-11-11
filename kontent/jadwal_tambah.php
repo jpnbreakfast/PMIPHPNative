@@ -58,7 +58,7 @@ if (mysqli_num_rows($q_kode)!=0)
   </div>
 </div>
 <div class="modal fade" id="mapModal">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -85,10 +85,6 @@ Tambah
 </ol>
 </section>
 <section class="content">
-<div id="statusOK" class="callout callout-info">
-	<h4>Berhasil!</h4>
-	Tunggu Sebentar Akan Dikembalikan Ke Dashboard....
-</div>
 <div class="box">
 	<div class="box-header">
 	<h3 class="box-title">Tambah Jadwal</h3>
@@ -130,6 +126,7 @@ Tambah
 			<label for="hari_jadwal" class="control-label">Hari Jadwal</label>
 			<div>
 			  <select class="form-control" id="hari_jadwal" name="hari_jadwal" required>
+			  	<option>Pilih Hari</option>
             	<option value="Senin">Senin</option>
                 <option value="Selasa">Selasa</option>
                 <option value="Rabu">Rabu</option>
@@ -137,17 +134,6 @@ Tambah
                 <option value="Jumat">Jumat</option>
                 <option value="Sabtu">Sabtu</option>
                 <option value="Minggu">Minggu</option>
-            </select>
-			</div>
-		  </div>
-		  <div class="form-group">
-			<label for="kecamatan_jadwal" class="control-label">Kecamatan</label>
-			<div>
-			  <select class="form-control" id="kecamatan_jadwal" name="kecamatan_jadwal" required>
-            	<option value="Denpasar Timur">Denpasar Timur</option>
-				<option value="Denpasar Selatan">Denpasar Selatan</option>
-				<option value="Denpasar Barat">Denpasar Barat</option>
-				<option value="Denpasar Utara">Denpasar Utara</option>
             </select>
 			</div>
 		  </div>
@@ -160,20 +146,32 @@ Tambah
                </span>
 			</div>
 		  </div>
+		  <div class="form-group">
+			<label for="kecamatan_jadwal" class="control-label">Kecamatan</label>
+			<div>
+			  <select class="form-control" id="kecamatan_jadwal" name="kecamatan_jadwal" required>
+			  	<option>Pilih Kecamatan</option>
+            	<option value="Denpasar Timur">Denpasar Timur</option>
+				<option value="Denpasar Selatan">Denpasar Selatan</option>
+				<option value="Denpasar Barat">Denpasar Barat</option>
+				<option value="Denpasar Utara">Denpasar Utara</option>
+            </select>
+			</div>
+		  </div>
 		   <div class="form-group">
-			<label for="lat_peta_jadwal" class="control-label">Lattidue Google Map</label>
+			<label for="lat_peta_jadwal" class="control-label">Lattidue Lokasi</label>
 			<div>
 			  <input type="text" class="form-control" id="lat_peta_jadwal" maxlength="10" name="lat_peta_jadwal" onchange="cekKebenaran('tambah',10,'#lat_peta_jadwal','Pastikan Panjang Lattidue Google Map 10 Baris Angka.!')" required>
 			</div>
 		  </div>
 		   <div class="form-group">
-			<label for="lng_peta_jadwal" class="control-label">Longtidue Google Map</label>
+			<label for="lng_peta_jadwal" class="control-label">Longtidue Lokasi</label>
 			<div>
 			  <input type="text" class="form-control" id="lng_peta_jadwal" maxlength="10" name="lng_peta_jadwal" onchange="cekKebenaran(10,'#lng_peta_jadwal','Pastikan Panjang Longtidue Google Map 10 Baris Angka.!')" required>
 			</div>
 		  </div>
 		   <div class="form-group">
-			<label for="link_peta_jadwal" class="control-label">Link Google Map</label>
+			<label for="link_peta_jadwal" class="control-label">Link Lokasi</label>
 			<div>
 			  <input type="text" class="form-control" id="link_peta_jadwal" name="link_peta_jadwal" onchange="cekKebenaran(1,'#link_peta_jadwal','Pastikan Link Terisi.!')" required>
 			</div>
@@ -191,26 +189,45 @@ Tambah
 
 <?php
 if (isset($_POST['submit'])){  
-	$t_id_jadwal		= $_POST['id_jadwal'];
-	$t_instasi			= $_POST['instasi'];
-	$t_target			= $_POST['target'];
-	$t_tanggal_jadwal 	= $_POST['tanggal_jadwal'];
-	$t_jam_jadwal  		= $_POST['jam_jadwal'];
-	$t_hari_jadwal  	= $_POST['hari_jadwal'];
-	$t_kecamatan 		= $_POST['kecamatan_jadwal'];
-	$t_lokasi_jadwal 	= $_POST['lokasi_jadwal'];
-	$t_lat_peta_jadwal 	= $_POST['lat_peta_jadwal'];
-	$t_lng_peta_jadwal 	= $_POST['lng_peta_jadwal'];
-	$t_link_peta_jadwal = $_POST['link_peta_jadwal'];
+	$t_id_jadwal		= htmlspecialchars($_POST['id_jadwal'], ENT_QUOTES, 'UTF-8');
+	$t_instasi			= htmlspecialchars($_POST['instasi'], ENT_QUOTES, 'UTF-8');
+	$t_target			= htmlspecialchars($_POST['target'], ENT_QUOTES, 'UTF-8');
+	$t_tanggal_jadwal 	= htmlspecialchars($_POST['tanggal_jadwal'], ENT_QUOTES, 'UTF-8');
+	$t_jam_jadwal  		= htmlspecialchars($_POST['jam_jadwal'], ENT_QUOTES, 'UTF-8');
+	$t_hari_jadwal  	= htmlspecialchars($_POST['hari_jadwal'], ENT_QUOTES, 'UTF-8');
+	$t_kecamatan 		= htmlspecialchars($_POST['kecamatan_jadwal'], ENT_QUOTES, 'UTF-8');
+	$t_lokasi_jadwal 	= htmlspecialchars($_POST['lokasi_jadwal'], ENT_QUOTES, 'UTF-8');
+	$t_lat_peta_jadwal 	= htmlspecialchars($_POST['lat_peta_jadwal'], ENT_QUOTES, 'UTF-8');
+	$t_lng_peta_jadwal 	= htmlspecialchars($_POST['lng_peta_jadwal'], ENT_QUOTES, 'UTF-8');
+	$t_link_peta_jadwal = htmlspecialchars($_POST['link_peta_jadwal'], ENT_QUOTES, 'UTF-8');
 	$q_tambah	= 'INSERT INTO jadwal VALUES("'.$t_id_jadwal.'","'.$t_instasi.'","'.$t_target.'","'.$t_tanggal_jadwal.'","'.$t_hari_jadwal.'","'.$t_jam_jadwal.'","'.$t_lokasi_jadwal.'","'.$t_kecamatan.'","'.$t_lat_peta_jadwal.'","'.$t_lng_peta_jadwal.'","'.$t_link_peta_jadwal.'")';
 	$q_tambah	= mysqli_query(koneksi_global(),$q_tambah) or die(mysqli_error());
 	if ($q_tambah){
-		echo '<script>
+		echo "<script>
 				$(document).ready(function(){
-					$("#statusOK").show();
-					});
-					setTimeout(function(){window.location="'.base_url().'admin/jadwal/";}, 1000);
-			 </script>';
+					Swal.fire({
+						title: 'Sukses!',
+						text: 'Sukses Menambah Data!,Harap Menungu Halaman Akan Di Refresh!',
+						type: 'success',
+						showCancelButton: false,
+						showConfirmButton: false,
+					})
+				});
+				setTimeout(function(){window.location='".base_url()."/admin/jadwal/';}, 1000);
+			 </script>";
+	}else{
+		echo "
+		<script>
+		$(document).ready(function () {
+				Swal.fire({
+					title: 'Kesalahan!',
+					text: 'Kesalahan Dalam Menambah Data!',
+					type: 'warning',
+					showCancelButton: false,
+					showConfirmButton: true,
+				})
+			});
+		</script>";
 	}
 }
 ?>

@@ -69,10 +69,6 @@ Tambah
 </ol>
 </section>
 <section class="content">
-<div id="statusOK" class="callout callout-info">
-	<h4>Berhasil!</h4>
-	Tunggu Sebentar Akan Dikembalikan Ke Dashboard....
-</div>
 <div class="box">
 	<div class="box-header">
 	<h3 class="box-title">Tambah Unit Darah</h3>
@@ -97,8 +93,8 @@ Tambah
 					if ($n!=0)
 						{	
 							while ($r = mysqli_fetch_array($q)){
-							$pil_id_pendonor = $r['id_pendonor'];
-							$pil_nama_lengkap_pendonor = $r['nama_lengkap_pendonor'];
+								$pil_id_pendonor 			= htmlspecialchars($r['id_pendonor'], ENT_QUOTES, 'UTF-8');
+								$pil_nama_lengkap_pendonor 	= htmlspecialchars($r['nama_lengkap_pendonor'], ENT_QUOTES, 'UTF-8');
 							echo '<option  value="'.$pil_id_pendonor.'">['.$pil_id_pendonor.']&nbsp;'.$pil_nama_lengkap_pendonor.'</option>';
 							}
 						}
@@ -110,6 +106,7 @@ Tambah
 			<label for="rhesus" class="control-label">Rhesus</label>
 			<div>
 			   <select class="form-control" id="rhesus" name="rhesus" required>
+			   		<option>Pilih Rhesus Darah</option>
 					<option value="+">+</option>
 					<option value="-">-</option>
             </select>
@@ -128,9 +125,9 @@ Tambah
 
 <?php
 if (isset($_POST['submit'])){  
-	$t_nomor_kantong_darah		= $_POST['nomor_kantong_darah'];
-	$t_id_pendonor				= $_POST['id_pendonor'];
-	$t_rhesus					= $_POST['rhesus'];
+	$t_nomor_kantong_darah		= htmlspecialchars($_POST['nomor_kantong_darah'], ENT_QUOTES, 'UTF-8');
+	$t_id_pendonor				= htmlspecialchars($_POST['id_pendonor'], ENT_QUOTES, 'UTF-8');
+	$t_rhesus					= htmlspecialchars($_POST['rhesus'], ENT_QUOTES, 'UTF-8');
 
 	$query = dapatkandatapilihan('pendonor','id_pendonor',$t_id_pendonor);
 	if(mysqli_num_rows($query) != 0){
@@ -140,13 +137,32 @@ if (isset($_POST['submit'])){
 	$q_tambah	= 'INSERT INTO unit_darah VALUES("'.$t_nomor_kantong_darah.'","'.$t_id_pendonor.'","'.$t_rhesus.'","'.$t_golongandarah.'")';
 	$q_tambah	= mysqli_query(koneksi_global(),$q_tambah) or die(mysql_error());
 	if ($q_tambah){
-		echo '<script>
-				$(document).ready(function(){
-					$("#statusOK").show();
-					});
-					setTimeout(function(){window.location="/PMIAdminPHP/admin/unitdarah/";}, 1000);
-			 </script>';
-			}
+		echo "<script>
+		$(document).ready(function(){
+			Swal.fire({
+				title: 'Sukses!',
+				text: 'Sukses Menambah Data!,Harap Menungu Halaman Akan Di Refresh!',
+				type: 'success',
+				showCancelButton: false,
+				showConfirmButton: false,
+			})
+		});
+		setTimeout(function(){window.location='".base_url()."/admin/unitdarah/';}, 1000);
+	 </script>";
+}else{
+echo "
+<script>
+$(document).ready(function () {
+		Swal.fire({
+			title: 'Kesalahan!',
+			text: 'Kesalahan Dalam Menambah Data!',
+			type: 'warning',
+			showCancelButton: false,
+			showConfirmButton: true,
+		})
+	});
+</script>";
+}
 		}
 	}
 }

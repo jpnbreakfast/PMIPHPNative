@@ -3,14 +3,14 @@ if(isset($_GET['id'])){
 	$query = dapatkandatapilihan($_GET['halaman'],'id_jadwallokasi',$_GET['id']);
 	if(mysqli_num_rows($query) != 0){
 		$r = mysqli_fetch_array($query);
-		$id_jadwallokasi			= $r['id_jadwallokasi'];
-		$id_jadwal					= $r['id_jadwal'];
-		$doketer_jadwallokasi		= $r['doketer_jadwallokasi'];
-		$tensi_jadwallokasi 		= $r['tensi_jadwallokasi'];
-		$hb_jadwallokasi 			= $r['hb_jadwallokasi'];
-		$aftaper_jadwallokasi 		= $r['aftaper_jadwallokasi'];
-		$admin_jadwallokasi			= $r['admin_jadwallokasi'];
-		$supir_jadwallokasi			= $r['supir_jadwallokasi'];
+		$id_jadwallokasi			= htmlspecialchars($r['id_jadwallokasi'], ENT_QUOTES, 'UTF-8');
+		$id_jadwal					= htmlspecialchars($r['id_jadwal'], ENT_QUOTES, 'UTF-8');
+		$doketer_jadwallokasi		= htmlspecialchars($r['doketer_jadwallokasi'], ENT_QUOTES, 'UTF-8');
+		$tensi_jadwallokasi 		= htmlspecialchars($r['tensi_jadwallokasi'], ENT_QUOTES, 'UTF-8');
+		$hb_jadwallokasi 			= htmlspecialchars($r['hb_jadwallokasi'], ENT_QUOTES, 'UTF-8');
+		$aftaper_jadwallokasi 		= htmlspecialchars($r['aftaper_jadwallokasi'], ENT_QUOTES, 'UTF-8');
+		$admin_jadwallokasi			= htmlspecialchars($r['admin_jadwallokasi'], ENT_QUOTES, 'UTF-8');
+		$supir_jadwallokasi			= htmlspecialchars($r['supir_jadwallokasi'], ENT_QUOTES, 'UTF-8');
 	}else{
 		$id_jadwallokasi			= '';
 		$id_jadwal					= '';
@@ -20,15 +20,22 @@ if(isset($_GET['id'])){
 		$aftaper_jadwallokasi 		= '';
 		$admin_jadwallokasi			= '';
 		$supir_jadwallokasi			= '';
-		echo'
+		echo"
 		<script>
 			$(document).ready(function () {
-				$("#infoSalah").html("Data Yang Dipilih Salah!");
-				$("#modalInfo").modal();
-				$("#buttonKembali").show();
-				$("#buttonOK").hide();
+				Swal.fire({
+					title: 'Kesalahan!',
+					text: 'Data Yang Dipilih Salah!',
+					type: 'warning',
+					showCancelButton: false,
+					showConfirmButton: true,
+				}).then((result) => {
+					if (result.value) {
+						window.location='".base_url()."/admin/jadwallokasi/';
+					} 
+				  })
 			});
-		</script>';
+		</script>";
 	}
 }
 ?>
@@ -77,10 +84,6 @@ Tambah
 </ol>
 </section>
 <section class="content">
-<div id="statusOK" class="callout callout-info">
-	<h4>Berhasil!</h4>
-	Tunggu Sebentar Akan Dikembalikan Ke Dashboard....
-</div>
 <div class="box">
 	<div class="box-header">
 	<h3 class="box-title">Tambah Jadwal Dan Lokasi</h3>
@@ -275,24 +278,43 @@ pilihjadwal();
 </script>
 <?php
 if (isset($_POST['submit'])){  
-	$e_id_jadwallokasi				= $_POST['id_lokasi'];
-	$e_id_jadwal					= $_POST['jadwal'];
-	$e_doketer_jadwallokasi			= $_POST['dokter'];
-	$e_tensi_jadwallokasi			= $_POST['tensi'];
-	$e_hb_jadwallokasi				= $_POST['hb'];
-	$e_aftaper_jadwallokasi			= $_POST['aftaper'];
-	$e_admin_jadwallokasi			= $_POST['admin'];
-	$e_supir_jadwallokasi			= $_POST['supir'];
+	$e_id_jadwallokasi				= htmlspecialchars($_POST['id_lokasi'], ENT_QUOTES, 'UTF-8');
+	$e_id_jadwal					= htmlspecialchars($_POST['jadwal'], ENT_QUOTES, 'UTF-8');
+	$e_doketer_jadwallokasi			= htmlspecialchars($_POST['dokter'], ENT_QUOTES, 'UTF-8');
+	$e_tensi_jadwallokasi			= htmlspecialchars($_POST['tensi'], ENT_QUOTES, 'UTF-8');
+	$e_hb_jadwallokasi				= htmlspecialchars($_POST['hb'], ENT_QUOTES, 'UTF-8');
+	$e_aftaper_jadwallokasi			= htmlspecialchars($_POST['aftaper'], ENT_QUOTES, 'UTF-8');
+	$e_admin_jadwallokasi			= htmlspecialchars($_POST['admin'], ENT_QUOTES, 'UTF-8');
+	$e_supir_jadwallokasi			= htmlspecialchars($_POST['supir'], ENT_QUOTES, 'UTF-8');
 
 	$q_edit	= 'UPDATE jadwallokasi SET id_jadwal="'.$e_id_jadwal.'",doketer_jadwallokasi="'.$e_doketer_jadwallokasi.'",tensi_jadwallokasi="'.$e_tensi_jadwallokasi.'",hb_jadwallokasi="'.$e_hb_jadwallokasi.'",aftaper_jadwallokasi="'.$e_aftaper_jadwallokasi.'",admin_jadwallokasi="'.$e_admin_jadwallokasi.'",supir_jadwallokasi="'.$e_supir_jadwallokasi.'" WHERE id_jadwallokasi="'.$e_id_jadwallokasi.'"';
 	$p_edit	= mysqli_query(koneksi_global(),$q_edit) or die(mysqli_error());
 	if ($q_edit){
-		echo '<script>
+		echo "<script>
 				$(document).ready(function(){
-					$("#statusOK").show();
-					});
-					setTimeout(function(){window.location="'.base_url().'admin/jadwallokasi/";}, 1000);
-			 </script>';
-			}
+					Swal.fire({
+						title: 'Sukses!',
+						text: 'Sukses Mengubah Data!,Harap Menungu Halaman Akan Di Refresh!',
+						type: 'success',
+						showCancelButton: false,
+						showConfirmButton: false,
+					})
+				});
+				setTimeout(function(){window.location='".base_url()."/admin/jadwallokasi/';}, 1000);
+			 </script>";
+	}else{
+		echo "
+		<script>
+		$(document).ready(function () {
+				Swal.fire({
+					title: 'Kesalahan!',
+					text: 'Kesalahan Dalam Mengubah Data!',
+					type: 'warning',
+					showCancelButton: false,
+					showConfirmButton: true,
+				})
+			});
+		</script>";
+	}
 		}
 ?>

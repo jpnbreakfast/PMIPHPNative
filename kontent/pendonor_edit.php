@@ -3,15 +3,15 @@ if(isset($_GET['id'])){
 	$query = dapatkandatapilihan($_GET['halaman'],'id_pendonor',$_GET['id']);
 	if(mysqli_num_rows($query) != 0){
 		$r = mysqli_fetch_array($query);
-		$id_pendonor = $r['id_pendonor'];
-		$rama_lengkap_pendonor = $r['nama_lengkap_pendonor'];
-		$jenis_kelamin_pendonor = $r['jenis_kelamin_pendonor'];
-		$tanggal_lahir_pendonor = $r['tanggal_lahir_pendonor'];
-		$tempat_lahir_pendonor = $r['tempat_lahir_pendonor'];
-		$alamat_pendonor = $r['alamat_pendonor'];
-		$pekerjaan_pendonor = $r['pekerjaan_pendonor'];
-		$golongan_darah_pendonor = $r['golongan_darah_pendonor'];
-		$ro_telp_pendonor = $r['no_telp_pendonor'];
+		$id_pendonor 				= htmlspecialchars($r['id_pendonor'], ENT_QUOTES, 'UTF-8');
+		$rama_lengkap_pendonor 		= htmlspecialchars($r['nama_lengkap_pendonor'], ENT_QUOTES, 'UTF-8');
+		$jenis_kelamin_pendonor 	= htmlspecialchars($r['jenis_kelamin_pendonor'], ENT_QUOTES, 'UTF-8');
+		$tanggal_lahir_pendonor 	= htmlspecialchars($r['tanggal_lahir_pendonor'], ENT_QUOTES, 'UTF-8');
+		$tempat_lahir_pendonor 		= htmlspecialchars($r['tempat_lahir_pendonor'], ENT_QUOTES, 'UTF-8');
+		$alamat_pendonor 			= htmlspecialchars($r['alamat_pendonor'], ENT_QUOTES, 'UTF-8');
+		$pekerjaan_pendonor 		= htmlspecialchars($r['pekerjaan_pendonor'], ENT_QUOTES, 'UTF-8');
+		$golongan_darah_pendonor 	= htmlspecialchars($r['golongan_darah_pendonor'], ENT_QUOTES, 'UTF-8');
+		$ro_telp_pendonor 			= htmlspecialchars($r['no_telp_pendonor'], ENT_QUOTES, 'UTF-8');
 		$options  = array('Laki-Laki','Perempuan');
 		$optionsdarah  = array('A','B','O','AB');
 	}else{
@@ -24,15 +24,22 @@ if(isset($_GET['id'])){
 		$pekerjaan_pendonor = '';
 		$golongan_darah_pendonor = '';
 		$ro_telp_pendonor = '';
-		echo'
+		echo"
 		<script>
 			$(document).ready(function () {
-				$("#infoSalah").html("Data Yang Dipilih Salah!");
-				$("#modalInfo").modal();
-				$("#buttonKembali").show();
-				$("#buttonOK").hide();
+				Swal.fire({
+					title: 'Kesalahan!',
+					text: 'Data Yang Dipilih Salah!',
+					type: 'warning',
+					showCancelButton: false,
+					showConfirmButton: true,
+				}).then((result) => {
+					if (result.value) {
+						window.location='".base_url()."/admin/pendonor/';
+					} 
+				  })
 			});
-		</script>';
+		</script>";
 	}
 }
 ?>
@@ -70,10 +77,6 @@ Ubah
 </ol>
 </section>
 <section class="content">
-<div id="statusOK" class="callout callout-info">
-	<h4>Berhasil!</h4>
-	Tunggu Sebentar Akan Dikembalikan Ke Dashboard....
-</div>
 <div class="box">
 	<div class="box-header">
 	<h3 class="box-title">Ubah Pendonor</h3>
@@ -167,24 +170,43 @@ Ubah
 
 <?php
 if (isset($_POST['submit'])){  
-	$e_id_pendonor				= $_POST['id_pendonor'];
-	$e_nama_lengkap_pendonor	= $_POST['nama_lengkap'];
-	$e_jenis_kelamin_pendonor  	= $_POST['jenis_kelamin'];
-	$e_tanggal_lahir_pendonor  	= $_POST['tanggal_lahir'];
-	$e_tempat_lahir_pendonor 	= $_POST['tempat_lahir'];
-	$e_alamat_pendonor 			= $_POST['alamat'];
-	$e_pekerjaan_pendonor 		= $_POST['pekerjaan'];
-	$e_golongan_darah_pendonor	= $_POST['golongan_darah'];
-	$e_no_telp_pendonor 		= $_POST['nomor_telepon'];
+	$e_id_pendonor				= htmlspecialchars($_POST['id_pendonor'], ENT_QUOTES, 'UTF-8');
+	$e_nama_lengkap_pendonor	= htmlspecialchars($_POST['nama_lengkap'], ENT_QUOTES, 'UTF-8');
+	$e_jenis_kelamin_pendonor  	= htmlspecialchars($_POST['jenis_kelamin'], ENT_QUOTES, 'UTF-8');
+	$e_tanggal_lahir_pendonor  	= htmlspecialchars($_POST['tanggal_lahir'], ENT_QUOTES, 'UTF-8');
+	$e_tempat_lahir_pendonor 	= htmlspecialchars($_POST['tempat_lahir'], ENT_QUOTES, 'UTF-8');
+	$e_alamat_pendonor 			= htmlspecialchars($_POST['alamat'], ENT_QUOTES, 'UTF-8');
+	$e_pekerjaan_pendonor 		= htmlspecialchars($_POST['pekerjaan'], ENT_QUOTES, 'UTF-8');
+	$e_golongan_darah_pendonor	= htmlspecialchars($_POST['golongan_darah'], ENT_QUOTES, 'UTF-8');
+	$e_no_telp_pendonor 		= htmlspecialchars($_POST['nomor_telepon'], ENT_QUOTES, 'UTF-8');
 	$q_edit	= 'UPDATE pendonor SET nama_lengkap_pendonor="'.$e_nama_lengkap_pendonor.'", jenis_kelamin_pendonor="'.$e_jenis_kelamin_pendonor.'", tanggal_lahir_pendonor="'.$e_tanggal_lahir_pendonor.'", tempat_lahir_pendonor="'.$e_tempat_lahir_pendonor.'", alamat_pendonor="'.$e_alamat_pendonor.'", pekerjaan_pendonor="'.$e_pekerjaan_pendonor.'", golongan_darah_pendonor="'.$e_golongan_darah_pendonor.'", no_telp_pendonor="'.$e_no_telp_pendonor.'" WHERE id_pendonor="'.$e_id_pendonor.'"';
 	$p_edit	= mysqli_query(koneksi_global(),$q_edit) or die(mysqli_error());
 	if ($p_edit){
-		echo '<script>
-				$(document).ready(function(){
-					$("#statusOK").show();
-				});
-				setTimeout(function(){window.location="'.base_url().'admin/pendonor/";}, 1000);
-			 </script>';
-	}
+		echo "<script>
+		$(document).ready(function(){
+			Swal.fire({
+				title: 'Sukses!',
+				text: 'Sukses Mengubah Data!,Harap Menungu Halaman Akan Di Refresh!',
+				type: 'success',
+				showCancelButton: false,
+				showConfirmButton: false,
+			})
+		});
+		setTimeout(function(){window.location='".base_url()."/admin/pendonor/';}, 1000);
+	 </script>";
+}else{
+echo "
+<script>
+$(document).ready(function () {
+		Swal.fire({
+			title: 'Kesalahan!',
+			text: 'Kesalahan Dalam Mengubah Data!',
+			type: 'warning',
+			showCancelButton: false,
+			showConfirmButton: true,
+		})
+	});
+</script>";
+}
 }
 ?>

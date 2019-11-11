@@ -69,10 +69,6 @@ Tambah
 </ol>
 </section>
 <section class="content">
-<div id="statusOK" class="callout callout-info">
-	<h4>Berhasil!</h4>
-	Tunggu Sebentar Akan Dikembalikan Ke Dashboard....
-</div>
 <div class="box">
 	<div class="box-header">
 	<h3 class="box-title">Tambah Jadwal Dan Lokasi</h3>
@@ -97,7 +93,7 @@ Tambah
 					if ($n!=0)
 						{	
 							while ($r = mysqli_fetch_array($q)){
-							echo '<option instasi="'.$r['instasi_jadwal'].'" tgl="'.$r['hari_jadwal'].', '.date('j-F-Y',strtotime($r['tanggal_jadwal'])).'"  value="'.$r['id_jadwal'].'">['.$r['id_jadwal'].'] '.$r['instasi_jadwal'].'</option>';
+								echo '<option instasi="'.$r['instasi_jadwal'].'" tgl="'.$r['hari_jadwal'].', '.date('j-F-Y',strtotime($r['tanggal_jadwal'])).'"  value="'.$r['id_jadwal'].'">['.$r['id_jadwal'].'] '.$r['instasi_jadwal'].'</option>';
 							}
 						}
 			?>
@@ -237,24 +233,43 @@ Tambah
 
 <?php
 if (isset($_POST['submit'])){  
-	$t_id_jadwallokasi				= $_POST['id_lokasi'];
-	$t_id_jadwal					= $_POST['jadwal'];
-	$t_doketer_jadwallokasi			= $_POST['dokter'];
-	$t_tensi_jadwallokasi			= $_POST['tensi'];
-	$t_hb_jadwallokasi				= $_POST['hb'];
-	$t_aftaper_jadwallokasi			= $_POST['aftaper'];
-	$t_admin_jadwallokasi			= $_POST['admin'];
-	$t_supir_jadwallokasi			= $_POST['supir'];
+	$t_id_jadwallokasi				= htmlspecialchars($_POST['id_lokasi'], ENT_QUOTES, 'UTF-8');
+	$t_id_jadwal					= htmlspecialchars($_POST['jadwal'], ENT_QUOTES, 'UTF-8');
+	$t_doketer_jadwallokasi			= htmlspecialchars($_POST['dokter'], ENT_QUOTES, 'UTF-8');
+	$t_tensi_jadwallokasi			= htmlspecialchars($_POST['tensi'], ENT_QUOTES, 'UTF-8');
+	$t_hb_jadwallokasi				= htmlspecialchars($_POST['hb'], ENT_QUOTES, 'UTF-8');
+	$t_aftaper_jadwallokasi			= htmlspecialchars($_POST['aftaper'], ENT_QUOTES, 'UTF-8');
+	$t_admin_jadwallokasi			= htmlspecialchars($_POST['admin'], ENT_QUOTES, 'UTF-8');
+	$t_supir_jadwallokasi			= htmlspecialchars($_POST['supir'], ENT_QUOTES, 'UTF-8');
 
 	$q_tambah	= 'INSERT INTO jadwallokasi VALUES("'.$t_id_jadwallokasi.'","'.$t_id_jadwal.'","'.$t_doketer_jadwallokasi.'","'.$t_tensi_jadwallokasi.'","'.$t_hb_jadwallokasi.'","'.$t_aftaper_jadwallokasi.'","'.$t_admin_jadwallokasi.'","'.$t_supir_jadwallokasi.'")';
 	$q_tambah	= mysqli_query(koneksi_global(),$q_tambah) or die(mysqli_error());
 	if ($q_tambah){
-		echo '<script>
+		echo "<script>
 				$(document).ready(function(){
-					$("#statusOK").show();
-					});
-					setTimeout(function(){window.location="'.base_url().'admin/jadwallokasi/";}, 1000);
-			 </script>';
-			}
+					Swal.fire({
+						title: 'Sukses!',
+						text: 'Sukses Menambah Data!,Harap Menungu Halaman Akan Di Refresh!',
+						type: 'success',
+						showCancelButton: false,
+						showConfirmButton: false,
+					})
+				});
+				setTimeout(function(){window.location='".base_url()."/admin/jadwallokasi/';}, 1000);
+			 </script>";
+	}else{
+		echo "
+		<script>
+		$(document).ready(function () {
+				Swal.fire({
+					title: 'Kesalahan!',
+					text: 'Kesalahan Dalam Menambah Data!',
+					type: 'warning',
+					showCancelButton: false,
+					showConfirmButton: true,
+				})
+			});
+		</script>";
+	}
 		}
 ?>

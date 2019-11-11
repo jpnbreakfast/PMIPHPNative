@@ -14,8 +14,8 @@ include('../fungsi.php');
 		$query = dapatkandatadistinct('id_pendonor','nama_lengkap_pendonor','daftarpendonorunitdarah');
 		if(mysqli_num_rows($query) != 0){
 		while($n = mysqli_fetch_array($query)){
-			$id_pendonor = $n['id_pendonor'];
-			$nama_pendonor = $n['nama_lengkap_pendonor'];
+			$id_pendonor 	= htmlspecialchars($n['id_pendonor'], ENT_QUOTES, 'UTF-8');
+			$nama_pendonor 	= htmlspecialchars($n['nama_lengkap_pendonor'], ENT_QUOTES, 'UTF-8');
 			?>
 			<tr>
 				  <td><a id="<?php echo $id_pendonor;?>" href="#" onclick="pilihanpendonorModals(this)" ><?php echo $id_pendonor;?></a></td>

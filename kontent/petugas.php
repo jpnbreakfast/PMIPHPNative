@@ -50,48 +50,24 @@ Petugas
 			</div>
 	</div>
 	</div>
-	<div class="box-body table-responsive">
-	  <table id="datatble" class="table table-bordered table-striped">
-		<thead>
-		<tr>
-		  <th>No.</th>
-		  <th>ID Petugas</th>
-		  <th>Nama</th>
-		  <th>Posisi</th>
-		  <th>Foto</th>
-		  <th>Opsi</th>
-		</tr>
-		</thead>
-		<tbody>
-		<?php
-		$penomoran = 0;
-		$query = dapatkandataterkecuali('petugas','id_petugas','nama_petugas',dapatkaninfo(username)[3],dapatkaninfo(username)[0]);
-		if(mysqli_num_rows($query) != 0){
-		while($n = mysqli_fetch_array($query)){
-			$id_petugas = $n['id_petugas'];
-			$nama_petugas = $n['nama_petugas'];
-			$posisi_petugas = $n['posisi_petugas'];
-			$foto_petugas = $n['foto_petugas'];
-			$penomoran++;
-			?>
-			<tr>
-				  <td><?php echo $penomoran.'.'?></td>
-				  <td><?php echo $id_petugas;?></td>
-				  <td><?php echo $nama_petugas;?></td>
-				  <td><?php echo $posisi_petugas;?></td>
-				  <td><img class="img-thumbnail" src="<?php echo $url;?>img/<?php echo $foto_petugas;?>" width="80px" height="90px"></img></td>
-				  <td><a href="<?php echo base_url(); ?>admin/petugas/ubah/<?php echo $id_petugas;?>"><button type="button" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i> Ubah</button></a> <button type="button" class="btn btn-xs btn-danger btn-flat" data-toggle="modal" data-target="#modalHapus" onclick="formHapus('Apakah Anda Ingin Menghapus <?php echo $id_petugas;?> .?','<?php echo $id_petugas;?>')"><i class="fa fa-trash"></i> Hapus</button></td>
-				</tr>
-		<?php
-		}
-		}else{
-			echo'<tr>
-				<td colspan="6" align="center">Belum Ada Data Petugas</td>
-				</tr>';
-		}
-		?>
-			</table>
+
+	<div class="nav-tabs-custom">
+	<ul id="tabpetugas" class="nav nav-tabs">
+	  <li class="active"><a href="#semua" id="smdata" data-toggle="tab">Semua</a></li>
+	  <li><a href="#dokter" data-toggle="tab">Dokter</a></li>
+	  <li><a href="#supir" data-toggle="tab">Supir</a></li>
+	  <li><a href="#aftaper" data-toggle="tab">Aftaper</a></li>
+	  <li><a href="#tensi" data-toggle="tab">Tensi</a></li>
+	  <li><a href="#administrator" data-toggle="tab">Administrator</a></li>
+	  <li><a href="#administratorweb" data-toggle="tab">Administrator Web</a></li>
+	</ul>
+
+	<div class="tab-content">
+	<div class="tab-pane" id="semua">
+		<div class="box-body table-responsive">
+	  		<div id="semua"></div>
 		</div>
+	</div>
 	</div>
 </section>
 </div>

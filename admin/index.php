@@ -14,7 +14,7 @@
   <title>PMI Denpasar | Admin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="<?php echo $url; ?>dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo $url; ?>dist/css/bootstrap.css">
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/font-awesome.min.css">
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/AdminLTE.min.css">
@@ -22,6 +22,19 @@
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/skin.css">
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/dashboard.css">
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/datepicker.min.css">
+  <link rel="stylesheet" href="<?php echo $url; ?>dist/css/sweetalert2.min.css">
+  <link rel="stylesheet" href="<?php echo $url; ?>dist/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+
+
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js" integrity="sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g==" crossorigin=""></script>
+
+
+  <!-- Load Esri Leaflet Geocoder from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.css" integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ==" crossorigin="">
+  <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.js" integrity="sha512-zdT4Pc2tIrc6uoYly2Wp8jh6EPEWaveqqD3sT0lf5yei19BC1WulGuh5CesB0ldBKZieKGD7Qyf/G0jdSe016A==" crossorigin=""></script>
   <script src="<?php echo $url; ?>dist/js/jquery.min.js"></script>
   <script src="<?php echo $url; ?>dist/js/bootstrap.min.js"></script>
   <script src="<?php echo $url; ?>dist/js/adminlte.min.js"></script>
@@ -30,17 +43,23 @@
   <script src="<?php echo $url; ?>dist/js/bootstrap-datepicker.min.js"></script>
   <script src="<?php echo $url; ?>dist/js/form.js"></script>
   <script src="<?php echo $url; ?>dist/js/Chart.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKt5CjDT9N4RTIzDQQn6GpfLUaEX4e92w"></script>
+  <script src="<?php echo $url; ?>dist/js/sweetalert2.min.js"></script>
+  <script src="<?php echo $url; ?>dist/js/dataTables.responsive.js"></script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-
+  <script>
+        $(document).ready(function() {
+          datatable();
+        })
+ </script>
   <!-- Google Font -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
 </head>
 <body class="hold-transition skin-red sidebar-mini">
 <div class="wrapper">
@@ -124,7 +143,6 @@
 		<li class="header">Statistik</li>
 		<li><a href="<?php echo $url; ?>admin/statistikdata"><i class="fa fa-pie-chart"></i> <span>Statistik Data</span></a></li>
         <li class="header">Umum</li>
-        <!-- Optionally, you can add icons to the links -->
         <li><a href="<?php echo $url; ?>admin/pendonor"><i class="fa fa-users"></i> <span>Pendonor</span>
 		<span class="pull-right-container">
               <span class="label label-danger pull-right"><?php echo dapatkantotal('pendonor'); ?></span>
@@ -146,6 +164,8 @@
 					<li><a href="<?php echo $url; ?>admin/jadwallokasi"><i class="fa fa-calendar"></i> <span>Jadwal Dan Lokasi</span><span class="pull-right-container">
               <span class="label label-danger pull-right"><?php echo dapatkantotal('jadwaldanlokasi'); ?></span>
             </span></a></li>
+            <li class="header">Laporan</li>
+		<li><a href="<?php echo $url; ?>admin/laptransaksi"><i class="fa fa-file"></i> <span>Transaksi</span></a></li>
 		<li class="header">Profile</li>
 		<li><a href="<?php echo $url; ?>admin/profile"><i class="fa fa-gears"></i> <span>Pengaturan Profile</span></a></li>
       </ul>
@@ -175,6 +195,8 @@
 			include('../kontent/jadwallokasi.php');
 		}else if($_GET["halaman"] == "statistikdata"){
 			include('../kontent/statistikdata.php');
+		}else if($_GET["halaman"] == "laptransaksi"){
+			include('../kontent/report_transaksi.php');
 		}else{
 			include('../kontent/404.php');
 		}
@@ -189,16 +211,23 @@
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      Made with <p class="fa fa-heart"></p> & <p class="fa fa-coffee"></p> from Kelompok 7
+      Made with <p class="fa fa-heart"></p> & <p class="fa fa-coffee"></p> from Kelompok 5
     </div>
-    <strong>Copyright &copy; 2018 PMI Denpasar.</strong>
+    <strong>Copyright &copy; 2019 PMI Denpasar.</strong>
   </footer>
 <script>
-  $(function () {
+  function datatable() {
+    $.fn.dataTable.ext.errMode = 'none';
+    $('#tabel_data').on( 'error.dt', function ( e, settings, techNote, message ) {
+    console.log( 'An error has been reported by DataTables: ', message );
+    } ) ;
     $('#datatble').DataTable( {
-		 
+      responsive: true,
+      columnDefs: [
+        { responsivePriority: 1, targets: 0 }
+      ]
 	});
-  })
+  }
 </script>
 </body>
 </html>

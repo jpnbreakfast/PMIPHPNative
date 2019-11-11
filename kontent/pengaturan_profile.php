@@ -11,17 +11,13 @@ Pengaturan Profile
 </ol>
 </section>
 <section class="content">
-<div id="statusOK" class="callout ">
-	<h4 id="judulInfo">Berhasil!</h4>
-	<p id="isiInfo"></p>
-</div>
 <div class="row">
 <div class="col-md-3">
   <div class="box box-danger">
 	<div class="box-body box-profile">
-	  <img class="profile-user-img img-responsive img-circle" src="<?php echo $url.'img/'.dapatkaninfo(username)[2]; ?>" alt="User profile picture">
+	  <img class="profile-user-img img-responsive img-circle" src="<?php echo $url.'img/'.htmlspecialchars(dapatkaninfo(username)[2], ENT_QUOTES, 'UTF-8'); ?>" alt="User profile picture">
 
-	  <h3 class="profile-username text-center"><?php echo dapatkaninfo(username)[0]; ?></h3>
+	  <h3 class="profile-username text-center"><?php echo htmlspecialchars(dapatkaninfo(username)[0], ENT_QUOTES, 'UTF-8'); ?></h3>
 	  <p class="text-muted text-center">Administrator</p>
 	</div>
   </div>
@@ -102,57 +98,133 @@ Pengaturan Profile
 </section>
 <?php
 	if(isset($_POST['submit_profile'])){
+		$uploadOk = 1;
 		$lokasi_file = $_FILES['foto_profile']['tmp_name'];
 		if(!empty($lokasi_file)){
-			$e_foto = dapatkaninfo(username)[3].'_'.$_FILES['foto_profile']['name'];
-			$lokasi_tujuan = '../img/'.$e_foto.'';
-			move_uploaded_file($lokasi_file,$lokasi_tujuan);
+			
+			$imageFileType = strtolower(pathinfo($_FILES['foto_profile']['name'],PATHINFO_EXTENSION));
+			if($imageFileType != "jpg") {
+				echo"<script>
+				$(document).ready(function(){
+					Swal.fire({
+						title: 'Kesalahan!',
+						text: 'Foto Yang Diperbolehkan Hanya Berformat (.jpg)!',
+						type: 'success',
+						showCancelButton: false,
+						showConfirmButton: true,
+					})
+				});
+			</script>";
+					$uploadOk = 0;
+			}
+			if ($uploadOk != 0) {
+				unlink("../img/".dapatkaninfo(username)[2]);
+				$e_foto = htmlspecialchars(dapatkaninfo(username)[3], ENT_QUOTES, 'UTF-8').'.jpg';
+				$lokasi_tujuan = '../img/'.$e_foto.'';
+				move_uploaded_file($lokasi_file,$lokasi_tujuan);
+			}else{
+				echo"<script>
+						$(document).ready(function(){
+							Swal.fire({
+								title: 'Kesalahan!',
+								text: 'Terjadi Kesalahan Dalam Memproses Data!',
+								type: 'error',
+								showCancelButton: false,
+								showConfirmButton: true,
+							})
+						});
+					</script>";
+			}
 		}else{
-			$e_foto = dapatkaninfo(username)[2];
+			$e_foto = htmlspecialchars(dapatkaninfo(username)[2], ENT_QUOTES, 'UTF-8');
 		}
 		
 		if(!empty(strlen($_POST['nama_profile']))){
 			$e_nama = $_POST['nama_profile'];
 		}else{
-			$e_nama = dapatkaninfo(username)[0];
+			$e_nama = htmlspecialchars(dapatkaninfo(username)[0], ENT_QUOTES, 'UTF-8');
 		}
-		
-		$q = 'UPDATE petugas SET nama_petugas="'.$e_nama.'", foto_petugas="'.$e_foto.'" WHERE id_petugas="'.dapatkaninfo(username)[3].'"';
+		if ($uploadOk != 0) {
+		$q = 'UPDATE petugas SET nama_petugas="'.$e_nama.'", foto_petugas="'.$e_foto.'" WHERE id_petugas="'.htmlspecialchars(dapatkaninfo(username)[3], ENT_QUOTES, 'UTF-8').'"';
 		$p = mysqli_query(koneksi_global(),$q) or die(mysql_error());
 		if($p){
-			echo'<script>
+			echo"<script>
 					$(document).ready(function(){
-						calloutInfo("berhasil","Berhasil!","Harap Tunggu...");
+						Swal.fire({
+							title: 'Sukses!',
+							text: 'Sukses Mengubah Profile!, Tunggu Sebentar...',
+							type: 'success',
+							showCancelButton: false,
+							showConfirmButton: false,
+						})
 					});
 					setTimeout(function(){window.location = window.location.href;}, 3000);
-				</script>';
+				</script>";
+		}else{
+			echo"<script>
+					$(document).ready(function(){
+						Swal.fire({
+							title: 'Kesalahan!',
+							text: 'Terjadi Kesalahan Dalam Memproses Data!',
+							type: 'error',
+							showCancelButton: false,
+							showConfirmButton: true,
+						})
+					});
+				</script>";
+		}
 		}
 	}
 	if(isset($_POST['submit_password'])){
-		$e_pass_lama = $_POST['password_lama_profile'];
-		$e_pass_baru = $_POST['password_baru_verifikasi_profile'];
-		$q1 = dapatkandatapilihan('login','username_login',username);
+		$e_pass_lama = htmlspecialchars($_POST['password_lama_profile'], ENT_QUOTES, 'UTF-8');
+		$e_pass_baru = htmlspecialchars($_POST['password_baru_verifikasi_profile'], ENT_QUOTES, 'UTF-8');
+		$q1 = dapatkandatapilihan('login','username_login',htmlspecialchars(username, ENT_QUOTES, 'UTF-8'));
 		if(mysqli_num_rows($q1) != 0){
 		$n = mysqli_fetch_array($q1);
 		
-		$passwordlogin = $n['password_login'];
-		if(strtolower($passwordlogin)==md5($e_pass_lama)){
-			$q = 'UPDATE login SET password_login="'.md5($e_pass_baru).'" WHERE username_login="'.username.'"';
+		$passwordlogin = htmlspecialchars($n['password_login'], ENT_QUOTES, 'UTF-8');
+		if(password_verify($passwordlogin)==$e_pass_lama){
+			$q = 'UPDATE login SET password_login="'.md5($e_pass_baru).'" WHERE username_login="'.htmlspecialchars(username, ENT_QUOTES, 'UTF-8').'"';
 			$p = mysqli_query(koneksi_global(),$q) or die(mysqli_error());
 				if($p){
-					echo'<script>
+					echo"<script>
 						$(document).ready(function(){
-							calloutInfo("berhasil","Berhasil!","Harap Tunggu...");
+							Swal.fire({
+								title: 'Sukses!',
+								text: 'Sukses Mengubah Profile!, Tunggu Sebentar...',
+								type: 'success',
+								showCancelButton: false,
+								showConfirmButton: false,
+							})
 						});
 						setTimeout(function(){window.location = window.location.href;}, 3000);
-					</script>';
+					</script>";
+				}else{
+					echo"<script>
+							$(document).ready(function(){
+								Swal.fire({
+									title: 'Kesalahan!',
+									text: 'Terjadi Kesalahan Dalam Memproses Data!',
+									type: 'error',
+									showCancelButton: false,
+									showConfirmButton: true,
+								})
+							});
+						</script>";
 				}
 			}else{
-				echo'<script>
+				echo"<script>
 					$(document).ready(function(){
-						calloutInfo("gagal","Gagal!","Password Lama Yang Anda Masukan Salah. <br/> Cek Kembali Password Anda :D");
+						$(document).ready(function(){
+							Swal.fire({
+								title: 'Kesalahan!',
+								text: 'Terjadi Kesalahan Dalam Memproses Data!',
+								type: 'error',
+								showCancelButton: false,
+								showConfirmButton: true,
+							})
 					});
-				</script>';
+				</script>";
 			}
 		}
 	}

@@ -69,10 +69,6 @@ Tambah
 </ol>
 </section>
 <section class="content">
-<div id="statusOK" class="callout callout-info">
-	<h4>Berhasil!</h4>
-	Tunggu Sebentar Akan Dikembalikan Ke Dashboard....
-</div>
 <div class="box">
 	<div class="box-header">
 	<h3 class="box-title">Tambah Transaksi</h3>
@@ -97,8 +93,8 @@ Tambah
 					if ($n!=0)
 						{	
 							while ($r = mysqli_fetch_array($q)){
-							$pil_id_pendonor = $r['id_pendonor'];
-							$pil_nama_lengkap_pendonor = $r['nama_lengkap_pendonor'];
+								$pil_id_pendonor 			= htmlspecialchars($r['id_pendonor'], ENT_QUOTES, 'UTF-8');
+								$pil_nama_lengkap_pendonor 	= htmlspecialchars($r['nama_lengkap_pendonor'], ENT_QUOTES, 'UTF-8');
 							echo '<option namapendonor="'.$pil_nama_lengkap_pendonor.'" identitas="'.$pil_id_pendonor.'"  value="'.$pil_id_pendonor.'">['.$pil_id_pendonor.']&nbsp;'.$pil_nama_lengkap_pendonor.'</option>';
 							}
 						}
@@ -139,9 +135,9 @@ Tambah
 					if ($n!=0)
 						{	
 							while ($r = mysqli_fetch_array($q)){
-							$pil_id_jadwal = $r['id_jadwal'];
-							$pil_instasi_jadwal = $r['instasi_jadwal'];
-							$pil_tanggal_jadwal = $r['tanggal_jadwal'];
+								$pil_id_jadwal 		= htmlspecialchars($r['id_jadwal'], ENT_QUOTES, 'UTF-8');
+								$pil_instasi_jadwal = htmlspecialchars($r['instasi_jadwal'], ENT_QUOTES, 'UTF-8');
+								$pil_tanggal_jadwal = htmlspecialchars($r['tanggal_jadwal'], ENT_QUOTES, 'UTF-8');
 							echo '<option instasi="'.$pil_instasi_jadwal.'" tanggal_jadwal="'.$pil_tanggal_jadwal.'"  value="'.$pil_id_jadwal.'">['.$pil_instasi_jadwal.']&nbsp;'.$pil_tanggal_jadwal.'</option>';
 							}
 						}
@@ -179,23 +175,42 @@ Tambah
 
 <?php
 if (isset($_POST['submit'])){  
-	$t_id_transaksi		= $_POST['id_transaksi'];
-	$t_id_pendonor		= $_POST['id_pendonor'];
-	$t_nama_pendonor	= $_POST['nama_pendonor'];
-	$t_nomor_kantong_darah 	= $_POST['nomor_kantong_darah'];
-	$t_gol_dar  		= $_POST['gol_dar'];
-	$t_id_jadwal  	= $_POST['id_jadwal'];
-	$t_tanggal 		= $_POST['tanggal'];
-	$t_pengambilan 	= $_POST['pengambilan'];
-	$q_tambah	= 'INSERT INTO transaksi VALUES("'.$t_id_transaksi.'","'.$t_id_pendonor.'","'.$t_nama_pendonor.'","'.$t_nomor_kantong_darah.'","'.$t_gol_dar.'","'.$t_id_jadwal.'","'.$t_tanggal.'","'.$t_pengambilan.'")';
-	$q_tambah	= mysqli_query(koneksi_global(),$q_tambah) or die(mysql_error());
+	$t_id_transaksi			= htmlspecialchars($_POST['id_transaksi'], ENT_QUOTES, 'UTF-8');
+	$t_id_pendonor			= htmlspecialchars($_POST['id_pendonor'], ENT_QUOTES, 'UTF-8');
+	$t_nama_pendonor		= htmlspecialchars($_POST['nama_pendonor'], ENT_QUOTES, 'UTF-8');
+	$t_nomor_kantong_darah 	= htmlspecialchars($_POST['nomor_kantong_darah'], ENT_QUOTES, 'UTF-8');
+	$t_gol_dar  			= htmlspecialchars($_POST['gol_dar'], ENT_QUOTES, 'UTF-8');
+	$t_id_jadwal  			= htmlspecialchars($_POST['id_jadwal'], ENT_QUOTES, 'UTF-8');
+	$t_tanggal 				= htmlspecialchars($_POST['tanggal'], ENT_QUOTES, 'UTF-8');
+	$t_pengambilan 			= htmlspecialchars($_POST['pengambilan'], ENT_QUOTES, 'UTF-8');
+	$q_tambah	= 'INSERT INTO transaksi VALUES("'.$t_id_transaksi.'","'.$t_id_pendonor.'","'.dapatkaninfo(username)[3].'" ,"'.$t_nama_pendonor.'","'.$t_nomor_kantong_darah.'","'.$t_gol_dar.'","'.$t_id_jadwal.'","'.$t_tanggal.'","'.$t_pengambilan.'")';
+	$q_tambah	= mysqli_query(koneksi_global(),$q_tambah) or die(mysqli_error());
 	if ($q_tambah){
-		echo '<script>
-				$(document).ready(function(){
-					$("#statusOK").show();
-					});
-					setTimeout(function(){window.location="'.base_url().'admin/transaksi/";}, 1000);
-			 </script>';
-	}
+		echo "<script>
+		$(document).ready(function(){
+			Swal.fire({
+				title: 'Sukses!',
+				text: 'Sukses Menambah Data!,Harap Menungu Halaman Akan Di Refresh!',
+				type: 'success',
+				showCancelButton: false,
+				showConfirmButton: false,
+			})
+		});
+		setTimeout(function(){window.location='".base_url()."/admin/transaksi/';}, 1000);
+	 </script>";
+}else{
+echo "
+<script>
+$(document).ready(function () {
+		Swal.fire({
+			title: 'Kesalahan!',
+			text: 'Kesalahan Dalam Menambah Data!',
+			type: 'warning',
+			showCancelButton: false,
+			showConfirmButton: true,
+		})
+	});
+</script>";
+}
 }
 ?>

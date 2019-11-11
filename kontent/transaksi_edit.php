@@ -3,14 +3,14 @@ if(isset($_GET['id'])){
 	$query = dapatkandatapilihan($_GET['halaman'],'id_transaksi',$_GET['id']);
 	if(mysqli_num_rows($query) != 0){
 		$r = mysqli_fetch_array($query);
-		$id_transaksi			= $r['id_transaksi'];
-		$id_pendonor			= $r['id_pendonor'];
-		$nama_pendonor			= $r['nama_pendonor'];
-		$nomor_kantong_darah 	= $r['nomor_kantong_darah'];
-		$golongan_darah 		= $r['golongan_darah'];
-		$id_jadwal 				= $r['id_jadwal'];
-		$tanggal				= $r['tanggal'];
-		$pengambilan			= $r['pengambilan'];
+		$id_transaksi			= htmlspecialchars($r['id_transaksi'], ENT_QUOTES, 'UTF-8');
+		$id_pendonor			= htmlspecialchars($r['id_pendonor'], ENT_QUOTES, 'UTF-8');
+		$nama_pendonor			= htmlspecialchars($r['nama_pendonor'], ENT_QUOTES, 'UTF-8');
+		$nomor_kantong_darah 	= htmlspecialchars($r['nomor_kantong_darah'], ENT_QUOTES, 'UTF-8');
+		$golongan_darah 		= htmlspecialchars($r['golongan_darah'], ENT_QUOTES, 'UTF-8');
+		$id_jadwal 				= htmlspecialchars($r['id_jadwal'], ENT_QUOTES, 'UTF-8');
+		$tanggal				= htmlspecialchars($r['tanggal'], ENT_QUOTES, 'UTF-8');
+		$pengambilan			= htmlspecialchars($r['pengambilan'], ENT_QUOTES, 'UTF-8');
 		$opsipengambilan  		= array('Biasa', 'Apheresis');
 	}else{
 		$id_transaksi			= '';
@@ -22,15 +22,22 @@ if(isset($_GET['id'])){
 		$tanggal				= '';
 		$pengambilan			= '';;
 		$opsipengambilan  		= array('Biasa', 'Apheresis');
-		echo'
+		echo"
 		<script>
 			$(document).ready(function () {
-				$("#infoSalah").html("Data Yang Dipilih Salah!");
-				$("#modalInfo").modal();
-				$("#buttonKembali").show();
-				$("#buttonOK").hide();
+				Swal.fire({
+					title: 'Kesalahan!',
+					text: 'Data Yang Dipilih Salah!',
+					type: 'warning',
+					showCancelButton: false,
+					showConfirmButton: true,
+				}).then((result) => {
+					if (result.value) {
+						window.location='".base_url()."/admin/jadwal/';
+					} 
+				  })
 			});
-		</script>';
+		</script>";
 	}
 }
 ?>
@@ -69,10 +76,6 @@ Ubah
 </ol>
 </section>
 <section class="content">
-<div id="statusOK" class="callout callout-info">
-	<h4>Berhasil!</h4>
-	Tunggu Sebentar Akan Dikembalikan Ke Dashboard....
-</div>
 <div class="box">
 	<div class="box-header">
 	<h3 class="box-title">Ubah Transaksi</h3>
@@ -97,8 +100,8 @@ Ubah
 					if ($n!=0)
 						{	
 							while ($r = mysqli_fetch_array($q)){
-							$pil_id_pendonor = $r['id_pendonor'];
-							$pil_nama_lengkap_pendonor = $r['nama_lengkap_pendonor'];
+							$pil_id_pendonor 			= htmlspecialchars($r['id_pendonor'], ENT_QUOTES, 'UTF-8');
+							$pil_nama_lengkap_pendonor 	= htmlspecialchars($r['nama_lengkap_pendonor'], ENT_QUOTES, 'UTF-8');
 								if($pil_id_pendonor == $id_pendonor){
 									echo '<option selected="selected" namapendonor="'.$pil_nama_lengkap_pendonor.'" kantong="'.$nomor_kantong_darah.'" identitas="'.$pil_id_pendonor.'"  value="'.$pil_id_pendonor.'">['.$pil_id_pendonor.']&nbsp;'.$pil_nama_lengkap_pendonor.'</option>';
 								}else{
@@ -143,9 +146,9 @@ Ubah
 					if ($n!=0)
 						{	
 							while ($r = mysqli_fetch_array($q)){
-							$pil_id_jadwal = $r['id_jadwal'];
-							$pil_instasi_jadwal = $r['instasi_jadwal'];
-							$pil_tanggal_jadwal = $r['tanggal_jadwal'];
+							$pil_id_jadwal 		= htmlspecialchars($r['id_jadwal'], ENT_QUOTES, 'UTF-8');
+							$pil_instasi_jadwal = htmlspecialchars($r['instasi_jadwal'], ENT_QUOTES, 'UTF-8');
+							$pil_tanggal_jadwal = htmlspecialchars($r['tanggal_jadwal'], ENT_QUOTES, 'UTF-8');
 							if($pil_id_jadwal == $id_jadwal){
 							echo '<option selected="selected" idjad="'.$pil_id_jadwal.'" tanggal_jadwal="'.$pil_tanggal_jadwal.'"  value="'.$pil_id_jadwal.'">['.$pil_instasi_jadwal.']&nbsp;'.$pil_tanggal_jadwal.'</option>';
 							}else{
@@ -197,23 +200,42 @@ pilihpendonor();
 </script>
 <?php
 if (isset($_POST['submit'])){  
-	$e_id_transaksi		= $_POST['id_transaksi'];
-	$e_id_pendonor		= $_POST['id_pendonor'];
-	$e_nama_pendonor	= $_POST['nama_pendonor'];
-	$e_nomor_kantong_darah 	= $_POST['nomor_kantong_darah'];
-	$e_gol_dar  		= $_POST['gol_dar'];
-	$e_id_jadwal  	= $_POST['id_jadwal'];
-	$e_tanggal 		= $_POST['tanggal'];
-	$e_pengambilan 	= $_POST['pengambilan'];
+	$e_id_transaksi			= htmlspecialchars($_POST['id_transaksi'], ENT_QUOTES, 'UTF-8');
+	$e_id_pendonor			= htmlspecialchars($_POST['id_pendonor'], ENT_QUOTES, 'UTF-8');
+	$e_nama_pendonor		= htmlspecialchars($_POST['nama_pendonor'], ENT_QUOTES, 'UTF-8');
+	$e_nomor_kantong_darah 	= htmlspecialchars($_POST['nomor_kantong_darah'], ENT_QUOTES, 'UTF-8');
+	$e_gol_dar  			= htmlspecialchars($_POST['gol_dar'], ENT_QUOTES, 'UTF-8');
+	$e_id_jadwal  			= htmlspecialchars($_POST['id_jadwal'], ENT_QUOTES, 'UTF-8');
+	$e_tanggal 				= htmlspecialchars($_POST['tanggal'], ENT_QUOTES, 'UTF-8');
+	$e_pengambilan 			= htmlspecialchars($_POST['pengambilan'], ENT_QUOTES, 'UTF-8');
 	$q_edit	= 'UPDATE transaksi SET id_pendonor="'.$e_id_pendonor.'", nama_pendonor="'.$e_nama_pendonor.'", nomor_kantong_darah="'.$e_nomor_kantong_darah.'", golongan_darah="'.$e_gol_dar.'", id_jadwal="'.$e_id_jadwal.'", tanggal="'.$e_tanggal.'", pengambilan="'.$e_pengambilan.'" WHERE id_transaksi="'.$e_id_transaksi.'"';
 	$p_edit	= mysqli_query(koneksi_global(),$q_edit) or die(mysqli_error());
 	if ($p_edit){
-		echo '<script>
-				$(document).ready(function(){
-					$("#statusOK").show();
-				});
-				setTimeout(function(){window.location="'.base_url().'admin/transaksi/";}, 1000);
-			 </script>';
-	}
+		echo "<script>
+		$(document).ready(function(){
+			Swal.fire({
+				title: 'Sukses!',
+				text: 'Sukses Mengubah Data!,Harap Menungu Halaman Akan Di Refresh!',
+				type: 'success',
+				showCancelButton: false,
+				showConfirmButton: false,
+			})
+		});
+		setTimeout(function(){window.location='".base_url()."/admin/transaksi/';}, 1000);
+	 </script>";
+}else{
+echo "
+<script>
+$(document).ready(function () {
+		Swal.fire({
+			title: 'Kesalahan!',
+			text: 'Kesalahan Dalam Mengubah Data!',
+			type: 'warning',
+			showCancelButton: false,
+			showConfirmButton: true,
+		})
+	});
+</script>";
+}
 }
 ?>

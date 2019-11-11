@@ -14,14 +14,14 @@ $penomoran = 0;
 $query = dapatkanlokasi($_POST['tempat']);
 if(mysqli_num_rows($query) != 0){
 	while($n = mysqli_fetch_array($query)){
-		$instasi_jadwal = $n['instasi_jadwal'];
-		$target_jumlah_jadwal = $n['target_jumlah_jadwal'];
-		$tanggal_jadwal = $n['tanggal_jadwal'];
-		$alamat_jadwal = $n['alamat_jadwal'];
-		$kecamatan_jadwal = $n['kecamatan_jadwal'];
-		$jam_jadwal = $n['jam_jadwal'];
+		$instasi_jadwal 		= htmlspecialchars($n['instasi_jadwal'], ENT_QUOTES, 'UTF-8');
+		$target_jumlah_jadwal 	= htmlspecialchars($n['target_jumlah_jadwal'], ENT_QUOTES, 'UTF-8');
+		$tanggal_jadwal 		= htmlspecialchars($n['tanggal_jadwal'], ENT_QUOTES, 'UTF-8');
+		$alamat_jadwal 			= htmlspecialchars($n['alamat_jadwal'], ENT_QUOTES, 'UTF-8');
+		$kecamatan_jadwal 		= htmlspecialchars($n['kecamatan_jadwal'], ENT_QUOTES, 'UTF-8');
+		$jam_jadwal 			= htmlspecialchars($n['jam_jadwal'], ENT_QUOTES, 'UTF-8');
 		$penomoran++;
-		?>
+?>
 		<tr>
 		<td><?php echo $penomoran.'.'?></td>
 		<td><?php echo $instasi_jadwal?></td>
