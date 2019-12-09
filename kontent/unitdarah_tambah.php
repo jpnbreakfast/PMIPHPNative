@@ -114,7 +114,7 @@ Tambah
 		  </div>
 		  <div class="form-group">
 			<div>
-			 <a href="/PMIAdminPHP/admin/unitdarah/"><button type="button" class="btn btn-default"><i class="fa fa-angle-left"></i>  Kembali</button></a>
+			 <a href="<?php echo base_url(); ?>admin/unitdarah/"><button type="button" class="btn btn-default"><i class="fa fa-angle-left"></i>  Kembali</button></a>
 			  <button type="submit" name="submit" class="btn btn-danger"><i class="fa fa-plus"></i> Tambah</button>
 			</div>
 		  </div>

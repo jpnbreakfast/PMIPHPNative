@@ -18,15 +18,16 @@
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/font-awesome.min.css">
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/AdminLTE.min.css">
-  <link rel="stylesheet" href="<?php echo $url; ?>dist/css/morris.css">
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/skin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css">
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/dashboard.css">
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/datepicker.min.css">
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/sweetalert2.min.css">
   <link rel="stylesheet" href="<?php echo $url; ?>dist/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.4.0/dist/leaflet-search.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/leaflet-search@2.4.0/dist/leaflet-search.min.js"></script>
 
   <!-- Load Esri Leaflet from CDN -->
   <script src="https://unpkg.com/esri-leaflet@2.2.3/dist/esri-leaflet.js" integrity="sha512-YZ6b5bXRVwipfqul5krehD9qlbJzc6KOGXYsDjU9HHXW2gK57xmWl2gU6nAegiErAqFXhygKIsWPKbjLPXVb2g==" crossorigin=""></script>
@@ -42,7 +43,7 @@
   <script src="<?php echo $url; ?>dist/js/dataTables.bootstrap.js"></script>
   <script src="<?php echo $url; ?>dist/js/bootstrap-datepicker.min.js"></script>
   <script src="<?php echo $url; ?>dist/js/form.js"></script>
-  <script src="<?php echo $url; ?>dist/js/Chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
   <script src="<?php echo $url; ?>dist/js/sweetalert2.min.js"></script>
   <script src="<?php echo $url; ?>dist/js/dataTables.responsive.js"></script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

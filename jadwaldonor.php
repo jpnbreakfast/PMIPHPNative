@@ -15,11 +15,13 @@
     <link href="dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="dist/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="dist/css/app.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
-    <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css">
-    <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css">
-    <link rel="stylesheet" href="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.68.0/dist/L.Control.Locate.min.css">
     <link rel="stylesheet" href="dist/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <link rel="stylesheet" href="dist/css/style.css">
   </head>
 
@@ -65,7 +67,7 @@
               <i class="fa fa-close fa-xs pull-right" style="color: #e81123;" id="sidebar-hide-btn"></i></h3>
             </div>
             <div class="panel-body">
-              <div class="row">
+              <div class="row" style="margin-left: 0;">
                 <div class="">
                 <div class="search-widget">
                             <form class="flex flex-wrap align-items-center">
@@ -92,13 +94,12 @@
           <div class="progress-bar progress-bar-info progress-bar-full"></div>
         </div>
       </div>
-	</div>
-
-    <div class="modal fade" id="featureModal" tabindex="-1" role="dialog">
+  </div>
+<div class="modal fade" id="featureModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title text-primary" id="feature-title"></h4>
+            <h4 class="modal-title text-danger" id="feature-title"></h4>
           </div>
           <div class="modal-body" id="feature-info"></div>
           <div class="modal-footer">
@@ -108,14 +109,17 @@
       </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 	
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script src="dist/js/bootstrap.min.js"></script>
+    <script src="dist/js/jquery.min.js"></script>
+    <script src="dist/js/popper.min.js"></script>
+    <script src="dist/js/bootstrap.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/typeahead.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
-    <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js"></script>
-    <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.43.0/L.Control.Locate.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.68.0/src/L.Control.Locate.min.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="dist/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.js"></script>
     <script src="dist/js/app.js"></script>
     <script src="dist/js/custom.js"></script>

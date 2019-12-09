@@ -27,6 +27,20 @@ $(document).ready(function () {
         $('#password_layout').hide();
     }
 
+        
+
+        
+     
+    $('#tanggal_jadwal').datepicker({
+        format: "yyyy-mm-dd",
+        startView: "day",
+        minViewMode: "day",
+    }).on("change", function () {    
+        var local = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu' ];
+        var today = new Date($('#tanggal_jadwal').datepicker('getDate'));
+        $('#hari_jadwal').val(local[today.getDay()]);
+    });
+
     $('#transaksiperbulan').datepicker({
         format: "yyyy-mm",
         startView: "months",
@@ -246,7 +260,7 @@ function tbl_show() {
 
 
 function tbl_datapetugas() {
-    $('a[data-toggle="tab"]').click(function () {
+    $('a[data-toggle="tab"]').on('shown.bs.tab',function () {
         var jabatan = $('#tabpetugas li.active a').attr('href').substring(1);
         if (jabatan == "administratorweb") {
             var jabatan = "Administrator Web";
@@ -451,14 +465,17 @@ function errorPemilihandata() {
 
 
 function mapInit() {
-    document.getElementById('map-canvas').innerHTML = "<div id='map''></div>";
+    document.getElementById('map-canvas').innerHTML = "<div id='map'></div>";
     var modalElm = $('#mapModal');
+
     var map = L.map("map", {
         zoom: 10,
         center: [-8.65977227887551, 115.21739959716798],
-        zoomControl: false,
+        zoomControl: true,
         attributionControl: false
     });
+    
+
     var theMarker = {};
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -497,6 +514,24 @@ function mapInit() {
             theMarker = L.marker(e.latlng).addTo(map);
         });
     });
+
+
+    
+    map.addControl( new L.Control.Search({
+		url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+		jsonpParam: 'json_callback',
+		propertyName: 'display_name',
+		propertyLoc: ['lat','lon'],
+		marker: L.circleMarker([0,0],{
+            radius:30,
+            color: '#f03',
+            fillColor: '#f03',
+            fillOpacity: 0.80
+        }),
+		autoCollapse: true,
+		autoType: false,
+		minLength: 2
+	}) );
 
 
     modalElm.modal('show');

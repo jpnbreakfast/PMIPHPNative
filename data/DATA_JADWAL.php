@@ -1,13 +1,12 @@
 <?php
 include "../fungsi.php";
-echo '{"type": "FeatureCollection",
-		"features": [';
 ?>
 
 <?php
 $i = -1;
 $lokasi = "";
 $query = dapatkandata2($_GET['posisi']);
+$geojson = array( 'type' => 'FeatureCollection', 'features' => array());
 if (mysqli_num_rows($query) != 0) {
     while ($n = mysqli_fetch_array($query)) {
 
@@ -29,16 +28,57 @@ if (mysqli_num_rows($query) != 0) {
         $lat_jadwal = htmlspecialchars($n['lat_jadwal'], ENT_QUOTES, 'UTF-8');
         $lng_jadwal = htmlspecialchars($n['lng_jadwal'], ENT_QUOTES, 'UTF-8');
 
-        $lokasi .= '{ "type": "Feature", "id": "' . $i . '", "properties": { "NAME": "' . $instasi_jadwal . '", "TEL": "(212) 514-3700", "DESCRIPTION": "http:\/\/www.oldnycustomhouse.gov\/", "ADRESS1": "' . $alamat_jadwal . '", "ADDRESS2": null, "CITY": "' . $kecamatan_jadwal . '", "ZIP": 10004.0 }, "geometry": { "type": "Point", "coordinates": [ ' . $lng_jadwal . ', ' . $lat_jadwal . ' ] } },';
+
+  $marker = array(
+    'type' => 'Feature',
+    'id' => $i, 
+    'properties' => array(
+      'NAME' => $n['instasi_jadwal'],
+      'TEL' => $n['id_jadwallokasi'],
+      'DESCRIPTION' => $n['id_jadwallokasi'],
+      'ADRESS1' => $n['id_jadwallokasi'],
+      'ADDRESS2' => $n['id_jadwallokasi'],
+      'CITY' => $n['id_jadwallokasi'],
+      'ZIP' => $n['id_jadwallokasi']
+
+    ),
+    'geometry' => array(
+      'type' => 'Point',
+      'coordinates' => array( 
+        $lng_jadwal,
+        $lat_jadwal
+      )
+    )
+  );
+  array_push($geojson['features'], $marker);
+
 
     }
-    echo rtrim($lokasi, ",");
-}
-?>
 
-<?php
-echo "
-	]
+}else{
+  $marker = array(
+    'type' => 'Feature',
+    'id' => $i, 
+    'properties' => array(
+      'NAME' => "",
+      'TEL' => "",
+      'DESCRIPTION' => "",
+      'ADRESS1' => "",
+      'ADDRESS2' => "",
+      'CITY' => "",
+      'ZIP' => ""
+
+    ),
+    'geometry' => array(
+      'type' => 'Point',
+      'coordinates' => array( 
+        "0",
+        "0"
+      )
+    )
+  );
+  array_push($geojson['features'], $marker);
 }
-";
+
+echo json_encode($geojson,JSON_PRETTY_PRINT);
 ?>

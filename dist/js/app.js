@@ -95,7 +95,7 @@ function syncSidebar() {
   denpasarbarats.eachLayer(function (layer) {
     if (map.hasLayer(denpasarbaratLayer)) {
       if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/kec2.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     }
   });
@@ -103,7 +103,7 @@ function syncSidebar() {
   denpasarutaras.eachLayer(function (layer) {
     if (map.hasLayer(denpasarutaraLayer)) {
       if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/kec1.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     }
   });
@@ -111,7 +111,7 @@ function syncSidebar() {
   denpasarselatans.eachLayer(function (layer) {
     if (map.hasLayer(denpasarselatanLayer)) {
       if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/kec3.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     }
   });
@@ -119,7 +119,7 @@ function syncSidebar() {
   denpasartimurs.eachLayer(function (layer) {
     if (map.hasLayer(denpasartimurLayer)) {
       if (map.getBounds().contains(layer.getLatLng())) {
-        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+        $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/kec4.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       }
     }
   });
@@ -181,7 +181,7 @@ var denpasarutaras = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "dist/img/favicon.ico",
+        iconUrl: "dist/img/kec1.png",
         iconSize: [24, 28],
         iconAnchor: [12, 28],
         popupAnchor: [0, -25]
@@ -195,13 +195,29 @@ var denpasarutaras = L.geoJson(null, {
       var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Tanggal Pelaksanaan</th><td>" + feature.properties.TEL + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.ADRESS1 + "</td></tr>" + "<tr><th>Deskripsi</th><td>" + feature.properties.DESCRIPTION + "</td></tr>" + "<table>";
       layer.on({
         click: function (e) {
-          $("#feature-title").html(feature.properties.NAME);
-          $("#feature-info").html(content);
-          $("#featureModal").modal("show");
+          var container = L.DomUtil.create('div'),
+          deskripsi = createButton('Deskripsi Lokasi', container),
+          arahkan = createButton('Menuju Lokasi Ini', container);
+  
+          L.popup()
+              .setContent(container)
+              .setLatLng(e.latlng)
+              .openOn(map);
+      
+          L.DomEvent.on(arahkan, 'click', function() {
+            control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
+            map.closePopup();
+          });
+          L.DomEvent.on(deskripsi, 'click', function() {
+            $("#feature-title").html(feature.properties.NAME);
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
+            map.closePopup();
+      });
           highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
         }
       });
-      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/favicon.ico"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/kec1.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       denpasarutaraSearch.push({
         name: layer.feature.properties.NAME,
         address: layer.feature.properties.ADRESS1,
@@ -222,7 +238,7 @@ var denpasarbarats = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "dist/img/favicon.ico",
+        iconUrl: "dist/img/kec2.png",
         iconSize: [24, 28],
         iconAnchor: [12, 28],
         popupAnchor: [0, -25]
@@ -236,13 +252,29 @@ var denpasarbarats = L.geoJson(null, {
       var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Tanggal Pelaksanaan</th><td>" + feature.properties.TEL + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.ADRESS1 + "</td></tr>" + "<tr><th>Deskripsi</th><td>" + feature.properties.DESCRIPTION + "</td></tr>" + "<table>";
       layer.on({
         click: function (e) {
-          $("#feature-title").html(feature.properties.NAME);
-          $("#feature-info").html(content);
-          $("#featureModal").modal("show");
+          var container = L.DomUtil.create('div'),
+          deskripsi = createButton('Deskripsi Lokasi', container),
+          arahkan = createButton('Menuju Lokasi Ini', container);
+  
+          L.popup()
+              .setContent(container)
+              .setLatLng(e.latlng)
+              .openOn(map);
+      
+          L.DomEvent.on(arahkan, 'click', function() {
+            control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
+            map.closePopup();
+          });
+          L.DomEvent.on(deskripsi, 'click', function() {
+            $("#feature-title").html(feature.properties.NAME);
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
+            map.closePopup();
+      });
           highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
         }
       });
-      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/favicon.ico"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/kec2.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       denpasarbaratSearch.push({
         name: layer.feature.properties.NAME,
         address: layer.feature.properties.ADRESS1,
@@ -263,7 +295,7 @@ var denpasarselatans = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "dist/img/favicon.ico",
+        iconUrl: "dist/img/kec3.png",
         iconSize: [24, 28],
         iconAnchor: [12, 28],
         popupAnchor: [0, -25]
@@ -277,13 +309,29 @@ var denpasarselatans = L.geoJson(null, {
       var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Tanggal Pelaksanaan</th><td>" + feature.properties.TEL + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.ADRESS1 + "</td></tr>" + "<tr><th>Deskripsi</th><td>" + feature.properties.DESCRIPTION + "</td></tr>" + "<table>";
       layer.on({
         click: function (e) {
-          $("#feature-title").html(feature.properties.NAME);
-          $("#feature-info").html(content);
-          $("#featureModal").modal("show");
+          var container = L.DomUtil.create('div'),
+          deskripsi = createButton('Deskripsi Lokasi', container),
+          arahkan = createButton('Menuju Lokasi Ini', container);
+  
+          L.popup()
+              .setContent(container)
+              .setLatLng(e.latlng)
+              .openOn(map);
+      
+          L.DomEvent.on(arahkan, 'click', function() {
+            control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
+            map.closePopup();
+          });
+          L.DomEvent.on(deskripsi, 'click', function() {
+            $("#feature-title").html(feature.properties.NAME);
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
+            map.closePopup();
+      });
           highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
         }
       });
-      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/favicon.ico"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/kec3.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       denpasarselatanSearch.push({
         name: layer.feature.properties.NAME,
         address: layer.feature.properties.ADRESS1,
@@ -304,7 +352,7 @@ var denpasartimurs = L.geoJson(null, {
   pointToLayer: function (feature, latlng) {
     return L.marker(latlng, {
       icon: L.icon({
-        iconUrl: "dist/img/favicon.ico",
+        iconUrl: "dist/img/kec4.png",
         iconSize: [24, 28],
         iconAnchor: [12, 28],
         popupAnchor: [0, -25]
@@ -318,13 +366,29 @@ var denpasartimurs = L.geoJson(null, {
       var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Tanggal Pelaksanaan</th><td>" + feature.properties.TEL + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.ADRESS1 + "</td></tr>" + "<table>";
       layer.on({
         click: function (e) {
-          $("#feature-title").html(feature.properties.NAME);
-          $("#feature-info").html(content);
-          $("#featureModal").modal("show");
+          var container = L.DomUtil.create('div'),
+          deskripsi = createButton('Deskripsi Lokasi', container),
+          arahkan = createButton('Menuju Lokasi Ini', container);
+  
+          L.popup()
+              .setContent(container)
+              .setLatLng(e.latlng)
+              .openOn(map);
+      
+          L.DomEvent.on(arahkan, 'click', function() {
+            control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
+            map.closePopup();
+          });
+          L.DomEvent.on(deskripsi, 'click', function() {
+            $("#feature-title").html(feature.properties.NAME);
+            $("#feature-info").html(content);
+            $("#featureModal").modal("show");
+            map.closePopup();
+      });
           highlight.clearLayers().addLayer(L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], highlightStyle));
         }
       });
-      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
+      $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/kec4.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       denpasartimurSearch.push({
         name: layer.feature.properties.NAME,
         address: layer.feature.properties.ADRESS1,
@@ -346,6 +410,8 @@ map = L.map("map", {
   layers: [cartoLight, boroughs, markerClusters, highlight],
   zoomControl: false,
   attributionControl: false
+
+
 });
 
 /* Layer control listeners that allow for a single markerClusters layer */
@@ -400,9 +466,37 @@ map.on("moveend", function (e) {
   syncSidebar();
 });
 
+function createButton(label, container) {
+  var btn = L.DomUtil.create('button', '', container);
+  btn.setAttribute('type', 'button');
+  btn.setAttribute('class', 'leaflet-button');
+  btn.innerHTML = label;
+  return btn;
+}
+
+
+
 /* Clear feature highlight when map is clicked */
 map.on("click", function(e) {
   highlight.clearLayers();
+  var container = L.DomUtil.create('div'),
+        startBtn = createButton('Mulai Dari Lokasi Ini', container),
+        destBtn = createButton('Menuju Lokasi Ini', container);
+
+    L.popup()
+        .setContent(container)
+        .setLatLng(e.latlng)
+        .openOn(map);
+
+    L.DomEvent.on(destBtn, 'click', function() {
+      control.spliceWaypoints(control.getWaypoints().length - 1, 1, e.latlng);
+      map.closePopup();
+    });
+    
+    L.DomEvent.on(startBtn, 'click', function() {
+      control.spliceWaypoints(0, 1, e.latlng);
+      map.closePopup();
+    });
 });
 
 /* Attribution control */
@@ -430,6 +524,7 @@ var zoomControl = L.control.zoom({
   position: "bottomright"
 }).addTo(map);
 
+
 /* GPS enabled geolocation control set to follow the user's location */
 var locateControl = L.control.locate({
   position: "bottomright",
@@ -444,7 +539,7 @@ var locateControl = L.control.locate({
   },
   circleStyle: {
     weight: 1,
-    clickable: false
+    clickable: true
   },
   icon: "fa fa-location-arrow",
   metric: false,
@@ -462,6 +557,15 @@ var locateControl = L.control.locate({
   }
 }).addTo(map);
 
+
+map.locate().on('locationfound', function(e){
+  control.spliceWaypoints(0, 1, e.latlng);
+})
+.on('locationerror', function(e){
+  console.log(e);
+  alert("Gagal Mendapatkan Lokasi Terkini!.");
+});
+
 /* Larger screens get expanded layer control and visible sidebar */
 if (document.body.clientWidth <= 767) {
   var isCollapsed = true;
@@ -469,18 +573,31 @@ if (document.body.clientWidth <= 767) {
   var isCollapsed = false;
 }
 
+var control = L.Routing.control({
+  position: "bottomleft",
+  waypoints: [
+      L.latLng(-8.676742, 115.186333),
+      L.latLng(-8.659603, 115.228813)
+  ],
+  routeWhileDragging: true,
+  geocoder: L.Control.Geocoder.nominatim()
+}).addTo(map);
 
+L.Routing.errorControl(control,{
+  position: "bottomright"
+}).addTo(map);
 
 var groupedOverlays = {
   "Lokasi": {
-    "&nbsp;Denpasar Selatan": denpasarselatanLayer,
-    "&nbsp;Denpasar Timur": denpasartimurLayer,
-    "&nbsp;Denpasar Barat": denpasarbaratLayer,
-    "&nbsp;Denpasar Utara": denpasarutaraLayer
+    "<img src='dist/img/kec3.png' width='16' height='16'>&nbsp;Denpasar Selatan": denpasarselatanLayer,
+    "<img src='dist/img/kec4.png' width='16' height='16'>&nbsp;Denpasar Timur": denpasartimurLayer,
+    "<img src='dist/img/kec2.png' width='16' height='16'>&nbsp;Denpasar Barat": denpasarbaratLayer,
+    "<img src='dist/img/kec1.png' width='16' height='16'>&nbsp;Denpasar Utara": denpasarutaraLayer
   },
 };
 
 var layerControl = L.control.groupedLayers("", groupedOverlays, {
+  position: "topright",
   collapsed: isCollapsed
 }).addTo(map);
 
@@ -510,7 +627,7 @@ $(document).one("ajaxStop", function () {
   featureList.sort("feature-name", {order:"asc"});
 
   var boroughsBH = new Bloodhound({
-    name: "Boroughs",
+    name: "DENPASAR",
     datumTokenizer: function (d) {
       return Bloodhound.tokenizers.whitespace(d.name);
     },
@@ -613,7 +730,7 @@ $(document).one("ajaxStop", function () {
     displayKey: "name",
     source: denpasarutaraBH.ttAdapter(),
     templates: {
-      header: "<h4 class='typeahead-header'><img src='dist/img/favicon.ico' width='24' height='28'>&nbsp;Denpasar Selatan</h4>",
+      header: "<h4 class='typeahead-header'><img src='dist/img/kec1.png' width='24' height='28'>&nbsp;Denpasar Selatan</h4>",
       suggestion: Handlebars.compile(["{{name}}<br>&nbsp;<small>{{address}}</small>"].join(""))
     }
   },{
@@ -621,7 +738,7 @@ $(document).one("ajaxStop", function () {
     displayKey: "name",
     source: denpasarbaratBH.ttAdapter(),
     templates: {
-      header: "<h4 class='typeahead-header'><img src='dist/img/favicon.ico' width='24' height='28'>&nbsp;Denpasar Selatan</h4>",
+      header: "<h4 class='typeahead-header'><img src='dist/img/kec2.png' width='24' height='28'>&nbsp;Denpasar Selatan</h4>",
       suggestion: Handlebars.compile(["{{name}}<br>&nbsp;<small>{{address}}</small>"].join(""))
     }
   }, {
@@ -629,7 +746,7 @@ $(document).one("ajaxStop", function () {
     displayKey: "name",
     source: denpasarselatanBH.ttAdapter(),
     templates: {
-      header: "<h4 class='typeahead-header'><img src='dist/img/favicon.ico' width='24' height='28'>&nbsp;Denpasar Selatan</h4>",
+      header: "<h4 class='typeahead-header'><img src='dist/img/kec3.png' width='24' height='28'>&nbsp;Denpasar Selatan</h4>",
       suggestion: Handlebars.compile(["{{name}}<br>&nbsp;<small>{{address}}</small>"].join(""))
     }
   },{
@@ -637,7 +754,7 @@ $(document).one("ajaxStop", function () {
     displayKey: "name",
     source: denpasartimurBH.ttAdapter(),
     templates: {
-      header: "<h4 class='typeahead-header'><img src='dist/img/favicon.ico' width='24' height='28'>&nbsp;Denpasar Timur</h4>",
+      header: "<h4 class='typeahead-header'><img src='dist/img/kec4.png' width='24' height='28'>&nbsp;Denpasar Timur</h4>",
       suggestion: Handlebars.compile(["{{name}}<br>&nbsp;<small>{{address}}</small>"].join(""))
     }
   }, {
@@ -648,7 +765,7 @@ $(document).one("ajaxStop", function () {
       header: "<h4 class='typeahead-header'><img src='dist/img/globe.png' width='25' height='25'>&nbsp;GeoNames</h4>"
     }
   }).on("typeahead:selected", function (obj, datum) {
-    if (datum.source === "Boroughs") {
+    if (datum.source === "DENPASAR") {
       map.fitBounds(datum.bounds);
     }
     if (datum.source === "Denpasar Utara") {
@@ -713,3 +830,5 @@ if (!L.Browser.touch) {
 } else {
   L.DomEvent.disableClickPropagation(container);
 }
+
+

@@ -65,7 +65,7 @@ if (mysqli_num_rows($q_kode)!=0)
         <h4 class="modal-title">Pilih Lokasi</h4>
 		<p class="modal-title">Mungkin Penggunaan Pengisian Alamat Otomtasi Kurang Akurasi, Isikan Manual Jika Alamat Yang Akan Diisi Berdasarkan Tempat Yang Tertentu</p>
       </div>
-        <div class="modal-body" id='map-canvas'></div>
+        <div class="modal-body" id='map-canvas' style="padding: 0;"></div>
       <div id="buttonOK" class="modal-footer">
 	  <p id="infoAlamat" style="text-align:left;"></p>
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">OK</button>
@@ -113,7 +113,7 @@ Tambah
 		   <div class="form-group">
 			<label for="tanggal_jadwal" class="control-label">Tanggal Jadwal</label>
 			<div>
-			  <input type="date" class="form-control" id="tanggal_jadwal" name="tanggal_jadwal" required>
+			  <input class="form-control" id="tanggal_jadwal" name="tanggal_jadwal" placeholder="DD/MM/YYYY" required>
 			</div>
 		  </div>
 		  <div class="form-group">
@@ -127,13 +127,13 @@ Tambah
 			<div>
 			  <select class="form-control" id="hari_jadwal" name="hari_jadwal" required>
 			  	<option>Pilih Hari</option>
+				<option value="Minggu">Minggu</option>  
             	<option value="Senin">Senin</option>
                 <option value="Selasa">Selasa</option>
                 <option value="Rabu">Rabu</option>
                 <option value="Kamis">Kamis</option>
                 <option value="Jumat">Jumat</option>
                 <option value="Sabtu">Sabtu</option>
-                <option value="Minggu">Minggu</option>
             </select>
 			</div>
 		  </div>
@@ -201,7 +201,7 @@ if (isset($_POST['submit'])){
 	$t_lng_peta_jadwal 	= htmlspecialchars($_POST['lng_peta_jadwal'], ENT_QUOTES, 'UTF-8');
 	$t_link_peta_jadwal = htmlspecialchars($_POST['link_peta_jadwal'], ENT_QUOTES, 'UTF-8');
 	$q_tambah	= 'INSERT INTO jadwal VALUES("'.$t_id_jadwal.'","'.$t_instasi.'","'.$t_target.'","'.$t_tanggal_jadwal.'","'.$t_hari_jadwal.'","'.$t_jam_jadwal.'","'.$t_lokasi_jadwal.'","'.$t_kecamatan.'","'.$t_lat_peta_jadwal.'","'.$t_lng_peta_jadwal.'","'.$t_link_peta_jadwal.'")';
-	$q_tambah	= mysqli_query(koneksi_global(),$q_tambah) or die(mysqli_error());
+	$q_tambah	= mysqli_query(koneksi_global(),$q_tambah) or die(mysqli_error(koneksi_global()));
 	if ($q_tambah){
 		echo "<script>
 				$(document).ready(function(){

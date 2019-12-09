@@ -17,8 +17,8 @@
 
           <p>
             Sepertinya Halaman yang kamu cari tidak kami temukan.
-            Kamu bisa kembali <a href="<?php echo $url;?>admin/">ke halaman Dashboard</a>.
-          </p>
+            Kamu bisa kembali <a href="<?php echo $url; ?>admin/">ke halaman Dashboard</a>.
+          </p>z
         </div>
         <!-- /.error-content -->
       </div>

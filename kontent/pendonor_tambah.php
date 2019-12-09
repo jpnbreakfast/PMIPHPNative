@@ -176,8 +176,7 @@ if (isset($_POST['submit'])){
 		setTimeout(function(){window.location='".base_url()."/admin/pendonor/';}, 1000);
 	 </script>";
 }else{
-echo "
-<script>
+echo "<script>
 $(document).ready(function () {
 		Swal.fire({
 			title: 'Kesalahan!',

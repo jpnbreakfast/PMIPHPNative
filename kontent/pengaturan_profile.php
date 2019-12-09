@@ -115,7 +115,7 @@ Pengaturan Profile
 					})
 				});
 			</script>";
-					$uploadOk = 0;
+			$uploadOk = 0;
 			}
 			if ($uploadOk != 0) {
 				unlink("../img/".dapatkaninfo(username)[2]);

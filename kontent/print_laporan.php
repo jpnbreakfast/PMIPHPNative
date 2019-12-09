@@ -3,6 +3,7 @@
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,63 +23,66 @@
   <![endif]-->
 
   <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body onload="window.print();" onafterprint="window.history.back();">
-<div class="wrapper">
-  <!-- Main content -->
-  <section class="invoice">
-    <!-- title row -->
-    <div class="row">
-      <div class="col-xs-12">
-        <h2 class="page-header">
-          PMI Denpasar
-          <small class="pull-right">Tanggal Laporan: <?php echo date('j-F-Y'); ?></small>
-        </h2>
-      </div>
-      <!-- /.col -->
-    </div>
-    <!-- info row -->
-    <div class="row invoice-info">
-      <div class="col-sm-4 invoice-col">
-        <address>
-          <strong>PMI Denpasar</strong><br>
-          Br. Kelod Kauh Kangin<br>
-          Denpasar, ID 57410<br>
-          Phone: (666) 666-6666<br>
-          Email: info@rameses.com
-        </address>
-      </div>
-      <!-- /.col -->
-      <div class="col-sm-4 invoice-col">
-        <b>Laporan Transaksi</b>
-        <br>
-        <b>Data Tanggal:</b> <?php echo  date('j-F-Y',strtotime($_GET['bulandari'])); ?> - <?php echo  date('j-F-Y',strtotime($_GET['bulanke'])); ?>
-      </div>
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
 
-    <!-- Table row -->
-    <div class="row">
-      <div class="col-xs-12 table-responsive">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>No.</th>
-            <th>ID Transaksi</th>
-            <th>ID Pendonor</th>
-            <th>Nama Pendonor</th>
-            <th>Nomor Kantong Darah</th>
-            <th>Golongan Darah</th>
-            <th>ID Jadwal</th>
-            <th>Tanggal</th>
-            <th>Pengambilan</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tbody>
-        <?php
+<body onload="window.print();" onafterprint="window.history.back();">
+  <div class="wrapper">
+    <!-- Main content -->
+    <section class="invoice">
+      <!-- title row -->
+      <div class="row">
+        <div class="col-xs-12">
+          <h2 class="page-header">
+            PMI Denpasar
+            <small class="pull-right">Tanggal Laporan: <?php echo date('j-F-Y'); ?></small>
+          </h2>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- info row -->
+      <div class="row invoice-info">
+        <div class="col-sm-4 invoice-col">
+          <address>
+            <strong>PMI Denpasar</strong><br>
+            Br. Kelod Kauh Kangin<br>
+            Denpasar, ID 57410<br>
+            Phone: (666) 666-6666<br>
+            Email: info@rameses.com
+          </address>
+        </div>
+        <!-- /.col -->
+        <div class="col-sm-4 invoice-col">
+          <b>Laporan Transaksi</b>
+          <br>
+          <b>Data Tanggal:</b> <?php echo  date('j-F-Y',strtotime($_GET['bulandari'])); ?> -
+          <?php echo  date('j-F-Y',strtotime($_GET['bulanke'])); ?>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+      <!-- Table row -->
+      <div class="row">
+        <div class="col-xs-12 table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>ID Transaksi</th>
+                <th>ID Pendonor</th>
+                <th>Nama Pendonor</th>
+                <th>Nomor Kantong Darah</th>
+                <th>Golongan Darah</th>
+                <th>ID Jadwal</th>
+                <th>Tanggal</th>
+                <th>Pengambilan</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tbody>
+              <?php
         
 		$penomoran = 0;
 		$query = transaksi_report($_GET['bulandari'],$_GET['bulanke']);
@@ -95,47 +99,48 @@
 			
 			$penomoran++;
 			?>
-			<tr>
-				  <td><?php echo $penomoran.'.'?></td>
-				  <td><?php echo $id_transaksi;?></td>
-				  <td><?php echo $id_pendonor;?></td>
-				  <td><?php echo $nama_pendonor;?></td>
-				  <td><?php echo $nomor_kantong_darah;?></td>
-				  <td><?php echo $golongan_darah;?></td>
-				  <td><?php echo $id_jadwal;?></td>
-				  <td><?php echo date('j-F-Y',strtotime($tanggal));?></td>
-				  <td><?php echo $pengambilan;?></td>
-				</tr>
-		<?php
+              <tr>
+                <td><?php echo $penomoran.'.'?></td>
+                <td><?php echo $id_transaksi;?></td>
+                <td><?php echo $id_pendonor;?></td>
+                <td><?php echo $nama_pendonor;?></td>
+                <td><?php echo $nomor_kantong_darah;?></td>
+                <td><?php echo $golongan_darah;?></td>
+                <td><?php echo $id_jadwal;?></td>
+                <td><?php echo date('j-F-Y',strtotime($tanggal));?></td>
+                <td><?php echo $pengambilan;?></td>
+              </tr>
+              <?php
 		}
         }
         ?>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.col -->
       </div>
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
+      <!-- /.row -->
 
-    <div class="row">
-      <!-- accepted payments column -->
-      <div class="col-xs-6">
+      <div class="row">
+        <!-- accepted payments column -->
+        <div class="col-xs-6">
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-6">
+          <center>
+            <p>Denpasar, <?php echo date('j-F-Y'); ?></p>
+            <br>
+            <br>
+            <p>(Caca Handika)</p>
+          </center>
+        </div>
+        <!-- /.col -->
       </div>
-      <!-- /.col -->
-      <div class="col-xs-6">
-	  <center>
-        <p>Denpasar, <?php echo date('j-F-Y'); ?></p>
-		<br>
-        <br>
-        <p>(Caca Handika)</p>
-	  </center>
-      </div>
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- ./wrapper -->
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- ./wrapper -->
 </body>
+
 </html>

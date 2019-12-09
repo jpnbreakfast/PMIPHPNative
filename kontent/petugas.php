@@ -53,7 +53,7 @@ Petugas
 
 	<div class="nav-tabs-custom">
 	<ul id="tabpetugas" class="nav nav-tabs">
-	  <li class="active"><a href="#semua" id="smdata" data-toggle="tab">Semua</a></li>
+	  <li><a href="#semua" id="smdata" data-toggle="tab">Semua</a></li>
 	  <li><a href="#dokter" data-toggle="tab">Dokter</a></li>
 	  <li><a href="#supir" data-toggle="tab">Supir</a></li>
 	  <li><a href="#aftaper" data-toggle="tab">Aftaper</a></li>

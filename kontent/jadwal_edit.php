@@ -15,7 +15,7 @@ if(isset($_GET['id'])){
 		$lat_peta_jadwal	= htmlspecialchars($r['lat_jadwal'], ENT_QUOTES, 'UTF-8');
 		$lng_peta_jadwal 	= htmlspecialchars($r['lng_jadwal'], ENT_QUOTES, 'UTF-8');
 		$link_peta_jadwal 	= htmlspecialchars($r['link_jadwal'], ENT_QUOTES, 'UTF-8');
-		$opsihari  			= array('Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu');
+		$opsihari  			= array('Minggu' ,'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu');
 		$opsikecamatan 		= array('Denpasar Timur' ,'Denpasar Selatan', 'Denpasar Barat', 'Denpasar Utara');
 	}else{
 		$id_jadwal			= '';
@@ -52,14 +52,14 @@ if(isset($_GET['id'])){
 	sembunyiform();
 </script>
 <div class="modal fade" id="mapModal">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Pilih Lokasi</h4>
 		<p class="modal-title">Mungkin Penggunaan Pengisian Alamat Otomtasi Kurang Akurasi, Isikan Manual Jika Alamat Yang Akan Diisi Berdasarkan Tempat Yang Tertentu</p>
       </div>
-        <div class="modal-body" id='map-canvas'></div>
+        <div class="modal-body" id='map-canvas' style="padding: 0;"></div>
       <div id="buttonOK" class="modal-footer">
 	  	<p id="infoAlamat" style="text-align:left;"></p>
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">OK</button>
@@ -107,7 +107,7 @@ Ubah
 		   <div class="form-group">
 			<label for="tanggal_jadwal" class="control-label">Tanggal Jadwal</label>
 			<div>
-			  <input type="date" class="form-control" id="tanggal_jadwal" value="<?php echo $tanggal_jadwal;?>" name="tanggal_jadwal" required>
+			  <input class="form-control" id="tanggal_jadwal" placeholder="DD/MM/YYYY" value="<?php echo $tanggal_jadwal;?>" name="tanggal_jadwal" required>
 			</div>
 		  </div>
 		  <div class="form-group">
@@ -119,7 +119,7 @@ Ubah
 		  <div class="form-group">
 			<label for="hari_jadwal" class="control-label">Hari Jadwal</label>
 			<div>
-			  <select class="form-control" id="tanggal_jadwal" name="hari_jadwal" required>
+			  <select class="form-control" id="hari_jadwal" name="hari_jadwal" required>
 			  <option>Pilih Hari</option>
             	<?php
 				foreach($opsihari as $option){

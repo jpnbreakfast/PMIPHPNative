@@ -17,6 +17,7 @@
     </div>
   </div>
   <div class="row">
+
     <div class="col-md-6">
       <div class="box">
         <div class="box-header">
@@ -25,7 +26,22 @@
         <!-- /.box-header -->
         <div class="box-body padding">
           <div class="chart">
-            <canvas id="areaChartDarah" style="height:250px"></canvas>
+            <canvas id="areaChartDarah"></canvas>
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Jumlah Kantong Darah</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body padding">
+          <div class="chart">
+            <canvas id="areaChartDarahTotal"></canvas>
           </div>
         </div>
         <!-- /.box-body -->
@@ -40,7 +56,7 @@
         <!-- /.box-header -->
         <div class="box-body padding">
           <div class="chart">
-            <canvas id="areaChartPendonor" style="height:250px"></canvas>
+            <canvas id="areaChartPendonor"></canvas>
           </div>
         </div>
         <!-- /.box-body -->
@@ -50,79 +66,193 @@
 </section>
 
 <script>
-  $(function () {
-    var areaChartDCanvas = $('#areaChartDarah').get(0).getContext('2d')
-    var areaChartD       = new Chart(areaChartDCanvas)
-    var areaChartDarah = {
-      labels  : ['A', 'B', 'O', 'AB'],
-      datasets: [
-        {
-          label               : 'Darah',
-          fillColor           : 'rgba(221, 75, 57, 1)',
-          strokeColor         : 'rgba(210, 214, 222, 1)',
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [<?php echo dapatkantotaldarah('A','');?>, <?php echo dapatkantotaldarah('B','');?>, <?php echo dapatkantotaldarah('O','');?>, <?php echo dapatkantotaldarah('AB','');?>]
-        }
-      ]
-    }
-	
-	var areaChartPCanvas = $('#areaChartPendonor').get(0).getContext('2d')
-    var areaChartP       = new Chart(areaChartPCanvas)
-    var areaChartPendonor = {
-      labels  : [
-      <?php
-        $date = null;
-        foreach (range(1, 12) as $number) {   
-            $date .= "'".date("F", mktime(0, 0, 0, $number, 10))."'".','; 
-               
-        }
-        echo rtrim($date, ",");   
-      ?>
-      ],
-      datasets: [
-        {
-          label               : 'Pendonor',
-          fillColor           : 'rgba(221, 75, 57, 1)',
-          strokeColor         : 'rgba(210, 214, 222, 1)',
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [<?php
-                                    $data = null;
-                                    foreach (range(1, 12) as $number) {   
-                                        $data .= transaksi_chart($number).','; 
+    function chartDarahRhesus() {
+        $.ajax({
+                url: '../kontent/ajax/chartSemua.php?jenis=darah',
+                success: function (result) {
+                    var datachart = JSON.parse(result);
+                    var labelchart = [];
+                    var valuechartrhesusplus = [];
+                    var valuechartrhesusminus = [];
+                    for (var i in datachart) {
+
+                        labelchart.push(datachart[i].label);
+                        valuechartrhesusplus.push(datachart[i].darahrhesusuplus);
+                        valuechartrhesusminus.push(datachart[i].darahresusminus);
+
+                    }
+                    var ctx = document.getElementById("areaChartDarah");
+                    if (ctx) {
+                        ctx.height = 250;
+                        var ChartCountry = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                datasets: [{
+                                    label: "Rhesus +",
+                                    data: valuechartrhesusplus,
+                                    backgroundColor: [
+                                        "rgba(0, 123, 255,0.9)",
+                                        "rgba(0, 123, 255,0.7)",
+                                        "rgba(0, 123, 255,0.5)",
+                                        "rgba(0,0,0,0.07)"
+                                    ],
+                                    hoverBackgroundColor: [
+                                        "rgba(0, 123, 255,0.9)",
+                                        "rgba(0, 123, 255,0.7)",
+                                        "rgba(0, 123, 255,0.5)",
+                                        "rgba(0,0,0,0.07)"
+                                    ]
+
+                                },
+                                {
+                                      label: "Rhesus -",
+                                      data: valuechartrhesusminus,
+                                      backgroundColor: [
+                                          "rgba(0, 123, 255,0.9)",
+                                          "rgba(0, 123, 255,0.7)",
+                                          "rgba(0, 123, 255,0.5)",
+                                          "rgba(0,0,0,0.07)"
+                                      ],
+                                      hoverBackgroundColor: [
+                                          "rgba(0, 123, 255,0.9)",
+                                          "rgba(0, 123, 255,0.7)",
+                                          "rgba(0, 123, 255,0.5)",
+                                          "rgba(0,0,0,0.07)"
+                                      ]
+
+                                  }],
+                                labels: labelchart
+                            },
+                            options: {
+                                legend: {
+                                    position: 'top',
+                                    labels: {
+                                        fontFamily: 'Poppins'
                                     }
-                                    echo rtrim($data, ",");   
-                                  ?>]
+
+                                },
+                                responsive: true
+                            }
+                        });
+                    }
+                }
+                });
         }
-      ]
-    }
-    var areaChartOptions = {
-      showScale               : true,
-      scaleShowGridLines      : false,
-      scaleGridLineColor      : 'rgba(0,0,0,.05)',
-      scaleGridLineWidth      : 1,
-      scaleShowHorizontalLines: true,
-      scaleShowVerticalLines  : true,
-      bezierCurve             : true,
-      bezierCurveTension      : 0.3,
-      pointDot                : false,
-      pointDotRadius          : 4,
-      pointDotStrokeWidth     : 1,
-      pointHitDetectionRadius : 20,
-      datasetStroke           : true,
-      datasetStrokeWidth      : 2,
-      datasetFill             : true,
-      legendTemplate          : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].lineColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
-      maintainAspectRatio     : true,
-      responsive              : true,
-	  
-    }
-    areaChartD.Line(areaChartDarah, areaChartOptions)
-	areaChartP.Line(areaChartPendonor, areaChartOptions)
-  })
+    
+        function chartDarahTotal() {
+        $.ajax({
+                url: '../kontent/ajax/chartSemua.php?jenis=darahtotal',
+                success: function (result) {
+                    var datachart = JSON.parse(result);
+                    var labelchart = [];
+                    var valuechart = [];
+                    for (var i in datachart) {
+
+                        labelchart.push(datachart[i].label);
+                        valuechart.push(datachart[i].total);
+
+                    }
+                    var ctx = document.getElementById("areaChartDarahTotal");
+                    if (ctx) {
+                        ctx.height = 250;
+                        var ChartCountry = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                datasets: [{
+                                    data: valuechart,
+                                    backgroundColor: [
+                                        "rgba(0, 123, 255,0.9)",
+                                        "rgba(0, 123, 255,0.7)",
+                                        "rgba(0, 123, 255,0.5)",
+                                        "rgba(0,0,0,0.07)"
+                                    ],
+                                    hoverBackgroundColor: [
+                                        "rgba(0, 123, 255,0.9)",
+                                        "rgba(0, 123, 255,0.7)",
+                                        "rgba(0, 123, 255,0.5)",
+                                        "rgba(0,0,0,0.07)"
+                                    ]
+
+                                }],
+                                labels: labelchart
+                            },
+                            options: {
+                                legend: {
+                                    position: 'top',
+                                    labels: {
+                                        fontFamily: 'Poppins'
+                                    }
+
+                                },
+                                responsive: true
+                            }
+                        });
+                    }
+                }
+                });
+        }
+
+        function chartJumlahPendonor() {
+            $.ajax({
+                url: '../kontent/ajax/chartSemua.php?jenis=pendonor',
+                success: function (result) {
+                    var datachart = JSON.parse(result);
+                    var labelchart = [];
+                    var valuechart = [];
+                    for (var i in datachart) {
+
+                        labelchart.push(datachart[i].label);
+                        valuechart.push(datachart[i].data);
+
+                    }
+                var ctx = document.getElementById("areaChartPendonor");
+                    var ctx = document.getElementById("areaChartPendonor");
+                    if (ctx) {
+                        ctx.height = 250;
+                        var ChartRevenue = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labelchart,
+                                datasets: [{
+                                    label: "Revenue",
+                                    data: valuechart,
+                                    borderColor: "rgba(0, 123, 255, 0.9)",
+                                    borderWidth: "0",
+                                    backgroundColor: "rgba(0, 123, 255, 0.5)"
+                                }]
+                            },
+                            options: {
+                                legend: {
+                                    position: 'top',
+                                    labels: {
+                                        fontFamily: 'Poppins'
+                                    }
+
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        ticks: {
+                                            fontFamily: "Poppins"
+
+                                        }
+                                    }],
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true,
+                                            fontFamily: "Poppins"
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        $(document).on("ready", (function (e) {
+          e.preventDefault();
+          $.when(chartDarahTotal(), chartJumlahPendonor(), chartDarahRhesus()).done(function () {
+
+          });
+        }));
 </script>
