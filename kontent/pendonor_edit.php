@@ -182,6 +182,7 @@ if (isset($_POST['submit'])){
 	$q_edit	= 'UPDATE pendonor SET nama_lengkap_pendonor="'.$e_nama_lengkap_pendonor.'", jenis_kelamin_pendonor="'.$e_jenis_kelamin_pendonor.'", tanggal_lahir_pendonor="'.$e_tanggal_lahir_pendonor.'", tempat_lahir_pendonor="'.$e_tempat_lahir_pendonor.'", alamat_pendonor="'.$e_alamat_pendonor.'", pekerjaan_pendonor="'.$e_pekerjaan_pendonor.'", golongan_darah_pendonor="'.$e_golongan_darah_pendonor.'", no_telp_pendonor="'.$e_no_telp_pendonor.'" WHERE id_pendonor="'.$e_id_pendonor.'"';
 	$p_edit	= mysqli_query(koneksi_global(),$q_edit) or die(mysqli_error());
 	if ($p_edit){
+		simpanLog(dapatkaninfo(username)[3], "Ubah", "pendonor", "$e_id_pendonor", "ID Pendonor : $e_id_pendonor <br/> Nama Lengkap : $e_nama_lengkap_pendonor <br/> Jenis Kelamin : $e_jenis_kelamin_pendonor <br/> Tanggal Lahir : $e_tanggal_lahir_pendonor <br/> Tempat Lahir : $e_tempat_lahir_pendonor <br/> Alamat : $e_alamat_pendonor <br/> Pekerjaan : $e_pekerjaan_pendonor <br/> Golongan Darah : $e_golongan_darah_pendonor <br/> Nomor Telepon : $e_no_telp_pendonor");
 		echo "<script>
 		$(document).ready(function(){
 			Swal.fire({

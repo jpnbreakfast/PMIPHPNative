@@ -13,12 +13,6 @@ if (mysqli_num_rows($query) != 0) {
         $i++;
         $instasi_jadwal = htmlspecialchars($n['instasi_jadwal'], ENT_QUOTES, 'UTF-8');
         $target_jumlah_jadwal = htmlspecialchars($n['target_jumlah_jadwal'], ENT_QUOTES, 'UTF-8');
-        $doketer_jadwallokasi = htmlspecialchars($n['doketer_jadwallokasi'], ENT_QUOTES, 'UTF-8');
-        $tensi_jadwallokasi = htmlspecialchars($n['tensi_jadwallokasi'], ENT_QUOTES, 'UTF-8');
-        $hb_jadwallokasi = htmlspecialchars($n['hb_jadwallokasi'], ENT_QUOTES, 'UTF-8');
-        $aftaper_jadwallokasi = htmlspecialchars($n['aftaper_jadwallokasi'], ENT_QUOTES, 'UTF-8');
-        $admin_jadwallokasi = htmlspecialchars($n['admin_jadwallokasi'], ENT_QUOTES, 'UTF-8');
-        $supir_jadwallokasi = htmlspecialchars($n['supir_jadwallokasi'], ENT_QUOTES, 'UTF-8');
         $tanggal_jadwal = htmlspecialchars($n['tanggal_jadwal'], ENT_QUOTES, 'UTF-8');
         $jam_jadwal = htmlspecialchars($n['jam_jadwal'], ENT_QUOTES, 'UTF-8');
         $alamat_jadwal = htmlspecialchars($n['alamat_jadwal'], ENT_QUOTES, 'UTF-8');
@@ -33,13 +27,11 @@ if (mysqli_num_rows($query) != 0) {
     'type' => 'Feature',
     'id' => $i, 
     'properties' => array(
-      'NAME' => $n['instasi_jadwal'],
-      'TEL' => $n['id_jadwallokasi'],
-      'DESCRIPTION' => $n['id_jadwallokasi'],
-      'ADRESS1' => $n['id_jadwallokasi'],
-      'ADDRESS2' => $n['id_jadwallokasi'],
-      'CITY' => $n['id_jadwallokasi'],
-      'ZIP' => $n['id_jadwallokasi']
+      'NAME' => $instasi_jadwal,
+      'WAKTUDANTANGGAL' => $jam_jadwal .' '. date('j-F-Y',strtotime($tanggal_jadwal)),
+      'ALAMAT' => $alamat_jadwal,
+      'KECAMATAN' => $kecamatan_jadwal,
+      'LINK' => $link_jadwal
 
     ),
     'geometry' => array(
@@ -61,12 +53,10 @@ if (mysqli_num_rows($query) != 0) {
     'id' => $i, 
     'properties' => array(
       'NAME' => "",
-      'TEL' => "",
-      'DESCRIPTION' => "",
-      'ADRESS1' => "",
-      'ADDRESS2' => "",
-      'CITY' => "",
-      'ZIP' => ""
+      'WAKTUDANTANGGAL' => "",
+      'ALAMAT' => "",
+      'KECAMATAN' => "",
+      'LINK' => ""
 
     ),
     'geometry' => array(

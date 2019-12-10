@@ -195,3 +195,61 @@ function transaksi_chart($bulan){
 function transaksi_report($bulandari,$bulanke){
     return mysqli_query($GLOBALS['conn'],'SELECT * FROM `transaksi` WHERE `tanggal` BETWEEN "'.$bulandari.'" AND "'.$bulanke.'"');
 }
+
+function dapatkantotaldaerah($kec)
+{
+    $q = "SELECT COUNT(*) FROM jadwaldanlokasi WHERE kecamatan_jadwal = '$kec';";
+    $query = mysqli_query($GLOBALS['conn'], $q);
+    $result = mysqli_fetch_array($query);
+    return $result[0];
+}
+
+function simpanLog($id_petugas,$aksi,$nama_tabel,$id_data_table,$deskripsi){
+    $id_petugas = htmlspecialchars($id_petugas, ENT_QUOTES, 'UTF-8');
+    $aksi = htmlspecialchars($aksi, ENT_QUOTES, 'UTF-8');
+    $nama_tabel = htmlspecialchars($nama_tabel, ENT_QUOTES, 'UTF-8');
+    $id_data_table = htmlspecialchars($id_data_table, ENT_QUOTES, 'UTF-8');
+    $deskripsi = htmlspecialchars($deskripsi, ENT_QUOTES, 'UTF-8');
+    $waktu = date("Y-m-d H:i:s");
+
+    $q_kode = mysqli_query($GLOBALS['conn'], 'SELECT * FROM `log`');
+
+    $kodt_baru = '';
+    $angka_baru = 0;
+    $kata = 'log';
+
+    if (mysqli_num_rows($q_kode) != 0) {
+        while ($r_kode = mysqli_fetch_array($q_kode)) {
+            $kode = $r_kode['id_log'];
+            $angka_kode = str_replace($kata, '', $kode);
+
+            if ($angka_baru < $angka_kode) {
+                $angka_baru = $angka_kode;
+                $angka = $angka_baru + 1;
+                $kodt_baru = $kata . '' . $angka;
+            }
+        }
+    } else {
+        $kodt_baru = $kata . '1';
+    }
+
+    $q_tambah = 'INSERT INTO `log` VALUES("' . $kodt_baru . '","' . $id_petugas . '","' . $waktu . '","' . $aksi . '","' . $id_data_table . '","' . $nama_tabel . '","' . $deskripsi . '")';
+    $q_tambah = mysqli_query(koneksi_global(), $q_tambah) or die(mysqli_error());
+}
+
+function dapatkandatalogperuser($idpetugas)
+{
+    return mysqli_query($GLOBALS['conn'], 'SELECT * FROM `log` WHERE id_petugas = "' . $idpetugas . '"');
+}
+
+function dapatkandatalogsemua($type,$bulandari,$bulanke)
+{
+    if($type == "semua"){
+        $query = "SELECT `log`.*,petugas.nama_petugas FROM `log` JOIN petugas ON `log`.id_petugas = petugas.id_petugas";
+    }else{
+        $query = "SELECT `log`.*,petugas.nama_petugas FROM `log` JOIN petugas ON `log`.id_petugas = petugas.id_petugas WHERE CONVERT(`waktu`,DATE) BETWEEN '$bulandari' AND '$bulanke'";
+    }
+    
+    return mysqli_query($GLOBALS['conn'], $query);
+}
+

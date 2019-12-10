@@ -62,7 +62,7 @@
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
 </head>
-<body class="hold-transition skin-red sidebar-mini">
+<body class="hold-transition skin-red fixed sidebar-mini">
 <div class="wrapper">
 
   <!-- Main Header -->
@@ -169,6 +169,8 @@
 		<li><a href="<?php echo $url; ?>admin/laptransaksi"><i class="fa fa-file"></i> <span>Transaksi</span></a></li>
 		<li class="header">Profile</li>
 		<li><a href="<?php echo $url; ?>admin/profile"><i class="fa fa-gears"></i> <span>Pengaturan Profile</span></a></li>
+    <li class="header">Log Aktivitas</li>
+		<li><a href="<?php echo $url; ?>admin/logaktivitas"><i class="fa fa-history"></i> <span>Log</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>
@@ -198,6 +200,8 @@
 			include('../kontent/statistikdata.php');
 		}else if($_GET["halaman"] == "laptransaksi"){
 			include('../kontent/report_transaksi.php');
+		}else if($_GET["halaman"] == "logaktivitas"){
+			include('../kontent/logaktivitas.php');
 		}else{
 			include('../kontent/404.php');
 		}
@@ -216,6 +220,8 @@
     </div>
     <strong>Copyright &copy; 2019 PMI Denpasar.</strong>
   </footer>
+
+<script src="<?php echo $url; ?>dist/js/jquery.slimscroll.min.js"></script>
 <script>
   function datatable() {
     $.fn.dataTable.ext.errMode = 'none';

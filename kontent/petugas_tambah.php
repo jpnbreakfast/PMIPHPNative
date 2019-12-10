@@ -152,6 +152,7 @@ if(cek_user('petugas',$e_nama_petugas)=='sama'){
 	$q_edit	= 'INSERT INTO petugas VALUES("'.$e_id_petugas.'", "'.$e_username_petugas.'", "'.$e_nama_petugas.'", "'.$e_posisi_petugas.'", "'.$e_foto.'")';
 	$p_edit	= mysqli_query(koneksi_global(),$q_edit) or die(mysqli_error());
 	if ($p_edit){
+		simpanLog(dapatkaninfo(username)[3], "Tambah", "petugas", "$e_id_petugas", "ID Petugas : $e_id_petugas <br/> Posisi : $e_posisi_petugas <br/> Nama : $e_nama_petugas");
 			$nomorlogin = intval(dapatkantotal('login'))+1;
 			$q_edit_password 	= 'INSERT INTO login VALUES("'.$nomorlogin.'","'.$e_username_petugas.'","'.password_hash($e_password_petugas, PASSWORD_DEFAULT).'")';
 			$p_edit_password	= mysqli_query(koneksi_global(),$q_edit_password) or die(mysqli_error());

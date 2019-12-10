@@ -186,6 +186,8 @@ if (isset($_POST['submit'])){
 	$q_tambah	= 'INSERT INTO transaksi VALUES("'.$t_id_transaksi.'","'.$t_id_pendonor.'","'.dapatkaninfo(username)[3].'" ,"'.$t_nama_pendonor.'","'.$t_nomor_kantong_darah.'","'.$t_gol_dar.'","'.$t_id_jadwal.'","'.$t_tanggal.'","'.$t_pengambilan.'")';
 	$q_tambah	= mysqli_query(koneksi_global(),$q_tambah) or die(mysqli_error());
 	if ($q_tambah){
+		simpanLog(dapatkaninfo(username)[3], "Tambah", "transaksi", "$t_id_transaksi", "ID Transaksi : $t_id_transaksi <br/> ID Pendonor : $t_id_pendonor <br/> Nama Pendonor : $t_nama_pendonor <br/> Nomor Kantong Darah : $t_nomor_kantong_darah <br/> Golongan Darah : $t_gol_dar <br/> ID Jadwal : $t_id_jadwal <br/> Tanggal : $t_tanggal <br/> Pengambilan : $t_pengambilan");
+
 		echo "<script>
 		$(document).ready(function(){
 			Swal.fire({

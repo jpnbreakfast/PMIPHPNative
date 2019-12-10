@@ -79,7 +79,7 @@ include('fungsi.php');
 				if($n>0){ 
 					if (password_verify($password, htmlspecialchars($f['password_login'], ENT_QUOTES, 'UTF-8'))) {
 					$_SESSION['sesi']= 'admin';
-					$_SESSION['username']= htmlspecialchars($f['username_login'], ENT_QUOTES, 'UTF-8');	
+					$_SESSION['username'] = htmlspecialchars($f['username_login'], ENT_QUOTES, 'UTF-8');	
 					echo "<script>
 					$(document).ready(function(){
 						Swal.fire({

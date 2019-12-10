@@ -267,7 +267,7 @@ INSERT INTO `unit_darah` (`nomor_kantong_darah`, `id_pendonor`, `rhesus_darah`, 
 --
 DROP TABLE IF EXISTS `daftarpendonorunitdarah`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `daftarpendonorunitdarah`  AS  select `a`.`nama_lengkap_pendonor` AS `nama_lengkap_pendonor`,`b`.`id_pendonor` AS `id_pendonor` from (`pendonor` `a` join `unit_darah` `b`) where (`a`.`id_pendonor` = `b`.`id_pendonor`) ;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `daftarpendonorunitdarah`  AS  select `a`.`nama_lengkap_pendonor` AS `nama_lengkap_pendonor`,`b`.`id_pendonor` AS `id_pendonor` from (`pendonor` `a` join `unit_darah` `b`) where (`a`.`id_pendonor` = `b`.`id_pendonor`) ;
 
 -- --------------------------------------------------------
 
@@ -276,7 +276,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `jadwaldanlokasi`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `jadwaldanlokasi`  AS  select `a`.`instasi_jadwal` AS `instasi_jadwal`,`a`.`target_jumlah_jadwal` AS `target_jumlah_jadwal`,`a`.`tanggal_jadwal` AS `tanggal_jadwal`,`a`.`hari_jadwal` AS `hari_jadwal`,`a`.`jam_jadwal` AS `jam_jadwal`,`a`.`alamat_jadwal` AS `alamat_jadwal`,`a`.`kecamatan_jadwal` AS `kecamatan_jadwal`,`a`.`link_jadwal` AS `link_jadwal`,`b`.`id_jadwallokasi` AS `id_jadwallokasi`,`b`.`id_jadwal` AS `id_jadwal`,`b`.`doketer_jadwallokasi` AS `doketer_jadwallokasi`,`b`.`tensi_jadwallokasi` AS `tensi_jadwallokasi`,`b`.`hb_jadwallokasi` AS `hb_jadwallokasi`,`b`.`aftaper_jadwallokasi` AS `aftaper_jadwallokasi`,`b`.`admin_jadwallokasi` AS `admin_jadwallokasi`,`b`.`supir_jadwallokasi` AS `supir_jadwallokasi`,`a`.`lat_jadwal` AS `lat_jadwal`,`a`.`lng_jadwal` AS `lng_jadwal` from (`jadwal` `a` join `jadwallokasi` `b`) where (`a`.`id_jadwal` = `b`.`id_jadwal`) ;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `jadwaldanlokasi`  AS  select `a`.`instasi_jadwal` AS `instasi_jadwal`,`a`.`target_jumlah_jadwal` AS `target_jumlah_jadwal`,`a`.`tanggal_jadwal` AS `tanggal_jadwal`,`a`.`hari_jadwal` AS `hari_jadwal`,`a`.`jam_jadwal` AS `jam_jadwal`,`a`.`alamat_jadwal` AS `alamat_jadwal`,`a`.`kecamatan_jadwal` AS `kecamatan_jadwal`,`a`.`link_jadwal` AS `link_jadwal`,`b`.`id_jadwallokasi` AS `id_jadwallokasi`,`b`.`id_jadwal` AS `id_jadwal`,`b`.`doketer_jadwallokasi` AS `doketer_jadwallokasi`,`b`.`tensi_jadwallokasi` AS `tensi_jadwallokasi`,`b`.`hb_jadwallokasi` AS `hb_jadwallokasi`,`b`.`aftaper_jadwallokasi` AS `aftaper_jadwallokasi`,`b`.`admin_jadwallokasi` AS `admin_jadwallokasi`,`b`.`supir_jadwallokasi` AS `supir_jadwallokasi`,`a`.`lat_jadwal` AS `lat_jadwal`,`a`.`lng_jadwal` AS `lng_jadwal` from (`jadwal` `a` join `jadwallokasi` `b`) where (`a`.`id_jadwal` = `b`.`id_jadwal`) ;
 
 -- --------------------------------------------------------
 
@@ -285,7 +285,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `petugas_view`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `petugas_view`  AS  select `petugas`.`id_petugas` AS `id_petugas`,`petugas`.`nama_petugas` AS `nama_petugas`,`petugas`.`posisi_petugas` AS `posisi_petugas` from `petugas` ;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `petugas_view`  AS  select `petugas`.`id_petugas` AS `id_petugas`,`petugas`.`nama_petugas` AS `nama_petugas`,`petugas`.`posisi_petugas` AS `posisi_petugas` from `petugas` ;
 
 --
 -- Indexes for dumped tables

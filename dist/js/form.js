@@ -8,6 +8,7 @@ $(document).ready(function () {
     tbl_datapetugas();
     modalsPendonor();
     datatable();
+    form_log();
     form_laporan_transaksi();
     $('[data-toggle="tooltip"]').tooltip({
         'selector': '',
@@ -131,6 +132,27 @@ function form_laporan_transaksi() {
                 }
             });
         }));
+}
+
+
+function form_log() {
+    $("#formlog").on("submit", (function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: url + 'kontent/ajax/data_log.php',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            data: new FormData(this),
+            success: function (data) {
+                $("#log_aktivitas").html(data);
+                datatable();
+            },
+            error: function () {
+
+            }
+        });
+    }));
 }
 
 function pilihpendonor() {

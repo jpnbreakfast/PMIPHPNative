@@ -192,7 +192,8 @@ var denpasarutaras = L.geoJson(null, {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Tanggal Pelaksanaan</th><td>" + feature.properties.TEL + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.ADRESS1 + "</td></tr>" + "<tr><th>Deskripsi</th><td>" + feature.properties.DESCRIPTION + "</td></tr>" + "<table>";
+            var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Nama Instansi</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Tanggal Pelaksanaan</th><td>" + feature.properties.WAKTUDANTANGGAL + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.ALAMAT + "</td></tr>" + "<tr><th>Kecamatan</th><td>" + feature.properties.KECAMATAN + "</td></tr>" + "<tr><th>Link</th><td><a href=" + feature.properties.LINK + " target='_blank'>Link</a></td></tr>" +
+              "<table>";
       layer.on({
         click: function (e) {
           var container = L.DomUtil.create('div'),
@@ -220,7 +221,7 @@ var denpasarutaras = L.geoJson(null, {
       $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/kec1.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       denpasarutaraSearch.push({
         name: layer.feature.properties.NAME,
-        address: layer.feature.properties.ADRESS1,
+        address: layer.feature.properties.ALAMAT,
         source: "Denpasar Utara",
         id: L.stamp(layer),
         lat: layer.feature.geometry.coordinates[1],
@@ -249,7 +250,8 @@ var denpasarbarats = L.geoJson(null, {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Tanggal Pelaksanaan</th><td>" + feature.properties.TEL + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.ADRESS1 + "</td></tr>" + "<tr><th>Deskripsi</th><td>" + feature.properties.DESCRIPTION + "</td></tr>" + "<table>";
+            var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Nama Instansi</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Tanggal Pelaksanaan</th><td>" + feature.properties.WAKTUDANTANGGAL + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.ALAMAT + "</td></tr>" + "<tr><th>Kecamatan</th><td>" + feature.properties.KECAMATAN + "</td></tr>" + "<tr><th>Link</th><td><a href=" + feature.properties.LINK + " target='_blank'>Link</a></td></tr>" +
+              "<table>";
       layer.on({
         click: function (e) {
           var container = L.DomUtil.create('div'),
@@ -277,7 +279,7 @@ var denpasarbarats = L.geoJson(null, {
       $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/kec2.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       denpasarbaratSearch.push({
         name: layer.feature.properties.NAME,
-        address: layer.feature.properties.ADRESS1,
+        address: layer.feature.properties.ALAMAT,
         source: "Denpasar Barat",
         id: L.stamp(layer),
         lat: layer.feature.geometry.coordinates[1],
@@ -306,7 +308,8 @@ var denpasarselatans = L.geoJson(null, {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Tanggal Pelaksanaan</th><td>" + feature.properties.TEL + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.ADRESS1 + "</td></tr>" + "<tr><th>Deskripsi</th><td>" + feature.properties.DESCRIPTION + "</td></tr>" + "<table>";
+            var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Nama Instansi</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Tanggal Pelaksanaan</th><td>" + feature.properties.WAKTUDANTANGGAL + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.ALAMAT + "</td></tr>" + "<tr><th>Kecamatan</th><td>" + feature.properties.KECAMATAN + "</td></tr>" + "<tr><th>Link</th><td><a href=" + feature.properties.LINK + " target='_blank'>Link</a></td></tr>" +
+              "<table>";
       layer.on({
         click: function (e) {
           var container = L.DomUtil.create('div'),
@@ -334,7 +337,7 @@ var denpasarselatans = L.geoJson(null, {
       $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/kec3.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       denpasarselatanSearch.push({
         name: layer.feature.properties.NAME,
-        address: layer.feature.properties.ADRESS1,
+        address: layer.feature.properties.ALAMAT,
         source: "Denpasar Selatan",
         id: L.stamp(layer),
         lat: layer.feature.geometry.coordinates[1],
@@ -363,7 +366,8 @@ var denpasartimurs = L.geoJson(null, {
   },
   onEachFeature: function (feature, layer) {
     if (feature.properties) {
-      var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Name</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Tanggal Pelaksanaan</th><td>" + feature.properties.TEL + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.ADRESS1 + "</td></tr>" + "<table>";
+            var content = "<table class='table table-striped table-bordered table-condensed'>" + "<tr><th>Nama Instansi</th><td>" + feature.properties.NAME + "</td></tr>" + "<tr><th>Tanggal Pelaksanaan</th><td>" + feature.properties.WAKTUDANTANGGAL + "</td></tr>" + "<tr><th>Alamat</th><td>" + feature.properties.ALAMAT + "</td></tr>" + "<tr><th>Kecamatan</th><td>" + feature.properties.KECAMATAN + "</td></tr>" + "<tr><th>Link</th><td><a href=" + feature.properties.LINK + " target='_blank'>Link</a></td></tr>" +
+              "<table>";
       layer.on({
         click: function (e) {
           var container = L.DomUtil.create('div'),
@@ -391,7 +395,7 @@ var denpasartimurs = L.geoJson(null, {
       $("#feature-list tbody").append('<tr class="feature-row" id="' + L.stamp(layer) + '" lat="' + layer.getLatLng().lat + '" lng="' + layer.getLatLng().lng + '"><td style="vertical-align: middle;"><img width="16" height="18" src="dist/img/kec4.png"></td><td class="feature-name">' + layer.feature.properties.NAME + '</td><td style="vertical-align: middle;"><i class="fa fa-chevron-right pull-right"></i></td></tr>');
       denpasartimurSearch.push({
         name: layer.feature.properties.NAME,
-        address: layer.feature.properties.ADRESS1,
+        address: layer.feature.properties.ALAMAT,
         source: "Denpasar Timur",
         id: L.stamp(layer),
         lat: layer.feature.geometry.coordinates[1],

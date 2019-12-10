@@ -156,6 +156,8 @@ if (isset($_POST['submit'])){
 	$q_edit	= 'UPDATE unit_darah SET id_pendonor="'.$t_id_pendonor.'",rhesus_darah="'.$t_rhesus.'",golongan_darah="'.$t_golongandarah.'" WHERE nomor_kantong_darah="'.$t_nomor_kantong_darah.'"';
 	$q_edit	= mysqli_query(koneksi_global(),$q_edit) or die(mysql_error());
 	if ($q_edit){
+		simpanLog(dapatkaninfo(username)[3], "Ubah", "unit_darah", "$t_nomor_kantong_darah", "Nomor Kantong Darah : $t_nomor_kantong_darah <br/> ID Pendonor : $t_id_pendonor <br/> Rhesus : $t_rhesus");
+
 		echo "<script>
 		$(document).ready(function(){
 			Swal.fire({

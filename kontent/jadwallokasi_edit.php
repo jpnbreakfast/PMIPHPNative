@@ -290,6 +290,7 @@ if (isset($_POST['submit'])){
 	$q_edit	= 'UPDATE jadwallokasi SET id_jadwal="'.$e_id_jadwal.'",doketer_jadwallokasi="'.$e_doketer_jadwallokasi.'",tensi_jadwallokasi="'.$e_tensi_jadwallokasi.'",hb_jadwallokasi="'.$e_hb_jadwallokasi.'",aftaper_jadwallokasi="'.$e_aftaper_jadwallokasi.'",admin_jadwallokasi="'.$e_admin_jadwallokasi.'",supir_jadwallokasi="'.$e_supir_jadwallokasi.'" WHERE id_jadwallokasi="'.$e_id_jadwallokasi.'"';
 	$p_edit	= mysqli_query(koneksi_global(),$q_edit) or die(mysqli_error());
 	if ($q_edit){
+		simpanLog(dapatkaninfo(username)[3], "Ubah", "jadwallokasi", "$e_id_jadwallokasi", "ID Jadwal Dan Lokasi : $e_id_jadwallokasi <br/> ID Jadwal : $e_id_jadwal <br/> Dokter : $e_doketer_jadwallokasi <br/> Tensi : $e_tensi_jadwallokasi <br/> HB : $e_hb_jadwallokasi <br/> Aftaper : $e_aftaper_jadwallokasi <br/> Administrasi : $e_admin_jadwallokasi <br/> Supir : $e_supir_jadwallokasi");
 		echo "<script>
 				$(document).ready(function(){
 					Swal.fire({

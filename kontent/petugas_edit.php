@@ -177,6 +177,7 @@ if (isset($_POST['submit'])) {
         $q_edit = 'UPDATE petugas SET username="' . $e_username_petugas . '", nama_petugas="' . $e_nama_petugas . '", posisi_petugas="' . $e_posisi_petugas . '", foto_petugas="' . $e_foto . '" WHERE id_petugas="' . $e_id_petugas . '"';
         $p_edit = mysqli_query(koneksi_global(), $q_edit) or die(mysqli_error());
         if ($p_edit) {
+			simpanLog(dapatkaninfo(username)[3], "Ubah", "petugas", "$e_id_petugas", "ID Petugas : $e_id_petugas <br/> Posisi : $e_posisi_petugas <br/> Nama : $e_nama_petugas");
             echo "<script>
 					$(document).ready(function(){
 						Swal.fire({

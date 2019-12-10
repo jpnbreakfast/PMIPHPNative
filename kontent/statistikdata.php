@@ -51,6 +51,21 @@
     <div class="col-md-6">
       <div class="box">
         <div class="box-header">
+          <h3 class="box-title">Jumlah Jadwal Dan Lokasi</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body padding">
+          <div class="chart">
+            <canvas id="areaChartDaerahTotal"></canvas>
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header">
           <h3 class="box-title">Jumlah Pendonor</h3>
         </div>
         <!-- /.box-header -->
@@ -214,7 +229,65 @@
                             data: {
                                 labels: labelchart,
                                 datasets: [{
-                                    label: "Revenue",
+                                    label: "Pendonor",
+                                    data: valuechart,
+                                    borderColor: "rgba(0, 123, 255, 0.9)",
+                                    borderWidth: "0",
+                                    backgroundColor: "rgba(0, 123, 255, 0.5)"
+                                }]
+                            },
+                            options: {
+                                legend: {
+                                    position: 'top',
+                                    labels: {
+                                        fontFamily: 'Poppins'
+                                    }
+
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        ticks: {
+                                            fontFamily: "Poppins"
+
+                                        }
+                                    }],
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true,
+                                            fontFamily: "Poppins"
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        function chartJumlahDaerah() {
+            $.ajax({
+                url: '../kontent/ajax/chartSemua.php?jenis=daerah',
+                success: function (result) {
+                    var datachart = JSON.parse(result);
+                    var labelchart = [];
+                    var valuechart = [];
+                    for (var i in datachart) {
+
+                        labelchart.push(datachart[i].label);
+                        valuechart.push(datachart[i].total);
+
+                    }
+                var ctx = document.getElementById("areaChartDaerahTotal");
+                    var ctx = document.getElementById("areaChartDaerahTotal");
+                    if (ctx) {
+                        ctx.height = 250;
+                        var ChartRevenue = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: labelchart,
+                                datasets: [{
+                                    label: "Daerah",
                                     data: valuechart,
                                     borderColor: "rgba(0, 123, 255, 0.9)",
                                     borderWidth: "0",
@@ -251,7 +324,7 @@
         }
         $(document).on("ready", (function (e) {
           e.preventDefault();
-          $.when(chartDarahTotal(), chartJumlahPendonor(), chartDarahRhesus()).done(function () {
+          $.when(chartJumlahDaerah() ,chartDarahTotal(), chartJumlahPendonor(), chartDarahRhesus()).done(function () {
 
           });
         }));

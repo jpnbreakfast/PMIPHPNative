@@ -137,6 +137,8 @@ if (isset($_POST['submit'])){
 	$q_tambah	= 'INSERT INTO unit_darah VALUES("'.$t_nomor_kantong_darah.'","'.$t_id_pendonor.'","'.$t_rhesus.'","'.$t_golongandarah.'")';
 	$q_tambah	= mysqli_query(koneksi_global(),$q_tambah) or die(mysql_error());
 	if ($q_tambah){
+		simpanLog(dapatkaninfo(username)[3], "Tambah", "unit_darah", "$t_nomor_kantong_darah", "Nomor Kantong Darah : $t_nomor_kantong_darah <br/> ID Pendonor : $t_id_pendonor <br/> Rhesus : $t_rhesus");
+
 		echo "<script>
 		$(document).ready(function(){
 			Swal.fire({

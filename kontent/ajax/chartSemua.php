@@ -22,6 +22,13 @@ if($jenis == "darah"){
         $datachart[] = array('label' => $option, 'total' => dapatkantotaldarah($option, ''));
     }
     echo json_encode($datachart);
+}elseif ($jenis == "daerah") {
+    $optionsdaerah = array('Denpasar Barat', 'Denpasar Timur', 'Denpasar Selatan', 'Denpasar Utara');
+    $datachart = array();
+    foreach ($optionsdaerah as $option) {
+        $datachart[] = array('label' => $option, 'total' => dapatkantotaldaerah($option));
+    }
+    echo json_encode($datachart);
 }
 
 

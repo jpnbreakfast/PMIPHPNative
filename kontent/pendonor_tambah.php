@@ -163,6 +163,7 @@ if (isset($_POST['submit'])){
 	$q_tambah	= 'INSERT INTO pendonor VALUES("'.$t_id_pendonor.'","'.$t_nama_lengkap_pendonor.'","'.$t_jenis_kelamin_pendonor.'","'.$t_tanggal_lahir_pendonor.'","'.$t_tempat_lahir_pendonor.'","'.$t_alamat_pendonor.'","'.$t_pekerjaan_pendonor.'","'.$t_golongan_darah_pendonor.'","'.$t_no_telp_pendonor.'")';
 	$q_tambah	= mysqli_query(koneksi_global(),$q_tambah) or die(mysqli_error());
 	if ($q_tambah){
+		simpanLog(dapatkaninfo(username)[3], "Tambah", "pendonor", "$t_id_pendonor", "ID Pendonor : $t_id_pendonor <br/> Nama Lengkap : $t_nama_lengkap_pendonor <br/> Jenis Kelamin : $t_jenis_kelamin_pendonor <br/> Tanggal Lahir : $t_tanggal_lahir_pendonor <br/> Tempat Lahir : $t_tempat_lahir_pendonor <br/> Alamat : $t_alamat_pendonor <br/> Pekerjaan : $t_pekerjaan_pendonor <br/> Golongan Darah : $t_golongan_darah_pendonor <br/> Nomor Telepon : $t_no_telp_pendonor");
 		echo "<script>
 		$(document).ready(function(){
 			Swal.fire({

@@ -203,6 +203,7 @@ if (isset($_POST['submit'])){
 	$q_tambah	= 'INSERT INTO jadwal VALUES("'.$t_id_jadwal.'","'.$t_instasi.'","'.$t_target.'","'.$t_tanggal_jadwal.'","'.$t_hari_jadwal.'","'.$t_jam_jadwal.'","'.$t_lokasi_jadwal.'","'.$t_kecamatan.'","'.$t_lat_peta_jadwal.'","'.$t_lng_peta_jadwal.'","'.$t_link_peta_jadwal.'")';
 	$q_tambah	= mysqli_query(koneksi_global(),$q_tambah) or die(mysqli_error(koneksi_global()));
 	if ($q_tambah){
+		simpanLog(dapatkaninfo(username)[3], "Tambah", "jadwal", "$t_id_jadwal", "ID Jadwal : $t_id_transaksi <br/> Instansi : $t_instasi <br/> Target : $t_target <br/> Tanggal Jadwal : $t_tanggal_jadwal <br/> Jam Jadwal : $t_jam_jadwal <br/> Hari Jadwal : $t_hari_jadwal <br/> Kecamatan : $t_kecamatan <br/> Lokasi : $t_lokasi_jadwal  <br/> Lattidue Peta : $t_lat_peta_jadwal  <br/> Longtidue Peta : $t_lng_peta_jadwal  <br/> Link Peta : $t_link_peta_jadwal");
 		echo "<script>
 				$(document).ready(function(){
 					Swal.fire({

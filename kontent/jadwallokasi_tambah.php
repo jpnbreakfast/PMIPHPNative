@@ -245,6 +245,7 @@ if (isset($_POST['submit'])){
 	$q_tambah	= 'INSERT INTO jadwallokasi VALUES("'.$t_id_jadwallokasi.'","'.$t_id_jadwal.'","'.$t_doketer_jadwallokasi.'","'.$t_tensi_jadwallokasi.'","'.$t_hb_jadwallokasi.'","'.$t_aftaper_jadwallokasi.'","'.$t_admin_jadwallokasi.'","'.$t_supir_jadwallokasi.'")';
 	$q_tambah	= mysqli_query(koneksi_global(),$q_tambah) or die(mysqli_error());
 	if ($q_tambah){
+		simpanLog(dapatkaninfo(username)[3], "Tambah", "jadwallokasi", "$t_id_jadwallokasi", "ID Jadwal Dan Lokasi : $t_id_jadwallokasi <br/> ID Jadwal : $t_id_jadwal <br/> Dokter : $t_doketer_jadwallokasi <br/> Tensi : $t_tensi_jadwallokasi <br/> HB : $t_hb_jadwallokasi <br/> Aftaper : $t_aftaper_jadwallokasi <br/> Administrasi : $t_admin_jadwallokasi <br/> Supir : $t_supir_jadwallokasi");
 		echo "<script>
 				$(document).ready(function(){
 					Swal.fire({

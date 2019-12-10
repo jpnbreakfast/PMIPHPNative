@@ -71,8 +71,8 @@
                 <div class="">
                 <div class="search-widget">
                             <form class="flex flex-wrap align-items-center">
-                                <input type="search" class="search" placeholder="Cari...">
-                                <button type="button" class="flex justify-content-center align-items-center sort" data-sort="feature-name" id="sort-btn">GO</button>
+                                <input type="search" class="search" placeholder="Cari Lokasi...">
+                                <button type="button" class="flex justify-content-center align-items-center sort" data-sort="feature-name" id="sort-btn">Cari</button>
                             </form><!-- .flex -->
                         </div>
                 </div>

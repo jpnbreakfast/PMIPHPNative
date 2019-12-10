@@ -1,6 +1,28 @@
 <script>
 	sembunyiform();
 </script>
+
+<div class="modal fade" id="modalInfo">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="infoJudul"></h4>
+      </div>
+      <div class="modal-body">
+        <p id="infoSalah"></p>
+      </div>
+      <div id="statusHapus" class="modal-footer">
+		<button id="statusHapus" type="button" tabel="pendonor" col="id_pendonor" class="btn btn-danger delete_class"><i class="fa fa-trash"></i> Hapus</button>
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Batal</button>
+      </div>
+	  <div id="statusOK" class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <section class="content-header">
 <h1>
 Pengaturan Profile
@@ -28,10 +50,10 @@ Pengaturan Profile
 	<ul class="nav nav-tabs">
 	  <li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
 	  <li><a href="#password" data-toggle="tab">Password</a></li>
+	  <li><a href="#log" data-toggle="tab">Log Aktivitas</a></li>
 	</ul>
 	<div class="tab-content">
 	  <div class="active tab-pane" id="profile">
-	  <div class="tab-pane" id="profile">
 		<form method="post" enctype="multipart/form-data" class="form-horizontal">
 		  <div class="form-group">
 			<label for="nama_profile" class="col-sm-2 control-label">Nama</label>
@@ -57,7 +79,6 @@ Pengaturan Profile
 			</div>
 		  </div>
 		</form>
-	  </div>
 	</div>
 	
 	
@@ -92,6 +113,65 @@ Pengaturan Profile
 		  </div>
 		</form>
 	  </div>
+	  
+	  <div class="tab-pane" id="log">
+	  	<div class="box-body table-responsive">
+	  		<table id="datatble" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+	  			<thead>
+	  				<tr>
+	  					<th>No.</th>
+	  					<th>Waktu</th>
+						<th>Aksi</th>  
+	  					<th>Bagian</th>
+	  					<th>ID Data</th>
+
+	  				</tr>
+	  			</thead>
+	  			<tbody>
+	  				<?php
+						$penomoran = 0;
+						$query = dapatkandatalogperuser(dapatkaninfo(username)[3]);
+						if(mysqli_num_rows($query) != 0){
+						while($r = mysqli_fetch_array($query)){
+							$waktu 			= htmlspecialchars($r['waktu'], ENT_QUOTES, 'UTF-8');
+							$aksi 			= htmlspecialchars($r['aksi'], ENT_QUOTES, 'UTF-8');
+							$id_data_table 	= htmlspecialchars($r['id_data_table'], ENT_QUOTES, 'UTF-8');
+							$nama_table 	= htmlspecialchars($r['nama_table'], ENT_QUOTES, 'UTF-8');
+							if($nama_table == "unit_darah"){
+								$kolom_id_table = "nomor_kantong_darah";
+							}elseif ($nama_table == "pendonor") {
+								$kolom_id_table = "id_pendonor";
+							}elseif ($nama_table == "petugas") {
+								$kolom_id_table = "	id_petugas";
+							}elseif ($nama_table == "transaksi") {
+								$kolom_id_table = "	id_transaksi";
+							}elseif ($nama_table == "jadwallokasi") {
+								$kolom_id_table = "	id_jadwallokasi";
+							}elseif ($nama_table == "jadwal") {
+								$kolom_id_table = "	id_jadwal";
+							}
+							$penomoran++;
+							?>
+									<tr>
+										<td><?php echo $penomoran.'.'?></td>
+										<td><?php echo $waktu;?></td>
+										<td><?php echo $aksi;?></td>
+										<td><?php echo $nama_table;?></td>
+										<td><a id="<?php echo $id_data_table;?>" hal="<?php echo $nama_table;?>" jud="Log Aktivitas" col="<?php echo $kolom_id_table;?>" href="#"
+												class="modals" onclick="infoPendonor()"><?php echo $id_data_table;?></a></td>
+									</tr>
+									<?php
+						}
+						}else{
+							echo'<tr>
+								<td colspan="6" align="center">Belum Ada Aktivitas</td>
+								</tr>';
+						}
+					?>
+	  		</table>
+	  	</div>
+	  </div>
+	  
   </div>
 </div>
 </div>

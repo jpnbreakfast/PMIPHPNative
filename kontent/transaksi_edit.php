@@ -211,6 +211,7 @@ if (isset($_POST['submit'])){
 	$q_edit	= 'UPDATE transaksi SET id_pendonor="'.$e_id_pendonor.'", nama_pendonor="'.$e_nama_pendonor.'", nomor_kantong_darah="'.$e_nomor_kantong_darah.'", golongan_darah="'.$e_gol_dar.'", id_jadwal="'.$e_id_jadwal.'", tanggal="'.$e_tanggal.'", pengambilan="'.$e_pengambilan.'" WHERE id_transaksi="'.$e_id_transaksi.'"';
 	$p_edit	= mysqli_query(koneksi_global(),$q_edit) or die(mysqli_error());
 	if ($p_edit){
+		simpanLog(dapatkaninfo(username)[3], "Ubah", "transaksi", "$e_id_transaksi", "ID Transaksi : $e_id_transaksi <br/> ID Pendonor : $e_id_pendonor <br/> Nama Pendonor : $e_nama_pendonor <br/> Nomor Kantong Darah : $e_nomor_kantong_darah <br/> Golongan Darah : $e_gol_dar <br/> ID Jadwal : $e_id_jadwal <br/> Tanggal : $e_tanggal <br/> Pengambilan : $e_pengambilan");
 		echo "<script>
 		$(document).ready(function(){
 			Swal.fire({
