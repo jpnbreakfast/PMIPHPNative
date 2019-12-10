@@ -49,6 +49,11 @@
 	</section>
 </div>
 <script>
+	$(document).ready(function () {
+		$("#tanggal1").hide();
+		$("#tanggal2").hide();
+	})
+
 	$("#type_pencarian").change(function(){
 		if($(this).val() == "semua" || $(this).val() == ""){
 			$("#tanggal1").hide();
