@@ -12,7 +12,7 @@ if($jenis == "darah"){
 }elseif($jenis == "pendonor"){
     $datachart = array();
     foreach (range(1, 12) as $bulan) {   
-        $datachart[] = array('label' => date("F", mktime(0, 0, 0, $bulan, 10)),'data' =>transaksi_chart($bulan));
+        $datachart[] = array('label' => date("F", mktime(0, 0, 0, $bulan, 10)),'data' => transaksi_chart($bulan));
     }
     echo json_encode($datachart);
 }elseif ($jenis == "darahtotal") {

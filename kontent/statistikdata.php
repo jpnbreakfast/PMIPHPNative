@@ -322,6 +322,7 @@
                 }
             });
         }
+        
         $(document).on("ready", (function (e) {
           e.preventDefault();
           $.when(chartJumlahDaerah() ,chartDarahTotal(), chartJumlahPendonor(), chartDarahRhesus()).done(function () {

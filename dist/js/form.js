@@ -253,7 +253,7 @@ function infoTranskasiKosong() {
 }
 
 function tbl_show() {
-    $(".modals").click(function () {
+    $('body').on('click', ".modals", function () {
         var id = $(this).attr('id');
         var halaman = $(this).attr('hal');
         var kolom = $(this).attr('col');
@@ -537,8 +537,6 @@ function mapInit() {
         });
     });
 
-
-    
     map.addControl( new L.Control.Search({
 		url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
 		jsonpParam: 'json_callback',
@@ -554,7 +552,6 @@ function mapInit() {
 		autoType: false,
 		minLength: 2
 	}) );
-
 
     modalElm.modal('show');
     modalElm.on('shown.bs.modal', function () {
