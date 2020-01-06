@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 11, 2019 at 06:22 PM
+-- Generation Time: Dec 10, 2019 at 05:20 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.11
 
@@ -58,9 +58,10 @@ CREATE TABLE `jadwal` (
 --
 
 INSERT INTO `jadwal` (`id_jadwal`, `instasi_jadwal`, `target_jumlah_jadwal`, `tanggal_jadwal`, `hari_jadwal`, `jam_jadwal`, `alamat_jadwal`, `kecamatan_jadwal`, `lat_jadwal`, `lng_jadwal`, `link_jadwal`) VALUES
-('jadwal5', 'AAA', 2, '2019-06-10', 'Senin', '00:00:00', 'Jalan Teuku Umar Barat,  Padangsambian Klod', 'Denpasar Barat', -8.676742, 115.186333, 'http://google.com/maps?q=-8.676742336912469,115.18632888793947'),
-('jadwal6', 'Made Limun Korporation', 50, '2019-11-11', 'Selasa', '11:05:00', 'Jalan Jayagiri XXV,  Sumerta Kelod', 'Denpasar Timur', -8.659603, 115.228813, 'http://google.com/maps?q=-8.659602574426698,115.22881507873537'),
-('jadwal7', 'Mang Sudi Lawar Corp.', 50, '2019-10-25', 'Senin', '10:00:00', 'Jalan Sekar Jepun 1 6-10,  Kesiman Kertalangu', 'Denpasar Timur', -8.634655, 115.246407, 'http://google.com/maps?q=-8.634655188475021,115.24641036987306');
+('jadwal5', 'PT. Coca Cola', 2, '2019-06-10', 'Senin', '00:00:00', 'Jalan Raya Serangan,  Sesetan', 'Denpasar Selatan', -8.721709, 115.224220, 'http://google.com/maps?q=-8.721709277432032,115.22422313690187'),
+('jadwal6', 'Made Limun Korporation', 50, '2019-11-11', 'Selasa', '11:05:00', 'Jalan Jayagiri XXV,  Sumerta Kelod', 'Denpasar Utara', -8.659603, 115.228813, 'http://google.com/maps?q=-8.659602574426698,115.22881507873537'),
+('jadwal7', 'Mang Sudi Lawar Corp.', 50, '2019-10-25', 'Senin', '10:00:00', 'Jalan Sekar Jepun 1 6-10,  Kesiman Kertalangu', 'Denpasar Timur', -8.634655, 115.246407, 'http://google.com/maps?q=-8.634655188475021,115.24641036987306'),
+('jadwal8', 'STIKI INDONESIA', 50, '2019-12-07', 'Senin', '11:00:00', 'Jalan Tukad Pakerisan,  Panjer', 'Denpasar Selatan', -8.690652, 115.226028, 'http://google.com/maps?q=-8.690651909404549,115.22602826356889');
 
 -- --------------------------------------------------------
 
@@ -113,7 +114,33 @@ CREATE TABLE `jadwallokasi` (
 INSERT INTO `jadwallokasi` (`id_jadwallokasi`, `id_jadwal`, `doketer_jadwallokasi`, `tensi_jadwallokasi`, `hb_jadwallokasi`, `aftaper_jadwallokasi`, `admin_jadwallokasi`, `supir_jadwallokasi`) VALUES
 ('lokasi1', 'jadwal5', 'IRAYADI', 'Inemmunz', 'MUSA', 'Tera', 'AAAA', 'Inemmuna'),
 ('lokasi2', 'jadwal6', 'Mas Kadir', 'Inemmunz', 'MUSA', 'Tera', 'Inem', 'Inemmuna'),
-('lokasi3', 'jadwal7', 'Mas Kadir', 'Inemmunz', 'MUSA', 'Tera', 'Inem', 'Inemmuna');
+('lokasi3', 'jadwal7', 'Mas Kadir', 'Inemmunz', 'MUSA', 'Tera', 'Inem', 'Inemmuna'),
+('lokasi4', 'jadwal8', 'Randes', 'Inemmunz', 'MUSA', 'Tera', 'Jojo', 'Inemmuna');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `log`
+--
+
+CREATE TABLE `log` (
+  `id_log` varchar(10) NOT NULL,
+  `id_petugas` varchar(10) NOT NULL,
+  `waktu` datetime NOT NULL,
+  `aksi` varchar(20) NOT NULL,
+  `id_data_table` varchar(20) NOT NULL,
+  `nama_table` varchar(20) NOT NULL,
+  `deskripsi_aksi` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `log`
+--
+
+INSERT INTO `log` (`id_log`, `id_petugas`, `waktu`, `aksi`, `id_data_table`, `nama_table`, `deskripsi_aksi`) VALUES
+('log2', 'petugas23', '2019-12-10 03:18:55', 'Tambah', '306U89213', 'unit_darah', 'Nomor Kantong Darah : 306U89213 &lt;br/&gt; ID Pendonor : 5171DG545MA1 &lt;br/&gt; Rhesus : +'),
+('log3', 'petugas23', '2019-12-10 03:23:49', 'Ubah', '5171DG545MA1', 'pendonor', 'ID Pendonor : 5171DG545MA1 &lt;br/&gt; Nama Lengkap : Papank Zidane &lt;br/&gt; Jenis Kelamin : Laki-Laki &lt;br/&gt; Tanggal Lahir : 2019-05-10 &lt;br/&gt; Tempat Lahir : Denpasar &lt;br/&gt; Alamat : Denpasar &lt;br/&gt; Pekerjaan : Petani &lt;br/&gt; Golongan Darah : O &lt;br/&gt; Nomor Telepon : 11111'),
+('log4', 'petugas23', '2019-12-13 03:28:12', 'Ubah', 'jadwal5', 'jadwal', 'ID Jadwal :  &lt;br/&gt; Instansi : PT. Coca Cola &lt;br/&gt; Target : 2 &lt;br/&gt; Tanggal Jadwal : 2019-06-10 &lt;br/&gt; Jam Jadwal : 00:00:00 &lt;br/&gt; Hari Jadwal : Senin &lt;br/&gt; Kecamatan : Denpasar Selatan &lt;br/&gt; Lokasi :   &lt;br/&gt; Lattidue Peta : -8.721709  &lt;br/&gt; Longtidue Peta : 115.224220  &lt;br/&gt; Link Peta : http://google.com/maps?q=-8.721709277432032,115.22422313690187');
 
 -- --------------------------------------------------------
 
@@ -135,7 +162,8 @@ INSERT INTO `login` (`id_login`, `username_login`, `password_login`) VALUES
 ('1', 'ita555', '$2y$10$JCb7f2GGPpAr7JClEkdChuwvZgpStyQzlY.Hr3CxFAtHsccX3x/qW'),
 ('2', 'Inem', '$2y$10$/t6m4WrY7rdE.p7n4rC35eIzc1/XRn1BP8f7V3CP3UMEOPkSdqlv6'),
 ('3', 'asdda', '$2y$10$PlAgByG.ynYLJhtfT1VUIO8O0BhYUeoWdlVfbknu6fLp05xXQmHKO'),
-('4', '', '$2y$10$2WZbNTHLfxDLu9pDId9ieew4QQDQVPySpeZeCPxWlKSL/IZVfpeoO');
+('4', 'ita555', '$2y$10$AXNBTjS49DtDxInKGdYKiusGwHPsDMAmex4ZMxq4ualYorJcZYsTe'),
+('7', 'rameses', '$2y$10$l9WGTLZfGFwdE92Ls5PJOemXwAPxIVUwOp8irm2Cy29FQB.Ro08ZS');
 
 -- --------------------------------------------------------
 
@@ -162,7 +190,8 @@ CREATE TABLE `pendonor` (
 INSERT INTO `pendonor` (`id_pendonor`, `nama_lengkap_pendonor`, `jenis_kelamin_pendonor`, `tanggal_lahir_pendonor`, `tempat_lahir_pendonor`, `alamat_pendonor`, `pekerjaan_pendonor`, `golongan_darah_pendonor`, `no_telp_pendonor`) VALUES
 ('5171DG545MA1', 'Papank Zidane', 'Laki-Laki', '2019-05-10', 'Denpasar', 'Denpasar', 'Petani', 'O', '11111'),
 ('5171DG545MA2', 'Rai Saputra', 'Laki-Laki', '2019-06-08', 'AAA', 'AAAA', 'AAAA', 'B', '1111'),
-('5171DG545MA3', 'Eka Pratama', 'Laki-Laki', '2019-06-08', 'AAA', 'AAAA', 'AAAA', 'AB', '1111');
+('5171DG545MA3', 'Eka Pratama', 'Laki-Laki', '2019-06-08', 'AAA', 'AAAA', 'AAAA', 'AB', '1111'),
+('5171DG545MA4', 'Inemmunz', 'Perempuan', '1998-11-02', 'aaa', 'AAA', 'AAA', 'A', '8988');
 
 -- --------------------------------------------------------
 
@@ -183,18 +212,16 @@ CREATE TABLE `petugas` (
 --
 
 INSERT INTO `petugas` (`id_petugas`, `username`, `nama_petugas`, `posisi_petugas`, `foto_petugas`) VALUES
-('petugas1', 'ita555', 'Papank', 'Administrator Web', 'petugas1.jpg'),
+('petugas1', 'ita555', 'Rei Ayanami', 'Administrator Web', 'petugas1.jpg'),
 ('petugas12', '', 'Inemmuna', 'Supir', 'default_profile.jpg'),
 ('petugas13', '', 'Tera', 'Aftaper', 'default_profile.jpg'),
 ('petugas14', '', 'Inemmunz', 'Tensi', 'default_profile.jpg'),
 ('petugas15', '', 'Inem', 'Administrator Web', 'default_profile.jpg'),
-('petugas16', '', 'AAA', 'Administrator Web', 'default_profile.jpg'),
 ('petugas17', '', 'AFFG', 'Administrator Web', 'default_profile.jpg'),
-('petugas18', '', 'dfgfgfdg', 'Administrator Web', 'default_profile.jpg'),
-('petugas19', 'asdda', 'asdadad', 'Administrator Web', 'default_profile.jpg'),
-('petugas20', '', 'AAAA', 'Administrator', 'default_profile.jpg'),
+('petugas21', '', 'Randes', 'Dokter', 'default_profile.jpg'),
+('petugas22', '', 'Jojo', 'Administrator', 'default_profile.jpg'),
+('petugas23', 'rameses', 'Rei Ayanako', 'Administrator Web', 'petugas23_unnamed.jpg'),
 ('petugas7', '', 'YANTO', 'Supir', '../img/default_profile.jpg'),
-('petugas8', '', 'IRAYADI', 'Dokter', '../img/default_profile.jpg'),
 ('petugas9', '', 'MUSA', 'HB', '../img/default_profile.jpg');
 
 -- --------------------------------------------------------
@@ -232,9 +259,8 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `id_pendonor`, `id_petugas`, `nama_pendonor`, `nomor_kantong_darah`, `golongan_darah`, `id_jadwal`, `tanggal`, `pengambilan`) VALUES
-('transaksi1', '5171DG545MA1', 'petugas1', 'AAA', '306U8922', 'A', 'jadwal5', '2019-10-10', 'Biasa'),
-('transaksi2', '5171DG545MA1', 'petugas1', 'Papank Zidane', '306U8922', 'A', 'jadwal6', '2019-11-11', 'Biasa'),
-('transaksi3', '5171DG545MA3', 'petugas17', 'Eka Pratama', '306U8925', 'AB', 'jadwal7', '2019-10-25', 'Biasa');
+('transaksi1', '5171DG545MA1', 'petugas1', 'Papank Zidane', '306U8922', 'A', 'jadwal5', '2019-06-10', 'Biasa'),
+('transaksi4', '5171DG545MA1', 'petugas1', 'Papank Zidane', '306U8923', 'A', 'jadwal6', '2019-11-11', 'Apheresis');
 
 -- --------------------------------------------------------
 
@@ -254,11 +280,12 @@ CREATE TABLE `unit_darah` (
 --
 
 INSERT INTO `unit_darah` (`nomor_kantong_darah`, `id_pendonor`, `rhesus_darah`, `golongan_darah`) VALUES
+('306U89210', '5171DG545MA1', '+', 'O'),
+('306U89211', '5171DG545MA1', '+', 'O'),
+('306U89212', '5171DG545MA1', '+', 'O'),
+('306U89213', '5171DG545MA1', '+', 'O'),
 ('306U8922', '5171DG545MA1', '+', 'O'),
-('306U8923', '5171DG545MA1', '+', 'A'),
-('306U8924', '5171DG545MA2', '-', 'B'),
-('306U8925', '5171DG545MA3', '-', 'AB'),
-('306U8926', '5171DG545MA1', '+', 'O');
+('306U8923', '5171DG545MA1', '+', 'A');
 
 -- --------------------------------------------------------
 
@@ -267,7 +294,7 @@ INSERT INTO `unit_darah` (`nomor_kantong_darah`, `id_pendonor`, `rhesus_darah`, 
 --
 DROP TABLE IF EXISTS `daftarpendonorunitdarah`;
 
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `daftarpendonorunitdarah`  AS  select `a`.`nama_lengkap_pendonor` AS `nama_lengkap_pendonor`,`b`.`id_pendonor` AS `id_pendonor` from (`pendonor` `a` join `unit_darah` `b`) where (`a`.`id_pendonor` = `b`.`id_pendonor`) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `daftarpendonorunitdarah`  AS  select `a`.`nama_lengkap_pendonor` AS `nama_lengkap_pendonor`,`b`.`id_pendonor` AS `id_pendonor` from (`pendonor` `a` join `unit_darah` `b`) where (`a`.`id_pendonor` = `b`.`id_pendonor`) ;
 
 -- --------------------------------------------------------
 
@@ -276,7 +303,7 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `daftarpendonorunitdarah`  
 --
 DROP TABLE IF EXISTS `jadwaldanlokasi`;
 
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `jadwaldanlokasi`  AS  select `a`.`instasi_jadwal` AS `instasi_jadwal`,`a`.`target_jumlah_jadwal` AS `target_jumlah_jadwal`,`a`.`tanggal_jadwal` AS `tanggal_jadwal`,`a`.`hari_jadwal` AS `hari_jadwal`,`a`.`jam_jadwal` AS `jam_jadwal`,`a`.`alamat_jadwal` AS `alamat_jadwal`,`a`.`kecamatan_jadwal` AS `kecamatan_jadwal`,`a`.`link_jadwal` AS `link_jadwal`,`b`.`id_jadwallokasi` AS `id_jadwallokasi`,`b`.`id_jadwal` AS `id_jadwal`,`b`.`doketer_jadwallokasi` AS `doketer_jadwallokasi`,`b`.`tensi_jadwallokasi` AS `tensi_jadwallokasi`,`b`.`hb_jadwallokasi` AS `hb_jadwallokasi`,`b`.`aftaper_jadwallokasi` AS `aftaper_jadwallokasi`,`b`.`admin_jadwallokasi` AS `admin_jadwallokasi`,`b`.`supir_jadwallokasi` AS `supir_jadwallokasi`,`a`.`lat_jadwal` AS `lat_jadwal`,`a`.`lng_jadwal` AS `lng_jadwal` from (`jadwal` `a` join `jadwallokasi` `b`) where (`a`.`id_jadwal` = `b`.`id_jadwal`) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `jadwaldanlokasi`  AS  select `a`.`instasi_jadwal` AS `instasi_jadwal`,`a`.`target_jumlah_jadwal` AS `target_jumlah_jadwal`,`a`.`tanggal_jadwal` AS `tanggal_jadwal`,`a`.`hari_jadwal` AS `hari_jadwal`,`a`.`jam_jadwal` AS `jam_jadwal`,`a`.`alamat_jadwal` AS `alamat_jadwal`,`a`.`kecamatan_jadwal` AS `kecamatan_jadwal`,`a`.`link_jadwal` AS `link_jadwal`,`b`.`id_jadwallokasi` AS `id_jadwallokasi`,`b`.`id_jadwal` AS `id_jadwal`,`b`.`doketer_jadwallokasi` AS `doketer_jadwallokasi`,`b`.`tensi_jadwallokasi` AS `tensi_jadwallokasi`,`b`.`hb_jadwallokasi` AS `hb_jadwallokasi`,`b`.`aftaper_jadwallokasi` AS `aftaper_jadwallokasi`,`b`.`admin_jadwallokasi` AS `admin_jadwallokasi`,`b`.`supir_jadwallokasi` AS `supir_jadwallokasi`,`a`.`lat_jadwal` AS `lat_jadwal`,`a`.`lng_jadwal` AS `lng_jadwal` from (`jadwal` `a` join `jadwallokasi` `b`) where (`a`.`id_jadwal` = `b`.`id_jadwal`) ;
 
 -- --------------------------------------------------------
 
@@ -285,7 +312,7 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `jadwaldanlokasi`  AS  sele
 --
 DROP TABLE IF EXISTS `petugas_view`;
 
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `petugas_view`  AS  select `petugas`.`id_petugas` AS `id_petugas`,`petugas`.`nama_petugas` AS `nama_petugas`,`petugas`.`posisi_petugas` AS `posisi_petugas` from `petugas` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `petugas_view`  AS  select `petugas`.`id_petugas` AS `id_petugas`,`petugas`.`nama_petugas` AS `nama_petugas`,`petugas`.`posisi_petugas` AS `posisi_petugas` from `petugas` ;
 
 --
 -- Indexes for dumped tables
@@ -303,6 +330,13 @@ ALTER TABLE `jadwal`
 ALTER TABLE `jadwallokasi`
   ADD PRIMARY KEY (`id_jadwallokasi`),
   ADD KEY `id_jadwal` (`id_jadwal`);
+
+--
+-- Indexes for table `log`
+--
+ALTER TABLE `log`
+  ADD PRIMARY KEY (`id_log`),
+  ADD KEY `id_petugas` (`id_petugas`);
 
 --
 -- Indexes for table `login`
@@ -348,6 +382,12 @@ ALTER TABLE `unit_darah`
 --
 ALTER TABLE `jadwallokasi`
   ADD CONSTRAINT `jadwallokasi_ibfk_1` FOREIGN KEY (`id_jadwal`) REFERENCES `jadwal` (`id_jadwal`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `log`
+--
+ALTER TABLE `log`
+  ADD CONSTRAINT `log_ibfk_1` FOREIGN KEY (`id_petugas`) REFERENCES `petugas` (`id_petugas`);
 
 --
 -- Constraints for table `transaksi`
